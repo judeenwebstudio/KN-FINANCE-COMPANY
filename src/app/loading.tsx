@@ -1,0 +1,1 @@
+export default function Loading() { return <div className="grid min-h-72 place-items-center"><div className="size-8 animate-spin rounded-full border-2 border-slate-200 border-t-[#275d4f]"/><span className="sr-only">Loading</span></div>; }

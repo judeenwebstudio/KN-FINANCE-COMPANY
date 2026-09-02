@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+export function PageHeader({ title, description }: { title: string; description?: string }) { return <div className="mb-7"><div className="mb-2 flex items-center gap-1 text-xs font-medium text-slate-500"><Link href="/" className="transition-colors hover:text-indigo-600">Home</Link><ChevronRight className="size-3"/><span>{title}</span></div><h1 className="text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl">{title}</h1>{description && <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">{description}</p>}</div>; }

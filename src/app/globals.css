@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --background: #f7f8fc;
+  --foreground: #172033;
+  --brand: #4f46e5;
+  --brand-strong: #4338ca;
+  --brand-soft: #eef2ff;
+  --success: #059669;
+  --success-soft: #ecfdf5;
+  --warning: #d97706;
+  --warning-soft: #fffbeb;
+  --danger: #e11d48;
+  --danger-soft: #fff1f2;
+  --loan: #7c3aed;
+  --loan-soft: #f5f3ff;
+  --info: #0284c7;
+  --info-soft: #f0f9ff;
+}
+* { border-color: #e4e7ec; scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+html { background: var(--background); }
+body { background: var(--background); color: var(--foreground); font-family: "Geist", Arial, Helvetica, sans-serif; }
+button, a, input, select { outline-color: var(--brand); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+button { cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }

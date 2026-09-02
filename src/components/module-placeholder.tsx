@@ -1,0 +1,4 @@
+import { Construction } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { PageHeader } from "@/components/page-header";
+export function ModulePlaceholder({ title }: { title: string }) { return <><PageHeader title={title} description={`Manage ${title.toLowerCase()} across your authorized workspace.`}/><Card className="grid min-h-72 place-items-center p-8 text-center"><div><span className="mx-auto grid size-14 place-items-center rounded-xl bg-[#e8f2ef] text-[#275d4f]"><Construction/></span><h2 className="mt-5 text-lg font-semibold">{title} module coming next</h2><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">The navigation, authorization boundary, and data architecture are ready. The complete workflow is intentionally reserved for Phase 2.</p></div></Card></>; }
