@@ -13,6 +13,7 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
+    "db:bootstrap:production": "tsx scripts/bootstrap-production.ts",
     "db:validate": "prisma validate",
     "loans:refresh-overdue": "tsx scripts/refresh-overdue.ts",
     "test": "tsx --test src/lib/**/__tests__/**/*.test.ts"
