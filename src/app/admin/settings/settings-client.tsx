@@ -1019,8 +1019,8 @@ export function SettingsClient({
 
             <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <div className="text-sm font-bold text-slate-900">Email Dispatch Status</div>
-                <p className="text-xs text-slate-600 mt-0.5">Enable or disable outbound system email notifications.</p>
+                <div className="text-sm font-bold text-slate-900">Administrative Email Dispatch Preference</div>
+                <p className="text-xs text-slate-600 mt-0.5">Enable or disable system email preference. Delivery remains unavailable until a provider is installed.</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
@@ -1031,7 +1031,9 @@ export function SettingsClient({
                   className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a2e5a]"></div>
-                <span className="ml-3 text-xs font-bold text-slate-700">{emailForm.enabled ? "ENABLED" : "DISABLED"}</span>
+                <span className="ml-3 text-xs font-bold text-slate-700">
+                  {emailForm.enabled ? "ENABLED (Preference)" : "DISABLED"}
+                </span>
               </label>
             </div>
 
@@ -1055,7 +1057,7 @@ export function SettingsClient({
                   disabled={!canManageIntegrations}
                   value={emailForm.senderEmail}
                   onChange={(e) => setEmailForm({ ...emailForm, senderEmail: e.target.value })}
-                  placeholder="notifications@knfinance.com"
+                  placeholder="Optional official sender address"
                   className={inputClass}
                 />
               </div>
@@ -1066,34 +1068,30 @@ export function SettingsClient({
                   disabled={!canManageIntegrations}
                   value={emailForm.replyToEmail}
                   onChange={(e) => setEmailForm({ ...emailForm, replyToEmail: e.target.value })}
-                  placeholder="support@knfinance.com"
+                  placeholder="Optional reply-to address"
                   className={inputClass}
                 />
               </div>
             </div>
 
-            {/* Provider Infrastructure Readiness Card (Non-secret) */}
+            {/* Provider Infrastructure Readiness Card */}
             <div className="pt-4 border-t border-slate-100">
               <h3 className="text-sm font-bold text-slate-900 mb-2">Provider Infrastructure Status</h3>
               <div className="p-4 rounded-xl border bg-slate-50 flex items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span
-                      className={`inline-block w-2.5 h-2.5 rounded-full ${
-                        providerStatus.configured ? "bg-emerald-500" : "bg-amber-500"
-                      }`}
-                    ></span>
+                    <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                     <span className="text-sm font-bold text-slate-900">
-                      Provider: {providerStatus.providerType}
+                      Provider: NONE (Not Configured)
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">{providerStatus.statusMessage}</p>
+                  <p className="text-xs text-slate-600 mt-1">No email delivery provider integration exists in the repository.</p>
                   <p className="text-[11px] text-slate-500 mt-1 font-mono">
-                    Environment Credentials Status: {providerStatus.configured ? "Configured" : "Not Configured"}
+                    Delivery Status: UNAVAILABLE
                   </p>
                 </div>
                 <span className="text-[11px] font-semibold text-slate-500 border border-slate-200 bg-white px-2.5 py-1 rounded">
-                  Infrastructure Secrets Managed Server-Side
+                  Delivery Integration Deferred
                 </span>
               </div>
             </div>

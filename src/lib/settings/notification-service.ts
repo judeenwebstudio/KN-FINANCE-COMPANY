@@ -79,8 +79,8 @@ export const NOTIFICATION_CATALOG: NotificationEventDefinition[] = [
     name: "Overdue Payment Notice",
     description: "Sent when a loan installment becomes past due.",
     channel: "EMAIL",
-    defaultSubject: "Urgent: Overdue Payment Notice for Loan {{loanReference}}",
-    defaultBody: "Dear {{memberName}},\n\nThis is a notice that your payment of USD {{overdueAmount}} for loan {{loanReference}} was due on {{dueDate}} and is currently {{daysOverdue}} days overdue.\n\nPlease arrange payment immediately to prevent penalty charges.",
+    defaultSubject: "Overdue Payment Notice - {{loanReference}}",
+    defaultBody: "Dear {{memberName}},\n\nThis is a notice that your payment of USD {{overdueAmount}} for loan {{loanReference}} was due on {{dueDate}} and is currently {{daysOverdue}} days overdue.\n\nPlease arrange payment at your earliest convenience.",
     allowedPlaceholders: ["memberName", "loanReference", "overdueAmount", "dueDate", "daysOverdue"],
     sampleData: {
       memberName: "Alex Mercer",
@@ -100,7 +100,10 @@ export class NotificationTemplateValidationError extends Error {
 }
 
 /**
- * Validates template placeholder syntax, allowlists, and HTML script safety.
+ * Enforces strict grammar for template placeholders and HTML script safety.
+ * Allowed placeholder syntax: STRICTLY {{identifier}} where identifier matches ^[A-Za-z][A-Za-z0-9_]*$
+ * and belongs to the event's allowedPlaceholders catalog list.
+ * Rejects all expressions, dot access, function calls, pipes, or operators.
  */
 export function validateNotificationTemplateContent(code: string, subject: string, bodyTemplate: string) {
   const catalogItem = NOTIFICATION_CATALOG.find((item) => item.code === code);
@@ -108,28 +111,40 @@ export function validateNotificationTemplateContent(code: string, subject: strin
     throw new NotificationTemplateValidationError(`Notification event code '${code}' is not a registered system event.`);
   }
 
-  // HTML / Script injection safeguards
   const combined = `${subject} ${bodyTemplate}`;
+
+  // HTML & Script injection safeguards
   if (/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi.test(combined) || /on\w+\s*=/gi.test(combined) || /javascript:/gi.test(combined)) {
     throw new NotificationTemplateValidationError("Template content contains prohibited executable HTML tags, event handlers, or javascript: schemes.");
   }
 
-  // Extract all {{placeholder}} occurrences
-  const placeholderMatches = Array.from(combined.matchAll(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g));
-  const usedPlaceholders = Array.from(new Set(placeholderMatches.map((m) => m[1])));
+  // Find all {{...}} blocks in content
+  const braceMatches = Array.from(combined.matchAll(/\{\{([^}]+)\}\}/g));
 
-  // Validate every placeholder against strict event allowlist
-  for (const placeholder of usedPlaceholders) {
-    if (!catalogItem.allowedPlaceholders.includes(placeholder)) {
+  for (const match of braceMatches) {
+    const rawContent = match[1];
+    const trimmed = rawContent.trim();
+
+    // Strict identifier grammar check: must be a simple alphanumeric/underscore identifier starting with a letter
+    if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(trimmed)) {
       throw new NotificationTemplateValidationError(
-        `Invalid placeholder '{{${placeholder}}}' for event '${code}'. Allowed placeholders: ${catalogItem.allowedPlaceholders.join(", ")}`
+        `Invalid placeholder expression '{{${rawContent}}}'. Only simple identifiers e.g. {{memberName}} are permitted. No expressions, functions, or property paths allowed.`
+      );
+    }
+
+    // Must be in server event catalog allowlist
+    if (!catalogItem.allowedPlaceholders.includes(trimmed)) {
+      throw new NotificationTemplateValidationError(
+        `Invalid placeholder '{{${trimmed}}}' for event '${code}'. Allowed placeholders: ${catalogItem.allowedPlaceholders.join(", ")}`
       );
     }
   }
 
-  // Check for malformed braces or executable expressions e.g. {{eval(...)}}, {{function}}, {{a + b}}
-  if (/\{\{(?!\s*[a-zA-Z0-9_]+\s*\}\})/.test(combined)) {
-    throw new NotificationTemplateValidationError("Template contains malformed placeholder syntax or executable expressions.");
+  // Ensure no unclosed braces like {{ or }} exist without matching
+  const openCount = (combined.match(/\{\{/g) || []).length;
+  const closeCount = (combined.match(/\}\}/g) || []).length;
+  if (openCount !== closeCount || openCount !== braceMatches.length) {
+    throw new NotificationTemplateValidationError("Template contains malformed or unclosed placeholder braces.");
   }
 }
 
@@ -138,49 +153,79 @@ export function validateNotificationTemplateContent(code: string, subject: strin
  * Executes NO code, eval, or dynamic function calls.
  */
 export function renderNotificationText(templateStr: string, data: Record<string, string>): string {
-  return templateStr.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, (match, key) => {
+  return templateStr.replace(/\{\{\s*([A-Za-z][A-Za-z0-9_]*)\s*\}\}/g, (match, key) => {
     return data[key] !== undefined ? data[key] : match;
   });
 }
 
 /**
- * Retrieves all notification templates, initializing missing catalog defaults idempotently.
+ * Retrieves all notification templates.
+ * STRICTLY READ-ONLY GET: Performs database read ONLY. Executes ZERO database writes or upserts on GET.
+ * If database rows are missing, returns in-memory catalog defaults for display.
  */
 export async function getAllNotificationTemplates() {
   try {
-    const existing = await prisma.notificationTemplate.findMany({
+    const dbTemplates = await prisma.notificationTemplate.findMany({
       orderBy: { code: "asc" },
     });
 
-    const existingCodes = new Set(existing.map((t) => t.code));
+    if (dbTemplates.length > 0) {
+      const dbMap = new Map(dbTemplates.map((t) => [t.code, t]));
 
-    // Idempotent seeding for missing catalog events
-    for (const catItem of NOTIFICATION_CATALOG) {
-      if (!existingCodes.has(catItem.code)) {
-        await prisma.notificationTemplate.upsert({
-          where: { code: catItem.code },
-          update: {},
-          create: {
-            code: catItem.code,
-            name: catItem.name,
-            description: catItem.description,
-            channel: catItem.channel,
-            subject: catItem.defaultSubject,
-            bodyTemplate: catItem.defaultBody,
+      // Merge DB rows with catalog items, falling back to catalog defaults for unpersisted items
+      return NOTIFICATION_CATALOG.map((catItem) => {
+        const existing = dbMap.get(catItem.code);
+        if (existing) {
+          return {
+            id: existing.id,
+            code: existing.code,
+            name: existing.name,
+            description: existing.description,
+            channel: "EMAIL",
+            subject: existing.subject,
+            bodyTemplate: existing.bodyTemplate,
             variables: catItem.allowedPlaceholders,
-            isEnabled: true,
-          },
-        });
-      }
+            isEnabled: existing.isEnabled,
+            updatedById: existing.updatedById,
+            createdAt: existing.createdAt,
+            updatedAt: existing.updatedAt,
+          };
+        }
+        return {
+          id: `temp-${catItem.code}`,
+          code: catItem.code,
+          name: catItem.name,
+          description: catItem.description,
+          channel: catItem.channel,
+          subject: catItem.defaultSubject,
+          bodyTemplate: catItem.defaultBody,
+          variables: catItem.allowedPlaceholders,
+          isEnabled: true,
+          updatedById: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+      });
     }
 
-    return await prisma.notificationTemplate.findMany({
-      orderBy: { code: "asc" },
-    });
+    // In-memory catalog representation when DB table is empty
+    return NOTIFICATION_CATALOG.map((catItem) => ({
+      id: `temp-${catItem.code}`,
+      code: catItem.code,
+      name: catItem.name,
+      description: catItem.description,
+      channel: catItem.channel,
+      subject: catItem.defaultSubject,
+      bodyTemplate: catItem.defaultBody,
+      variables: catItem.allowedPlaceholders,
+      isEnabled: true,
+      updatedById: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
   } catch (error: unknown) {
     const msg = String(error);
     if (msg.includes("does not exist") || msg.includes("P2021")) {
-      // Missing DB table fallback
       return NOTIFICATION_CATALOG.map((catItem) => ({
         id: `temp-${catItem.code}`,
         code: catItem.code,
@@ -200,6 +245,39 @@ export async function getAllNotificationTemplates() {
   }
 }
 
+/**
+ * EXPLICIT INITIALIZATION PATH.
+ * Idempotently seeds default notification templates into the database.
+ * NEVER called from GET or page render paths.
+ */
+export async function initializeNotificationTemplates() {
+  const created: string[] = [];
+
+  for (const catItem of NOTIFICATION_CATALOG) {
+    const existing = await prisma.notificationTemplate.findUnique({
+      where: { code: catItem.code },
+    });
+
+    if (!existing) {
+      await prisma.notificationTemplate.create({
+        data: {
+          code: catItem.code,
+          name: catItem.name,
+          description: catItem.description,
+          channel: "EMAIL",
+          subject: catItem.defaultSubject,
+          bodyTemplate: catItem.defaultBody,
+          variables: catItem.allowedPlaceholders,
+          isEnabled: true,
+        },
+      });
+      created.push(catItem.code);
+    }
+  }
+
+  return { success: true, seededCodes: created };
+}
+
 export const updateTemplateSchema = z.object({
   subject: z.string().trim().min(2, "Subject line is required").max(200),
   bodyTemplate: z.string().trim().min(5, "Body template is required").max(5000),
@@ -209,28 +287,43 @@ export type UpdateTemplateInput = z.infer<typeof updateTemplateSchema>;
 
 /**
  * Updates a notification template's subject and body.
- * Validates strict placeholder allowlist server-side.
+ * Code and channel are IMMUTABLE.
+ * Variables JSON is snapshot metadata derived from server event catalog.
  */
 export async function updateNotificationTemplate(actorUserId: string, code: string, input: UpdateTemplateInput) {
+  const catalogItem = NOTIFICATION_CATALOG.find((item) => item.code === code);
+  if (!catalogItem) {
+    throw new NotificationTemplateValidationError(`Notification event code '${code}' is not a registered system event.`);
+  }
+
   const validated = updateTemplateSchema.parse(input);
 
   // Validate placeholder allowlist and HTML safety
   validateNotificationTemplateContent(code, validated.subject, validated.bodyTemplate);
 
   const existing = await prisma.notificationTemplate.findUnique({ where: { code } });
-  if (!existing) {
-    throw new NotificationTemplateValidationError(`Template for code '${code}' does not exist.`);
-  }
 
-  const changes: Record<string, { from: string; to: string }> = {};
-  if (existing.subject !== validated.subject) changes.subject = { from: existing.subject, to: validated.subject };
-  if (existing.bodyTemplate !== validated.bodyTemplate) changes.bodyTemplate = { from: "[Existing Body]", to: "[Updated Body]" };
+  const subjectChanged = !existing || existing.subject !== validated.subject;
+  const bodyChanged = !existing || existing.bodyTemplate !== validated.bodyTemplate;
 
-  const updated = await prisma.notificationTemplate.update({
+  const updated = await prisma.notificationTemplate.upsert({
     where: { code },
-    data: {
+    update: {
       subject: validated.subject,
       bodyTemplate: validated.bodyTemplate,
+      variables: catalogItem.allowedPlaceholders,
+      channel: "EMAIL",
+      updatedById: actorUserId,
+    },
+    create: {
+      code: catalogItem.code,
+      name: catalogItem.name,
+      description: catalogItem.description,
+      channel: "EMAIL",
+      subject: validated.subject,
+      bodyTemplate: validated.bodyTemplate,
+      variables: catalogItem.allowedPlaceholders,
+      isEnabled: true,
       updatedById: actorUserId,
     },
   });
@@ -243,7 +336,8 @@ export async function updateNotificationTemplate(actorUserId: string, code: stri
     metadata: {
       code: updated.code,
       name: updated.name,
-      changes: Object.keys(changes).length > 0 ? changes : undefined,
+      subjectChanged,
+      bodyChanged,
     },
   });
 
@@ -254,14 +348,25 @@ export async function updateNotificationTemplate(actorUserId: string, code: stri
  * Toggles notification template enabled/disabled status.
  */
 export async function toggleNotificationTemplateStatus(actorUserId: string, code: string, isEnabled: boolean) {
-  const existing = await prisma.notificationTemplate.findUnique({ where: { code } });
-  if (!existing) {
-    throw new NotificationTemplateValidationError(`Template for code '${code}' does not exist.`);
+  const catalogItem = NOTIFICATION_CATALOG.find((item) => item.code === code);
+  if (!catalogItem) {
+    throw new NotificationTemplateValidationError(`Notification event code '${code}' is not a registered system event.`);
   }
 
-  const updated = await prisma.notificationTemplate.update({
+  const updated = await prisma.notificationTemplate.upsert({
     where: { code },
-    data: {
+    update: {
+      isEnabled,
+      updatedById: actorUserId,
+    },
+    create: {
+      code: catalogItem.code,
+      name: catalogItem.name,
+      description: catalogItem.description,
+      channel: "EMAIL",
+      subject: catalogItem.defaultSubject,
+      bodyTemplate: catalogItem.defaultBody,
+      variables: catalogItem.allowedPlaceholders,
       isEnabled,
       updatedById: actorUserId,
     },

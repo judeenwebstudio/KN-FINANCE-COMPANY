@@ -21,48 +21,20 @@ export const DEFAULT_EMAIL_CONFIG = {
 };
 
 /**
- * Checks server-side infrastructure environment for configured email provider credentials.
- * Does NOT expose secret key values or passwords.
+ * Returns server provider readiness status.
+ * Strictly reflects actual code capability. Currently no delivery provider SDK is installed.
  */
 export function getEmailProviderStatus() {
-  const hasSmtp = Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASSWORD);
-  const hasResend = Boolean(process.env.RESEND_API_KEY);
-  const hasSendGrid = Boolean(process.env.SENDGRID_API_KEY);
-
-  if (hasSmtp) {
-    return {
-      configured: true,
-      providerType: "SMTP",
-      statusMessage: "SMTP infrastructure credentials configured in server environment.",
-    };
-  }
-
-  if (hasResend) {
-    return {
-      configured: true,
-      providerType: "RESEND",
-      statusMessage: "Resend API key configured in server environment.",
-    };
-  }
-
-  if (hasSendGrid) {
-    return {
-      configured: true,
-      providerType: "SENDGRID",
-      statusMessage: "SendGrid API key configured in server environment.",
-    };
-  }
-
   return {
     configured: false,
-    providerType: "NONE",
-    statusMessage: "Email provider is not configured.",
+    providerType: "NONE" as const,
+    statusMessage: "No email delivery provider is installed or configured.",
   };
 }
 
 /**
  * Retrieves non-secret Email Configuration.
- * Strictly read-only fallback if table or singleton record is absent.
+ * STRICTLY READ-ONLY GET: Executes ZERO database writes or inserts.
  */
 export async function getEmailConfiguration() {
   try {
@@ -94,7 +66,7 @@ export async function getEmailConfiguration() {
 
 /**
  * Updates non-secret Email Configuration settings.
- * NEVER accepts or persists secret credentials, passwords, or tokens.
+ * Client CANNOT submit arbitrary provider strings; provider is locked to "NONE".
  */
 export async function updateEmailConfiguration(actorUserId: string, input: EmailConfigurationInput) {
   const validated = emailConfigurationSchema.parse(input);
@@ -104,7 +76,7 @@ export async function updateEmailConfiguration(actorUserId: string, input: Email
     senderName: validated.senderName,
     senderEmail: validated.senderEmail || null,
     replyToEmail: validated.replyToEmail || null,
-    provider: getEmailProviderStatus().providerType,
+    provider: "NONE",
     updatedById: actorUserId,
   };
 
@@ -125,8 +97,8 @@ export async function updateEmailConfiguration(actorUserId: string, input: Email
     metadata: {
       enabled: updatedConfig.enabled,
       senderName: updatedConfig.senderName,
-      senderEmail: updatedConfig.senderEmail,
-      replyToEmail: updatedConfig.replyToEmail,
+      hasSenderEmail: Boolean(updatedConfig.senderEmail),
+      hasReplyToEmail: Boolean(updatedConfig.replyToEmail),
       provider: updatedConfig.provider,
     },
   });
@@ -135,17 +107,30 @@ export async function updateEmailConfiguration(actorUserId: string, input: Email
 }
 
 /**
- * Sends a test email to a validated recipient address.
- * Fails gracefully if provider is unconfigured in server environment.
- * NEVER simulates fake successful delivery when provider is missing.
+ * Attempts diagnostic test email dispatch.
+ * Fails gracefully when provider is unconfigured.
+ * NEVER simulates fake successful delivery.
+ * Audit metadata is strictly privacy-minimized.
  */
 export async function sendTestEmail(actorUserId: string, recipientEmail: string) {
   const emailSchema = z.string().trim().email("Invalid recipient email address");
-  const validRecipient = emailSchema.parse(recipientEmail);
+  emailSchema.parse(recipientEmail);
 
   const providerStatus = getEmailProviderStatus();
 
   if (!providerStatus.configured) {
+    await logAuditEvent({
+      actorUserId,
+      action: "email.test",
+      entityType: "EmailConfiguration",
+      entityId: "email-config-main",
+      metadata: {
+        providerType: "NONE",
+        status: "NOT_CONFIGURED",
+        delivered: false,
+      },
+    });
+
     return {
       success: false,
       delivered: false,
@@ -153,21 +138,9 @@ export async function sendTestEmail(actorUserId: string, recipientEmail: string)
     };
   }
 
-  // Delivery mechanism for configured provider environment
-  await logAuditEvent({
-    actorUserId,
-    action: "email.test",
-    entityType: "EmailConfiguration",
-    entityId: "email-config-main",
-    metadata: {
-      recipientEmail: validRecipient,
-      providerType: providerStatus.providerType,
-    },
-  });
-
   return {
-    success: true,
-    delivered: true,
-    message: `Test email successfully submitted to ${validRecipient} via ${providerStatus.providerType}.`,
+    success: false,
+    delivered: false,
+    message: "Email provider is not configured. Delivery skipped.",
   };
 }
