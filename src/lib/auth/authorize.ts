@@ -49,10 +49,12 @@ export async function getUserEffectivePermissions(userId: string): Promise<Set<s
     return new Set<string>();
   }
 
-  // Check if user has an active super admin role assignment
-  const isSuperAdmin = user.roleAssignments.some(
-    (ra) => ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
-  );
+  // Check if user has an active super admin role assignment or legacy SUPER_ADMIN role
+  const isSuperAdmin =
+    user.role === "SUPER_ADMIN" ||
+    user.roleAssignments.some(
+      (ra) => ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
+    );
 
   if (isSuperAdmin) {
     return new Set(PERMISSION_CATALOG.map((p) => p.code));
@@ -90,9 +92,11 @@ export async function getUserAuthorizedBranchScope(userId: string): Promise<Bran
     return { global: false, branchIds: [] };
   }
 
-  const isSuperAdmin = user.roleAssignments.some(
-    (ra) => ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
-  );
+  const isSuperAdmin =
+    user.role === "SUPER_ADMIN" ||
+    user.roleAssignments.some(
+      (ra) => ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
+    );
 
   const isGlobal = isSuperAdmin || user.hasGlobalBranchAccess;
 
