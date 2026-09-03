@@ -103,6 +103,40 @@ export async function getCompanyProfile() {
  * Explicit mutation initializer for bootstrap or write operations.
  */
 export async function ensureCompanyProfile() {
+  try {
+    await prisma.$executeRawUnsafe(`
+      CREATE TABLE IF NOT EXISTS "CompanyProfile" (
+          "id" TEXT NOT NULL DEFAULT 'company-profile-main',
+          "legalName" TEXT,
+          "displayName" TEXT NOT NULL DEFAULT 'KN Finance Company',
+          "tagline" TEXT DEFAULT 'Empowering your future',
+          "registrationNumber" TEXT,
+          "taxId" TEXT,
+          "licenseNumber" TEXT,
+          "email" TEXT,
+          "phone" TEXT,
+          "website" TEXT,
+          "address" TEXT,
+          "city" TEXT,
+          "state" TEXT,
+          "country" TEXT,
+          "timezone" TEXT DEFAULT 'UTC',
+          "dateFormat" TEXT NOT NULL DEFAULT 'YYYY-MM-DD',
+          "timeFormat" TEXT NOT NULL DEFAULT '12h',
+          "locale" TEXT NOT NULL DEFAULT 'en-US',
+          "logoUrl" TEXT DEFAULT '/branding/kn-finance-logo.png',
+          "faviconUrl" TEXT DEFAULT '/favicon.ico',
+          "metaDescription" TEXT DEFAULT 'KN Finance Company — Empowering your future. Multi-branch credit and loan management platform.',
+          "updatedById" TEXT,
+          "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "updatedAt" TIMESTAMP(3) NOT NULL,
+          CONSTRAINT "CompanyProfile_pkey" PRIMARY KEY ("id")
+      );
+    `);
+  } catch {
+    // Table already exists or managed by Prisma
+  }
+
   return await prisma.companyProfile.upsert({
     where: { id: "company-profile-main" },
     update: {},
@@ -140,14 +174,31 @@ export async function updateCompanyProfile(actorUserId: string, input: UpdateCom
     updatedById: actorUserId,
   };
 
-  const updatedProfile = await prisma.companyProfile.upsert({
-    where: { id: "company-profile-main" },
-    update: cleanData,
-    create: {
-      id: "company-profile-main",
-      ...cleanData,
-    },
-  });
+  let updatedProfile;
+  try {
+    updatedProfile = await prisma.companyProfile.upsert({
+      where: { id: "company-profile-main" },
+      update: cleanData,
+      create: {
+        id: "company-profile-main",
+        ...cleanData,
+      },
+    });
+  } catch (error: unknown) {
+    if (String(error).includes("does not exist")) {
+      await ensureCompanyProfile();
+      updatedProfile = await prisma.companyProfile.upsert({
+        where: { id: "company-profile-main" },
+        update: cleanData,
+        create: {
+          id: "company-profile-main",
+          ...cleanData,
+        },
+      });
+    } else {
+      throw error;
+    }
+  }
 
   await logAuditEvent({
     actorUserId,
