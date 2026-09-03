@@ -34,12 +34,12 @@ type PortalShellProps = {
   branches?: BranchDTO[];
 };
 
-/* KN Finance Dark Shell Navigation Styling Tokens */
+/* KN Finance Centralized Shell Navigation Styling Tokens */
 const NAV_ACTIVE =
-  "bg-[#153056] text-white shadow-xs font-semibold " +
-  "before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[3.5px] before:rounded-r-full before:bg-[#c5a059]";
+  "bg-shell-navy-active text-white shadow-xs font-semibold " +
+  "before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[3.5px] before:rounded-r-full before:bg-shell-gold";
 const NAV_IDLE =
-  "text-slate-300 hover:bg-[#10243e] hover:text-white";
+  "text-slate-300 hover:bg-shell-navy-hover hover:text-white";
 
 export function PortalShell({ children, user, portal, branches = [] }: PortalShellProps) {
   const path = usePathname();
@@ -62,7 +62,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       {/* ── Brand header ── */}
       <div
         className={cn(
-          "flex items-center justify-between border-b border-[#142845] bg-white px-4 shrink-0 transition-[height] duration-200",
+          "flex items-center justify-between border-b border-shell-border bg-white px-4 shrink-0 transition-[height] duration-200",
           collapsed ? "h-[60px]" : "h-[84px]"
         )}
       >
@@ -73,8 +73,8 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
         >
           {collapsed ? (
             /* Collapsed: gold/navy branded avatar */
-            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#071426] text-[#e6ca85] border border-[#c5a059]/40 shadow-xs">
-              <span className="font-serif font-bold text-base text-[#e6ca85]">KN</span>
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-shell-navy text-shell-gold-light border border-shell-gold/40 shadow-xs">
+              <span className="font-serif font-bold text-base text-shell-gold-light">KN</span>
             </span>
           ) : (
             /* Expanded: official logo on clean white background */
@@ -116,7 +116,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                       active ? NAV_ACTIVE : NAV_IDLE
                     )}
                   >
-                    <Icon className={cn("size-[18px] shrink-0", active ? "text-[#e6ca85]" : "text-slate-400")} />
+                    <Icon className={cn("size-[18px] shrink-0", active ? "text-shell-gold-light" : "text-slate-400")} />
                     {!collapsed && <span>{item.name}</span>}
                   </Link>
                 );
@@ -135,7 +135,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                     active ? NAV_ACTIVE : NAV_IDLE
                   )}
                 >
-                  <Icon className={cn("size-[18px] shrink-0", active ? "text-[#e6ca85]" : "text-slate-400")} />
+                  <Icon className={cn("size-[18px] shrink-0", active ? "text-shell-gold-light" : "text-slate-400")} />
                   {!collapsed && <span>{label}</span>}
                 </Link>
               );
@@ -143,9 +143,9 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       </nav>
 
       {/* ── Dark Sidebar User Card ── */}
-      <div className="border-t border-[#142845] bg-[#071426] p-3 shrink-0">
-        <div className={cn("flex items-center gap-3 rounded-xl border border-[#1b3459] bg-[#0b1c34] p-2.5 shadow-xs", collapsed && "justify-center p-2")}>
-          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-[#c5a059]/20 text-xs font-bold text-[#e6ca85] border border-[#c5a059]/30">
+      <div className="border-t border-shell-border bg-shell-navy p-3 shrink-0">
+        <div className={cn("flex items-center gap-3 rounded-xl border border-shell-border-subtle bg-shell-navy-surface p-2.5 shadow-xs", collapsed && "justify-center p-2")}>
+          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-shell-gold/20 text-xs font-bold text-shell-gold-light border border-shell-gold/30">
             {user.name.slice(0, 2).toUpperCase()}
           </div>
           {!collapsed && (
@@ -164,7 +164,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       {/* ── Desktop Dark Sidebar ── */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 hidden border-r border-[#142845] bg-gradient-to-b from-[#071426] via-[#09182b] to-[#0b1c34] transition-[width] duration-200 lg:flex lg:flex-col",
+          "fixed inset-y-0 left-0 z-40 hidden border-r border-shell-border bg-gradient-to-b from-shell-navy via-[#09182b] to-shell-navy-surface transition-[width] duration-200 lg:flex lg:flex-col",
           collapsed ? "w-20" : "w-64"
         )}
       >
@@ -174,7 +174,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       {/* ── Mobile Sidebar Drawer ── */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs lg:hidden">
-          <aside className="flex h-full w-72 flex-col bg-gradient-to-b from-[#071426] via-[#09182b] to-[#0b1c34] border-r border-[#142845]">
+          <aside className="flex h-full w-72 flex-col bg-gradient-to-b from-shell-navy via-[#09182b] to-shell-navy-surface border-r border-shell-border">
             {sidebar}
           </aside>
         </div>
@@ -183,11 +183,11 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       {/* ── Main Layout Wrapper ── */}
       <div className={cn("transition-[padding] duration-200", collapsed ? "lg:pl-20" : "lg:pl-64")}>
         {/* ── Premium Corporate Dark Top Navbar ── */}
-        <header className="sticky top-0 z-30 flex h-[68px] items-center gap-3 border-b border-[#142845] bg-[#071426] px-4 shadow-[0_2px_10px_rgba(0,0,0,0.15)] md:px-6">
+        <header className="sticky top-0 z-30 flex h-[68px] items-center gap-3 border-b border-shell-border bg-shell-navy px-4 shadow-[0_2px_10px_rgba(0,0,0,0.15)] md:px-6">
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden text-slate-300 hover:bg-[#0e223d] hover:text-white"
+            className="lg:hidden text-slate-300 hover:bg-shell-navy-elevated hover:text-white"
             onClick={() => setMobileOpen(true)}
             aria-label="Open navigation"
           >
@@ -197,7 +197,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
           <Button
             variant="ghost"
             size="icon"
-            className="hidden lg:inline-flex text-slate-300 hover:bg-[#0e223d] hover:text-white"
+            className="hidden lg:inline-flex text-slate-300 hover:bg-shell-navy-elevated hover:text-white"
             onClick={() => setCollapsed(!collapsed)}
             aria-label="Collapse navigation"
           >
@@ -209,7 +209,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
             <Search className="absolute left-3 top-2.5 size-4 text-slate-400" />
             <input
               aria-label="Search"
-              className="h-10 w-full rounded-xl border border-[#1b365d] bg-[#0b1c34] pl-9 pr-3 text-xs text-white transition-colors placeholder:text-slate-400 hover:border-[#274878] focus:border-[#c5a059] focus:bg-[#0e223d] focus:outline-none focus:ring-2 focus:ring-[#c5a059]/20"
+              className="h-10 w-full rounded-xl border border-shell-border-subtle bg-shell-navy-surface pl-9 pr-3 text-xs text-white transition-colors placeholder:text-slate-400 hover:border-shell-border-hover focus:border-shell-gold focus:bg-shell-navy-elevated focus:outline-none focus:ring-2 focus:ring-shell-gold/20"
               placeholder={portal === "Admin" ? "Search members, loans, accounts…" : "Search loans, transactions…"}
             />
           </div>
@@ -221,11 +221,11 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                 aria-label="Branch"
                 value={selectedBranchId}
                 onChange={(event) => setSelectedBranchId(event.target.value)}
-                className="hidden h-10 max-w-52 rounded-xl border border-[#1b365d] bg-[#0b1c34] px-3 text-xs font-medium text-slate-200 transition-colors hover:border-[#274878] focus:border-[#c5a059] focus:outline-none sm:block"
+                className="hidden h-10 max-w-52 rounded-xl border border-shell-border-subtle bg-shell-navy-surface px-3 text-xs font-medium text-slate-200 transition-colors hover:border-shell-border-hover focus:border-shell-gold focus:outline-none sm:block"
               >
-                <option value="all" className="bg-[#0b1c34] text-white">All branches</option>
+                <option value="all" className="bg-shell-navy-surface text-white">All branches</option>
                 {branches.map((branch) => (
-                  <option key={branch.id} value={branch.id} className="bg-[#0b1c34] text-white">
+                  <option key={branch.id} value={branch.id} className="bg-shell-navy-surface text-white">
                     {branch.name} ({branch.code})
                   </option>
                 ))}
@@ -233,7 +233,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
             )}
 
             {portal === "Member" && (
-              <button className="hidden text-xs font-medium text-slate-300 hover:text-white sm:block px-2 py-1 rounded-lg hover:bg-[#0e223d]">
+              <button className="hidden text-xs font-medium text-slate-300 hover:text-white sm:block px-2 py-1 rounded-lg hover:bg-shell-navy-elevated">
                 EN <ChevronDown className="inline size-3 ml-0.5" />
               </button>
             )}
@@ -242,10 +242,10 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
               variant="ghost"
               size="icon"
               aria-label="Notifications"
-              className="relative rounded-xl text-slate-300 hover:bg-[#0e223d] hover:text-white"
+              className="relative rounded-xl text-slate-300 hover:bg-shell-navy-elevated hover:text-white"
             >
               <Bell className="size-5" />
-              <span className="absolute right-2 top-2 size-2 rounded-full bg-rose-500 ring-2 ring-[#071426]" />
+              <span className="absolute right-2 top-2 size-2 rounded-full bg-rose-500 ring-2 ring-shell-navy" />
             </Button>
 
             {/* Profile Dropdown */}
@@ -254,9 +254,9 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                 aria-label="User menu"
                 aria-expanded={userMenuOpen}
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 rounded-xl p-1.5 transition-colors hover:bg-[#0e223d]"
+                className="flex items-center gap-2 rounded-xl p-1.5 transition-colors hover:bg-shell-navy-elevated"
               >
-                <span className="grid size-8 place-items-center rounded-xl bg-[#c5a059]/20 text-xs font-bold text-[#e6ca85] ring-1 ring-[#c5a059]/40">
+                <span className="grid size-8 place-items-center rounded-xl bg-shell-gold/20 text-xs font-bold text-shell-gold-light ring-1 ring-shell-gold/40">
                   {user.name.slice(0, 2).toUpperCase()}
                 </span>
                 <span className="hidden text-left md:block">

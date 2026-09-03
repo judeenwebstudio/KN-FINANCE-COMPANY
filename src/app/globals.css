@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@theme {
+  --color-shell-navy: #071426;
+  --color-shell-navy-surface: #0b1c34;
+  --color-shell-navy-elevated: #0e223d;
+  --color-shell-navy-hover: #10243e;
+  --color-shell-navy-active: #153056;
+  --color-shell-border: #142845;
+  --color-shell-border-subtle: #1b365d;
+  --color-shell-border-hover: #274878;
+  --color-shell-text-primary: #f8fafc;
+  --color-shell-text-secondary: #94a3b8;
+  --color-shell-gold: #c5a059;
+  --color-shell-gold-light: #e6ca85;
+}
+
 :root {
   --background: #f7f8fc;
   --foreground: #172033;
@@ -17,19 +32,6 @@
   --loan-soft: #f5f3ff;
   --info: #0284c7;
   --info-soft: #f0f9ff;
-
-  /* KN Finance Corporate Dark Shell Tokens */
-  --shell-navy: #071426;
-  --shell-navy-surface: #0b1c34;
-  --shell-navy-elevated: #0e223d;
-  --shell-navy-hover: #10243e;
-  --shell-navy-active: #153056;
-  --shell-border: #142845;
-  --shell-border-subtle: #1b365d;
-  --shell-text-primary: #f8fafc;
-  --shell-text-secondary: #94a3b8;
-  --shell-gold: #c5a059;
-  --shell-gold-light: #e6ca85;
 }
 
 * {
@@ -41,7 +43,7 @@
 /* Custom dark scrollbar for sidebar shell */
 .dark-sidebar-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #1b365d transparent;
+  scrollbar-color: var(--color-shell-border-subtle) transparent;
 }
 .dark-sidebar-scroll::-webkit-scrollbar {
   width: 5px;
@@ -50,11 +52,11 @@
   background: transparent;
 }
 .dark-sidebar-scroll::-webkit-scrollbar-thumb {
-  background: #1b365d;
+  background: var(--color-shell-border-subtle);
   border-radius: 9999px;
 }
 .dark-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background: #274878;
+  background: var(--color-shell-border-hover);
 }
 
 html {
