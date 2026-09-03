@@ -1,6 +1,8 @@
 import { requirePermission, getUserEffectivePermissions } from "@/lib/auth/authorize";
 import { getCompanyProfile } from "@/lib/settings/company-profile";
 import { getAllBranchesWithCounts } from "@/lib/settings/branch-service";
+import { getEmailConfiguration, getEmailProviderStatus } from "@/lib/settings/email-service";
+import { getAllNotificationTemplates } from "@/lib/settings/notification-service";
 import { SettingsClient } from "./settings-client";
 
 export const dynamic = "force-dynamic";
@@ -13,9 +15,14 @@ async function loadSettingsData() {
     const canManageCompany = permissions.has("settings.company.manage");
     const canManageBranch = permissions.has("settings.branch.manage");
     const canManageFinancial = permissions.has("settings.financial.manage");
+    const canManageNotifications = permissions.has("settings.notifications.manage");
+    const canManageIntegrations = permissions.has("settings.integrations.manage");
 
     const rawProfile = await getCompanyProfile();
     const branches = await getAllBranchesWithCounts();
+    const rawEmailConfig = await getEmailConfiguration();
+    const providerStatus = getEmailProviderStatus();
+    const rawTemplates = await getAllNotificationTemplates();
 
     const safeProfile = {
       id: rawProfile.id,
@@ -59,12 +66,38 @@ async function loadSettingsData() {
       loanCount: b._count?.loans ?? 0,
     }));
 
+    const safeEmailConfig = {
+      id: rawEmailConfig.id,
+      enabled: rawEmailConfig.enabled,
+      provider: rawEmailConfig.provider,
+      senderName: rawEmailConfig.senderName,
+      senderEmail: rawEmailConfig.senderEmail,
+      replyToEmail: rawEmailConfig.replyToEmail,
+    };
+
+    const safeTemplates = (rawTemplates || []).map((t) => ({
+      id: t.id,
+      code: t.code,
+      name: t.name,
+      description: t.description,
+      channel: t.channel,
+      subject: t.subject,
+      bodyTemplate: t.bodyTemplate,
+      variables: Array.isArray(t.variables) ? (t.variables as string[]) : [],
+      isEnabled: t.isEnabled,
+    }));
+
     return {
       safeProfile,
       safeBranches,
+      safeEmailConfig,
+      providerStatus,
+      safeTemplates,
       canManageCompany,
       canManageBranch,
       canManageFinancial,
+      canManageNotifications,
+      canManageIntegrations,
     };
   } catch (error: unknown) {
     const err = error as Error;
@@ -84,9 +117,14 @@ export default async function SettingsPage() {
     <SettingsClient
       profile={data.safeProfile}
       branches={data.safeBranches}
+      emailConfig={data.safeEmailConfig}
+      providerStatus={data.providerStatus}
+      templates={data.safeTemplates}
       canManageCompany={data.canManageCompany}
       canManageBranch={data.canManageBranch}
       canManageFinancial={data.canManageFinancial}
+      canManageNotifications={data.canManageNotifications}
+      canManageIntegrations={data.canManageIntegrations}
     />
   );
 }

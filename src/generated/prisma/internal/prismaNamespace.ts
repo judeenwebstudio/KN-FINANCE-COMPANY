@@ -431,7 +431,9 @@ export const ModelName = {
   UserRoleAssignment: 'UserRoleAssignment',
   UserBranchAccess: 'UserBranchAccess',
   AuditLog: 'AuditLog',
-  CompanyProfile: 'CompanyProfile'
+  CompanyProfile: 'CompanyProfile',
+  EmailConfiguration: 'EmailConfiguration',
+  NotificationTemplate: 'NotificationTemplate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -447,7 +449,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "branch" | "memberProfile" | "accountTypePolicy" | "account" | "loanPenaltyRule" | "loanProduct" | "loan" | "loanRepaymentSchedule" | "loanPenaltyAssessment" | "loanRepayment" | "loanRepaymentAllocation" | "collectionNote" | "transactionCategory" | "transaction" | "depositRequest" | "withdrawalRequest" | "expenseCategory" | "treasuryAccount" | "treasuryTransaction" | "bankAccount" | "bankTransaction" | "expense" | "transfer" | "bankStatementImport" | "bankStatementLine" | "bankStatementImportError" | "bankReconciliationMatch" | "permission" | "roleProfile" | "rolePermission" | "userRoleAssignment" | "userBranchAccess" | "auditLog" | "companyProfile"
+    modelProps: "user" | "branch" | "memberProfile" | "accountTypePolicy" | "account" | "loanPenaltyRule" | "loanProduct" | "loan" | "loanRepaymentSchedule" | "loanPenaltyAssessment" | "loanRepayment" | "loanRepaymentAllocation" | "collectionNote" | "transactionCategory" | "transaction" | "depositRequest" | "withdrawalRequest" | "expenseCategory" | "treasuryAccount" | "treasuryTransaction" | "bankAccount" | "bankTransaction" | "expense" | "transfer" | "bankStatementImport" | "bankStatementLine" | "bankStatementImportError" | "bankReconciliationMatch" | "permission" | "roleProfile" | "rolePermission" | "userRoleAssignment" | "userBranchAccess" | "auditLog" | "companyProfile" | "emailConfiguration" | "notificationTemplate"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3041,6 +3043,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EmailConfiguration: {
+      payload: Prisma.$EmailConfigurationPayload<ExtArgs>
+      fields: Prisma.EmailConfigurationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmailConfigurationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmailConfigurationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>
+        }
+        findFirst: {
+          args: Prisma.EmailConfigurationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmailConfigurationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>
+        }
+        findMany: {
+          args: Prisma.EmailConfigurationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>[]
+        }
+        create: {
+          args: Prisma.EmailConfigurationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>
+        }
+        createMany: {
+          args: Prisma.EmailConfigurationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EmailConfigurationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>[]
+        }
+        delete: {
+          args: Prisma.EmailConfigurationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>
+        }
+        update: {
+          args: Prisma.EmailConfigurationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmailConfigurationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmailConfigurationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EmailConfigurationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>[]
+        }
+        upsert: {
+          args: Prisma.EmailConfigurationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailConfigurationPayload>
+        }
+        aggregate: {
+          args: Prisma.EmailConfigurationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmailConfiguration>
+        }
+        groupBy: {
+          args: Prisma.EmailConfigurationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailConfigurationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmailConfigurationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailConfigurationCountAggregateOutputType> | number
+        }
+      }
+    }
+    NotificationTemplate: {
+      payload: Prisma.$NotificationTemplatePayload<ExtArgs>
+      fields: Prisma.NotificationTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.NotificationTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.NotificationTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.NotificationTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>
+        }
+        update: {
+          args: Prisma.NotificationTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationTemplate>
+        }
+        groupBy: {
+          args: Prisma.NotificationTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3792,12 +3942,52 @@ export const CompanyProfileScalarFieldEnum = {
 export type CompanyProfileScalarFieldEnum = (typeof CompanyProfileScalarFieldEnum)[keyof typeof CompanyProfileScalarFieldEnum]
 
 
+export const EmailConfigurationScalarFieldEnum = {
+  id: 'id',
+  enabled: 'enabled',
+  provider: 'provider',
+  senderName: 'senderName',
+  senderEmail: 'senderEmail',
+  replyToEmail: 'replyToEmail',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmailConfigurationScalarFieldEnum = (typeof EmailConfigurationScalarFieldEnum)[keyof typeof EmailConfigurationScalarFieldEnum]
+
+
+export const NotificationTemplateScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  channel: 'channel',
+  subject: 'subject',
+  bodyTemplate: 'bodyTemplate',
+  variables: 'variables',
+  isEnabled: 'isEnabled',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationTemplateScalarFieldEnum = (typeof NotificationTemplateScalarFieldEnum)[keyof typeof NotificationTemplateScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -3814,6 +4004,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -4376,6 +4575,20 @@ export type ListEnumRoleProfileStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4574,6 +4787,8 @@ export type GlobalOmitConfig = {
   userBranchAccess?: Prisma.UserBranchAccessOmit
   auditLog?: Prisma.AuditLogOmit
   companyProfile?: Prisma.CompanyProfileOmit
+  emailConfiguration?: Prisma.EmailConfigurationOmit
+  notificationTemplate?: Prisma.NotificationTemplateOmit
 }
 
 /* Types for Logging */

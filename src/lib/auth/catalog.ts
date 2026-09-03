@@ -77,6 +77,8 @@ export const PERMISSION_CATALOG: PermissionDefinition[] = [
   { code: "settings.company.manage", name: "Manage Company Profile", category: "Settings", description: "Update company profile, localization, and branding settings." },
   { code: "settings.branch.manage", name: "Manage Branches", category: "Settings", description: "Create and update operational branches." },
   { code: "settings.financial.manage", name: "Manage Financial Defaults", category: "Settings", description: "View and manage financial accounting defaults." },
+  { code: "settings.notifications.manage", name: "Manage Notifications", category: "Settings", description: "Configure notification templates and placeholder templates." },
+  { code: "settings.integrations.manage", name: "Manage Integrations", category: "Settings", description: "Manage email delivery integrations and send test emails." },
 
   // Audit
   { code: "audit.view", name: "View Audit Log", category: "Audit", description: "Access administrative audit log." },

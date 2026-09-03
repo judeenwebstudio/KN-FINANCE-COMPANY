@@ -85,7 +85,9 @@ export const ModelName = {
   UserRoleAssignment: 'UserRoleAssignment',
   UserBranchAccess: 'UserBranchAccess',
   AuditLog: 'AuditLog',
-  CompanyProfile: 'CompanyProfile'
+  CompanyProfile: 'CompanyProfile',
+  EmailConfiguration: 'EmailConfiguration',
+  NotificationTemplate: 'NotificationTemplate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -816,12 +818,52 @@ export const CompanyProfileScalarFieldEnum = {
 export type CompanyProfileScalarFieldEnum = (typeof CompanyProfileScalarFieldEnum)[keyof typeof CompanyProfileScalarFieldEnum]
 
 
+export const EmailConfigurationScalarFieldEnum = {
+  id: 'id',
+  enabled: 'enabled',
+  provider: 'provider',
+  senderName: 'senderName',
+  senderEmail: 'senderEmail',
+  replyToEmail: 'replyToEmail',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmailConfigurationScalarFieldEnum = (typeof EmailConfigurationScalarFieldEnum)[keyof typeof EmailConfigurationScalarFieldEnum]
+
+
+export const NotificationTemplateScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  channel: 'channel',
+  subject: 'subject',
+  bodyTemplate: 'bodyTemplate',
+  variables: 'variables',
+  isEnabled: 'isEnabled',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationTemplateScalarFieldEnum = (typeof NotificationTemplateScalarFieldEnum)[keyof typeof NotificationTemplateScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -838,4 +880,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

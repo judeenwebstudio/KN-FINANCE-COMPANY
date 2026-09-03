@@ -24,6 +24,8 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       const scope = await getUserAuthorizedBranchScope(testUser.id);
       assert.equal(scope.global, false, "User with NO relational role assignments must NOT receive global branch access");
     } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
+      await prisma.userRoleAssignment.deleteMany({ where: { userId: testUser.id } });
       await prisma.user.delete({ where: { id: testUser.id } });
     }
   });
@@ -54,6 +56,7 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       assert.ok(perms.has("settings.branch.manage"), "Relational super admin must possess settings.branch.manage");
       assert.ok(perms.has("settings.financial.manage"), "Relational super admin must possess settings.financial.manage");
     } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
       await prisma.userRoleAssignment.deleteMany({ where: { userId: testUser.id } });
       await prisma.user.delete({ where: { id: testUser.id } });
     }
@@ -82,6 +85,7 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       assert.equal(scope.global, true, "Relational super admin must have global branch scope");
       assert.ok(scope.branchIds.length > 0, "Branch IDs list should be populated");
     } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
       await prisma.userRoleAssignment.deleteMany({ where: { userId: testUser.id } });
       await prisma.user.delete({ where: { id: testUser.id } });
     }
@@ -110,6 +114,7 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       assert.ok(perms.has("settings.branch.manage"), "Admin must possess settings.branch.manage");
       assert.equal(perms.has("settings.financial.manage"), false, "Admin MUST NOT possess settings.financial.manage");
     } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
       await prisma.userRoleAssignment.deleteMany({ where: { userId: testUser.id } });
       await prisma.user.delete({ where: { id: testUser.id } });
     }
@@ -130,6 +135,7 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       const perms = await getUserEffectivePermissions(testUser.id);
       assert.equal(perms.size, 0, "Unassigned user must receive 0 permissions");
     } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
       await prisma.user.delete({ where: { id: testUser.id } });
     }
   });

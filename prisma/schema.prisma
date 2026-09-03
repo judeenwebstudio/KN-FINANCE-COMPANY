@@ -187,6 +187,8 @@ model User {
   matchedBankReconciliations  BankReconciliationMatch[] @relation("BankMatchMatchedBy")
   unmatchedBankReconciliations BankReconciliationMatch[] @relation("BankMatchUnmatchedBy")
   updatedCompanyProfiles     CompanyProfile[]          @relation("CompanyProfileUpdatedBy")
+  updatedEmailConfigs        EmailConfiguration[]      @relation("EmailConfigUpdatedBy")
+  updatedNotificationTemplates NotificationTemplate[]  @relation("NotificationTemplateUpdatedBy")
 
   @@index([branchId])
   @@index([role, status])
@@ -1185,5 +1187,38 @@ model CompanyProfile {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 }
+
+model EmailConfiguration {
+  id           String   @id @default("email-config-main")
+  enabled      Boolean  @default(false)
+  provider     String   @default("NONE")
+  senderName   String   @default("KN Finance Company")
+  senderEmail  String?
+  replyToEmail String?
+  updatedById  String?
+  updatedBy    User?    @relation("EmailConfigUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model NotificationTemplate {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  name         String
+  description  String
+  channel      String   @default("EMAIL")
+  subject      String
+  bodyTemplate String   @db.Text
+  variables    Json
+  isEnabled    Boolean  @default(true)
+  updatedById  String?
+  updatedBy    User?    @relation("NotificationTemplateUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([code])
+  @@index([channel])
+}
+
 
 

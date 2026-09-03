@@ -40,7 +40,7 @@ export async function bootstrapRBAC(): Promise<{
       description: "Broad operational administration across branches and domains.",
       isSystem: true,
       isSuperAdminRole: false,
-      permissionCodes: Array.from(permissionMap.keys()).filter((c) => !c.startsWith("settings.update") && !c.startsWith("settings.company.manage") && !c.startsWith("settings.financial.manage")),
+      permissionCodes: Array.from(permissionMap.keys()).filter((c) => !c.startsWith("settings.update") && !c.startsWith("settings.company.manage") && !c.startsWith("settings.financial.manage") && c !== "settings.integrations.manage"),
     },
     {
       name: "Branch Manager",

@@ -192,3 +192,13 @@ export type AuditLog = Prisma.AuditLogModel
  * 
  */
 export type CompanyProfile = Prisma.CompanyProfileModel
+/**
+ * Model EmailConfiguration
+ * 
+ */
+export type EmailConfiguration = Prisma.EmailConfigurationModel
+/**
+ * Model NotificationTemplate
+ * 
+ */
+export type NotificationTemplate = Prisma.NotificationTemplateModel
