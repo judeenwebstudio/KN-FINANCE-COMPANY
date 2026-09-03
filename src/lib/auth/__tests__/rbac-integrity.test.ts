@@ -1,7 +1,7 @@
 import test, { describe } from "node:test";
 import assert from "node:assert/strict";
 import { prisma } from "../../prisma";
-import { getUserEffectivePermissions, getUserAuthorizedBranchScope, requirePermission } from "../authorize";
+import { getUserEffectivePermissions, getUserAuthorizedBranchScope } from "../authorize";
 
 describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
   test("A. User with User.role = SUPER_ADMIN but NO relational assignment MUST NOT receive privileges", async () => {
