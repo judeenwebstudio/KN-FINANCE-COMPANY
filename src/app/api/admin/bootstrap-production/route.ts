@@ -25,11 +25,29 @@ export async function GET() {
     }
 
     if (!email || !email.includes("@")) {
-      return NextResponse.json({ error: "INITIAL_SUPERADMIN_EMAIL is missing or invalid." }, { status: 500 });
+      return NextResponse.json({
+        error: "INITIAL_SUPERADMIN_EMAIL is missing or invalid.",
+        diagnostics: {
+          databaseUrlPresent: Boolean(rawUrl),
+          databaseHost: host,
+          emailPresent: Boolean(email),
+          passwordPresent: Boolean(password),
+          passwordLength: (password || "").length,
+        }
+      }, { status: 500 });
     }
 
     if (!password || password.length < 12) {
-      return NextResponse.json({ error: "INITIAL_SUPERADMIN_PASSWORD is missing or shorter than 12 characters." }, { status: 500 });
+      return NextResponse.json({
+        error: "INITIAL_SUPERADMIN_PASSWORD is missing or shorter than 12 characters.",
+        diagnostics: {
+          databaseUrlPresent: Boolean(rawUrl),
+          databaseHost: host,
+          emailPresent: Boolean(email),
+          passwordPresent: Boolean(password),
+          passwordLength: (password || "").length,
+        }
+      }, { status: 500 });
     }
 
     const sanitizedHost = host.includes("neon.tech") ? `Neon Hosted PostgreSQL (${host})` : `Hosted PostgreSQL (${host.split(".").slice(-2).join(".")})`;
