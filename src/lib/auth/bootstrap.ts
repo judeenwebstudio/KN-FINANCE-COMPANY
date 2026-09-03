@@ -11,12 +11,16 @@ export async function bootstrapRBAC(): Promise<{
 
   // 1. Seed Permission Catalog
   const permissionMap = new Map<string, string>(); // code -> id
-  for (const def of PERMISSION_CATALOG) {
-    const perm = await prisma.permission.upsert({
-      where: { code: def.code },
-      update: { name: def.name, category: def.category, description: def.description, isSystem: true },
-      create: { code: def.code, name: def.name, category: def.category, description: def.description, isSystem: true },
-    });
+  const permissions = await Promise.all(
+    PERMISSION_CATALOG.map((def) =>
+      prisma.permission.upsert({
+        where: { code: def.code },
+        update: { name: def.name, category: def.category, description: def.description, isSystem: true },
+        create: { code: def.code, name: def.name, category: def.category, description: def.description, isSystem: true },
+      }),
+    ),
+  );
+  for (const perm of permissions) {
     permissionMap.set(perm.code, perm.id);
   }
 
@@ -159,17 +163,14 @@ export async function bootstrapRBAC(): Promise<{
       },
     });
 
-    // Map permissions to role
-    for (const code of config.permissionCodes) {
-      const permId = permissionMap.get(code);
-      if (permId) {
-        await prisma.rolePermission.upsert({
-          where: { roleId_permissionId: { roleId: role.id, permissionId: permId } },
-          update: {},
-          create: { roleId: role.id, permissionId: permId },
-        });
-      }
-    }
+    // Map permissions to role in one idempotent batch.
+    await prisma.rolePermission.createMany({
+      data: config.permissionCodes.flatMap((code) => {
+        const permissionId = permissionMap.get(code);
+        return permissionId ? [{ roleId: role.id, permissionId }] : [];
+      }),
+      skipDuplicates: true,
+    });
   }
 
   // 3. Migrate Existing Users
