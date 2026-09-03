@@ -266,6 +266,7 @@ export type UserWhereInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineListRelationFilter
   matchedBankReconciliations?: Prisma.BankReconciliationMatchListRelationFilter
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchListRelationFilter
+  updatedCompanyProfiles?: Prisma.CompanyProfileListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -323,6 +324,7 @@ export type UserOrderByWithRelationInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineOrderByRelationAggregateInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchOrderByRelationAggregateInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchOrderByRelationAggregateInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -383,6 +385,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   ignoredBankStatementLines?: Prisma.BankStatementLineListRelationFilter
   matchedBankReconciliations?: Prisma.BankReconciliationMatchListRelationFilter
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchListRelationFilter
+  updatedCompanyProfiles?: Prisma.CompanyProfileListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -471,6 +474,7 @@ export type UserCreateInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -527,6 +531,7 @@ export type UserUncheckedCreateInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUpdateInput = {
@@ -583,6 +588,7 @@ export type UserUpdateInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -639,6 +645,7 @@ export type UserUncheckedUpdateInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1484,6 +1491,22 @@ export type UserUpdateOneRequiredWithoutActorAuditLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActorAuditLogsInput, Prisma.UserUpdateWithoutActorAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutActorAuditLogsInput>
 }
 
+export type UserCreateNestedOneWithoutUpdatedCompanyProfilesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCompanyProfilesInput, Prisma.UserUncheckedCreateWithoutUpdatedCompanyProfilesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedCompanyProfilesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutUpdatedCompanyProfilesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCompanyProfilesInput, Prisma.UserUncheckedCreateWithoutUpdatedCompanyProfilesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedCompanyProfilesInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedCompanyProfilesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedCompanyProfilesInput, Prisma.UserUpdateWithoutUpdatedCompanyProfilesInput>, Prisma.UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput>
+}
+
 export type UserCreateWithoutBranchInput = {
   id?: string
   name: string
@@ -1537,6 +1560,7 @@ export type UserCreateWithoutBranchInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutBranchInput = {
@@ -1592,6 +1616,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutBranchInput = {
@@ -1689,6 +1714,7 @@ export type UserCreateWithoutMemberProfileInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutMemberProfileInput = {
@@ -1744,6 +1770,7 @@ export type UserUncheckedCreateWithoutMemberProfileInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutMemberProfileInput = {
@@ -1815,6 +1842,7 @@ export type UserUpdateWithoutMemberProfileInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMemberProfileInput = {
@@ -1870,6 +1898,7 @@ export type UserUncheckedUpdateWithoutMemberProfileInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountTypesInput = {
@@ -1925,6 +1954,7 @@ export type UserCreateWithoutCreatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountTypesInput = {
@@ -1980,6 +2010,7 @@ export type UserUncheckedCreateWithoutCreatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountTypesInput = {
@@ -2040,6 +2071,7 @@ export type UserCreateWithoutUpdatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountTypesInput = {
@@ -2095,6 +2127,7 @@ export type UserUncheckedCreateWithoutUpdatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountTypesInput = {
@@ -2166,6 +2199,7 @@ export type UserUpdateWithoutCreatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountTypesInput = {
@@ -2221,6 +2255,7 @@ export type UserUncheckedUpdateWithoutCreatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountTypesInput = {
@@ -2287,6 +2322,7 @@ export type UserUpdateWithoutUpdatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountTypesInput = {
@@ -2342,6 +2378,7 @@ export type UserUncheckedUpdateWithoutUpdatedAccountTypesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPenaltyRulesInput = {
@@ -2397,6 +2434,7 @@ export type UserCreateWithoutCreatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPenaltyRulesInput = {
@@ -2452,6 +2490,7 @@ export type UserUncheckedCreateWithoutCreatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPenaltyRulesInput = {
@@ -2512,6 +2551,7 @@ export type UserCreateWithoutUpdatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPenaltyRulesInput = {
@@ -2567,6 +2607,7 @@ export type UserUncheckedCreateWithoutUpdatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPenaltyRulesInput = {
@@ -2638,6 +2679,7 @@ export type UserUpdateWithoutCreatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPenaltyRulesInput = {
@@ -2693,6 +2735,7 @@ export type UserUncheckedUpdateWithoutCreatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPenaltyRulesInput = {
@@ -2759,6 +2802,7 @@ export type UserUpdateWithoutUpdatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPenaltyRulesInput = {
@@ -2814,6 +2858,7 @@ export type UserUncheckedUpdateWithoutUpdatedPenaltyRulesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedLoanProductsInput = {
@@ -2869,6 +2914,7 @@ export type UserCreateWithoutCreatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLoanProductsInput = {
@@ -2924,6 +2970,7 @@ export type UserUncheckedCreateWithoutCreatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLoanProductsInput = {
@@ -2984,6 +3031,7 @@ export type UserCreateWithoutUpdatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLoanProductsInput = {
@@ -3039,6 +3087,7 @@ export type UserUncheckedCreateWithoutUpdatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLoanProductsInput = {
@@ -3110,6 +3159,7 @@ export type UserUpdateWithoutCreatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLoanProductsInput = {
@@ -3165,6 +3215,7 @@ export type UserUncheckedUpdateWithoutCreatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLoanProductsInput = {
@@ -3231,6 +3282,7 @@ export type UserUpdateWithoutUpdatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLoanProductsInput = {
@@ -3286,6 +3338,7 @@ export type UserUncheckedUpdateWithoutUpdatedLoanProductsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutApprovedLoansInput = {
@@ -3341,6 +3394,7 @@ export type UserCreateWithoutApprovedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutApprovedLoansInput = {
@@ -3396,6 +3450,7 @@ export type UserUncheckedCreateWithoutApprovedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutApprovedLoansInput = {
@@ -3456,6 +3511,7 @@ export type UserCreateWithoutDisbursedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutDisbursedLoansInput = {
@@ -3511,6 +3567,7 @@ export type UserUncheckedCreateWithoutDisbursedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutDisbursedLoansInput = {
@@ -3571,6 +3628,7 @@ export type UserCreateWithoutCreatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLoansInput = {
@@ -3626,6 +3684,7 @@ export type UserUncheckedCreateWithoutCreatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLoansInput = {
@@ -3686,6 +3745,7 @@ export type UserCreateWithoutUpdatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLoansInput = {
@@ -3741,6 +3801,7 @@ export type UserUncheckedCreateWithoutUpdatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLoansInput = {
@@ -3812,6 +3873,7 @@ export type UserUpdateWithoutApprovedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedLoansInput = {
@@ -3867,6 +3929,7 @@ export type UserUncheckedUpdateWithoutApprovedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutDisbursedLoansInput = {
@@ -3933,6 +3996,7 @@ export type UserUpdateWithoutDisbursedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDisbursedLoansInput = {
@@ -3988,6 +4052,7 @@ export type UserUncheckedUpdateWithoutDisbursedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedLoansInput = {
@@ -4054,6 +4119,7 @@ export type UserUpdateWithoutCreatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLoansInput = {
@@ -4109,6 +4175,7 @@ export type UserUncheckedUpdateWithoutCreatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLoansInput = {
@@ -4175,6 +4242,7 @@ export type UserUpdateWithoutUpdatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLoansInput = {
@@ -4230,6 +4298,7 @@ export type UserUncheckedUpdateWithoutUpdatedLoansInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedRepaymentsInput = {
@@ -4285,6 +4354,7 @@ export type UserCreateWithoutCreatedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedRepaymentsInput = {
@@ -4340,6 +4410,7 @@ export type UserUncheckedCreateWithoutCreatedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedRepaymentsInput = {
@@ -4400,6 +4471,7 @@ export type UserCreateWithoutReversedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutReversedRepaymentsInput = {
@@ -4455,6 +4527,7 @@ export type UserUncheckedCreateWithoutReversedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutReversedRepaymentsInput = {
@@ -4526,6 +4599,7 @@ export type UserUpdateWithoutCreatedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedRepaymentsInput = {
@@ -4581,6 +4655,7 @@ export type UserUncheckedUpdateWithoutCreatedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutReversedRepaymentsInput = {
@@ -4647,6 +4722,7 @@ export type UserUpdateWithoutReversedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedRepaymentsInput = {
@@ -4702,6 +4778,7 @@ export type UserUncheckedUpdateWithoutReversedRepaymentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCollectionNotesInput = {
@@ -4757,6 +4834,7 @@ export type UserCreateWithoutCollectionNotesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCollectionNotesInput = {
@@ -4812,6 +4890,7 @@ export type UserUncheckedCreateWithoutCollectionNotesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCollectionNotesInput = {
@@ -4883,6 +4962,7 @@ export type UserUpdateWithoutCollectionNotesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCollectionNotesInput = {
@@ -4938,6 +5018,7 @@ export type UserUncheckedUpdateWithoutCollectionNotesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionCategoriesInput = {
@@ -4993,6 +5074,7 @@ export type UserCreateWithoutCreatedTransactionCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionCategoriesInput = {
@@ -5048,6 +5130,7 @@ export type UserUncheckedCreateWithoutCreatedTransactionCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionCategoriesInput = {
@@ -5119,6 +5202,7 @@ export type UserUpdateWithoutCreatedTransactionCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionCategoriesInput = {
@@ -5174,6 +5258,7 @@ export type UserUncheckedUpdateWithoutCreatedTransactionCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionsInput = {
@@ -5229,6 +5314,7 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
@@ -5284,6 +5370,7 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
@@ -5344,6 +5431,7 @@ export type UserCreateWithoutReversedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutReversedTransactionsInput = {
@@ -5399,6 +5487,7 @@ export type UserUncheckedCreateWithoutReversedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutReversedTransactionsInput = {
@@ -5470,6 +5559,7 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
@@ -5525,6 +5615,7 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutReversedTransactionsInput = {
@@ -5591,6 +5682,7 @@ export type UserUpdateWithoutReversedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedTransactionsInput = {
@@ -5646,6 +5738,7 @@ export type UserUncheckedUpdateWithoutReversedTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutApprovedDepositRequestsInput = {
@@ -5701,6 +5794,7 @@ export type UserCreateWithoutApprovedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutApprovedDepositRequestsInput = {
@@ -5756,6 +5850,7 @@ export type UserUncheckedCreateWithoutApprovedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutApprovedDepositRequestsInput = {
@@ -5816,6 +5911,7 @@ export type UserCreateWithoutRejectedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutRejectedDepositRequestsInput = {
@@ -5871,6 +5967,7 @@ export type UserUncheckedCreateWithoutRejectedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutRejectedDepositRequestsInput = {
@@ -5931,6 +6028,7 @@ export type UserCreateWithoutCreatedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedDepositRequestsInput = {
@@ -5986,6 +6084,7 @@ export type UserUncheckedCreateWithoutCreatedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedDepositRequestsInput = {
@@ -6057,6 +6156,7 @@ export type UserUpdateWithoutApprovedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedDepositRequestsInput = {
@@ -6112,6 +6212,7 @@ export type UserUncheckedUpdateWithoutApprovedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutRejectedDepositRequestsInput = {
@@ -6178,6 +6279,7 @@ export type UserUpdateWithoutRejectedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedDepositRequestsInput = {
@@ -6233,6 +6335,7 @@ export type UserUncheckedUpdateWithoutRejectedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedDepositRequestsInput = {
@@ -6299,6 +6402,7 @@ export type UserUpdateWithoutCreatedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedDepositRequestsInput = {
@@ -6354,6 +6458,7 @@ export type UserUncheckedUpdateWithoutCreatedDepositRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutApprovedWithdrawalRequestsInput = {
@@ -6409,6 +6514,7 @@ export type UserCreateWithoutApprovedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutApprovedWithdrawalRequestsInput = {
@@ -6464,6 +6570,7 @@ export type UserUncheckedCreateWithoutApprovedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutApprovedWithdrawalRequestsInput = {
@@ -6524,6 +6631,7 @@ export type UserCreateWithoutRejectedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutRejectedWithdrawalRequestsInput = {
@@ -6579,6 +6687,7 @@ export type UserUncheckedCreateWithoutRejectedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutRejectedWithdrawalRequestsInput = {
@@ -6639,6 +6748,7 @@ export type UserCreateWithoutCreatedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedWithdrawalRequestsInput = {
@@ -6694,6 +6804,7 @@ export type UserUncheckedCreateWithoutCreatedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedWithdrawalRequestsInput = {
@@ -6765,6 +6876,7 @@ export type UserUpdateWithoutApprovedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedWithdrawalRequestsInput = {
@@ -6820,6 +6932,7 @@ export type UserUncheckedUpdateWithoutApprovedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutRejectedWithdrawalRequestsInput = {
@@ -6886,6 +6999,7 @@ export type UserUpdateWithoutRejectedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedWithdrawalRequestsInput = {
@@ -6941,6 +7055,7 @@ export type UserUncheckedUpdateWithoutRejectedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedWithdrawalRequestsInput = {
@@ -7007,6 +7122,7 @@ export type UserUpdateWithoutCreatedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedWithdrawalRequestsInput = {
@@ -7062,6 +7178,7 @@ export type UserUncheckedUpdateWithoutCreatedWithdrawalRequestsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedExpenseCategoriesInput = {
@@ -7117,6 +7234,7 @@ export type UserCreateWithoutCreatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExpenseCategoriesInput = {
@@ -7172,6 +7290,7 @@ export type UserUncheckedCreateWithoutCreatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExpenseCategoriesInput = {
@@ -7232,6 +7351,7 @@ export type UserCreateWithoutUpdatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedExpenseCategoriesInput = {
@@ -7287,6 +7407,7 @@ export type UserUncheckedCreateWithoutUpdatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedExpenseCategoriesInput = {
@@ -7358,6 +7479,7 @@ export type UserUpdateWithoutCreatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExpenseCategoriesInput = {
@@ -7413,6 +7535,7 @@ export type UserUncheckedUpdateWithoutCreatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedExpenseCategoriesInput = {
@@ -7479,6 +7602,7 @@ export type UserUpdateWithoutUpdatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedExpenseCategoriesInput = {
@@ -7534,6 +7658,7 @@ export type UserUncheckedUpdateWithoutUpdatedExpenseCategoriesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTreasuryAccountsInput = {
@@ -7589,6 +7714,7 @@ export type UserCreateWithoutCreatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTreasuryAccountsInput = {
@@ -7644,6 +7770,7 @@ export type UserUncheckedCreateWithoutCreatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTreasuryAccountsInput = {
@@ -7704,6 +7831,7 @@ export type UserCreateWithoutUpdatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTreasuryAccountsInput = {
@@ -7759,6 +7887,7 @@ export type UserUncheckedCreateWithoutUpdatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTreasuryAccountsInput = {
@@ -7830,6 +7959,7 @@ export type UserUpdateWithoutCreatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTreasuryAccountsInput = {
@@ -7885,6 +8015,7 @@ export type UserUncheckedUpdateWithoutCreatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTreasuryAccountsInput = {
@@ -7951,6 +8082,7 @@ export type UserUpdateWithoutUpdatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTreasuryAccountsInput = {
@@ -8006,6 +8138,7 @@ export type UserUncheckedUpdateWithoutUpdatedTreasuryAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTreasuryTransactionsInput = {
@@ -8061,6 +8194,7 @@ export type UserCreateWithoutCreatedTreasuryTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTreasuryTransactionsInput = {
@@ -8116,6 +8250,7 @@ export type UserUncheckedCreateWithoutCreatedTreasuryTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTreasuryTransactionsInput = {
@@ -8187,6 +8322,7 @@ export type UserUpdateWithoutCreatedTreasuryTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTreasuryTransactionsInput = {
@@ -8242,6 +8378,7 @@ export type UserUncheckedUpdateWithoutCreatedTreasuryTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedBankAccountsInput = {
@@ -8297,6 +8434,7 @@ export type UserCreateWithoutCreatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankAccountsInput = {
@@ -8352,6 +8490,7 @@ export type UserUncheckedCreateWithoutCreatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankAccountsInput = {
@@ -8412,6 +8551,7 @@ export type UserCreateWithoutUpdatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedBankAccountsInput = {
@@ -8467,6 +8607,7 @@ export type UserUncheckedCreateWithoutUpdatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedBankAccountsInput = {
@@ -8538,6 +8679,7 @@ export type UserUpdateWithoutCreatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankAccountsInput = {
@@ -8593,6 +8735,7 @@ export type UserUncheckedUpdateWithoutCreatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedBankAccountsInput = {
@@ -8659,6 +8802,7 @@ export type UserUpdateWithoutUpdatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedBankAccountsInput = {
@@ -8714,6 +8858,7 @@ export type UserUncheckedUpdateWithoutUpdatedBankAccountsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutReconciledBankTransactionsInput = {
@@ -8769,6 +8914,7 @@ export type UserCreateWithoutReconciledBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutReconciledBankTransactionsInput = {
@@ -8824,6 +8970,7 @@ export type UserUncheckedCreateWithoutReconciledBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutReconciledBankTransactionsInput = {
@@ -8884,6 +9031,7 @@ export type UserCreateWithoutCreatedBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankTransactionsInput = {
@@ -8939,6 +9087,7 @@ export type UserUncheckedCreateWithoutCreatedBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankTransactionsInput = {
@@ -9010,6 +9159,7 @@ export type UserUpdateWithoutReconciledBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReconciledBankTransactionsInput = {
@@ -9065,6 +9215,7 @@ export type UserUncheckedUpdateWithoutReconciledBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedBankTransactionsInput = {
@@ -9131,6 +9282,7 @@ export type UserUpdateWithoutCreatedBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankTransactionsInput = {
@@ -9186,6 +9338,7 @@ export type UserUncheckedUpdateWithoutCreatedBankTransactionsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedExpensesInput = {
@@ -9241,6 +9394,7 @@ export type UserCreateWithoutCreatedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExpensesInput = {
@@ -9296,6 +9450,7 @@ export type UserUncheckedCreateWithoutCreatedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExpensesInput = {
@@ -9356,6 +9511,7 @@ export type UserCreateWithoutReversedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutReversedExpensesInput = {
@@ -9411,6 +9567,7 @@ export type UserUncheckedCreateWithoutReversedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutReversedExpensesInput = {
@@ -9482,6 +9639,7 @@ export type UserUpdateWithoutCreatedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExpensesInput = {
@@ -9537,6 +9695,7 @@ export type UserUncheckedUpdateWithoutCreatedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutReversedExpensesInput = {
@@ -9603,6 +9762,7 @@ export type UserUpdateWithoutReversedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedExpensesInput = {
@@ -9658,6 +9818,7 @@ export type UserUncheckedUpdateWithoutReversedExpensesInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTransfersInput = {
@@ -9713,6 +9874,7 @@ export type UserCreateWithoutCreatedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransfersInput = {
@@ -9768,6 +9930,7 @@ export type UserUncheckedCreateWithoutCreatedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransfersInput = {
@@ -9828,6 +9991,7 @@ export type UserCreateWithoutReversedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutReversedTransfersInput = {
@@ -9883,6 +10047,7 @@ export type UserUncheckedCreateWithoutReversedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutReversedTransfersInput = {
@@ -9954,6 +10119,7 @@ export type UserUpdateWithoutCreatedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransfersInput = {
@@ -10009,6 +10175,7 @@ export type UserUncheckedUpdateWithoutCreatedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutReversedTransfersInput = {
@@ -10075,6 +10242,7 @@ export type UserUpdateWithoutReversedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedTransfersInput = {
@@ -10130,6 +10298,7 @@ export type UserUncheckedUpdateWithoutReversedTransfersInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedBankStatementImportsInput = {
@@ -10185,6 +10354,7 @@ export type UserCreateWithoutCreatedBankStatementImportsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankStatementImportsInput = {
@@ -10240,6 +10410,7 @@ export type UserUncheckedCreateWithoutCreatedBankStatementImportsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankStatementImportsInput = {
@@ -10311,6 +10482,7 @@ export type UserUpdateWithoutCreatedBankStatementImportsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankStatementImportsInput = {
@@ -10366,6 +10538,7 @@ export type UserUncheckedUpdateWithoutCreatedBankStatementImportsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutIgnoredBankStatementLinesInput = {
@@ -10421,6 +10594,7 @@ export type UserCreateWithoutIgnoredBankStatementLinesInput = {
   createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutIgnoredBankStatementLinesInput = {
@@ -10476,6 +10650,7 @@ export type UserUncheckedCreateWithoutIgnoredBankStatementLinesInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutIgnoredBankStatementLinesInput = {
@@ -10547,6 +10722,7 @@ export type UserUpdateWithoutIgnoredBankStatementLinesInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIgnoredBankStatementLinesInput = {
@@ -10602,6 +10778,7 @@ export type UserUncheckedUpdateWithoutIgnoredBankStatementLinesInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutMatchedBankReconciliationsInput = {
@@ -10657,6 +10834,7 @@ export type UserCreateWithoutMatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutMatchedBankReconciliationsInput = {
@@ -10712,6 +10890,7 @@ export type UserUncheckedCreateWithoutMatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutMatchedBankReconciliationsInput = {
@@ -10772,6 +10951,7 @@ export type UserCreateWithoutUnmatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUnmatchedBankReconciliationsInput = {
@@ -10827,6 +11007,7 @@ export type UserUncheckedCreateWithoutUnmatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUnmatchedBankReconciliationsInput = {
@@ -10898,6 +11079,7 @@ export type UserUpdateWithoutMatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMatchedBankReconciliationsInput = {
@@ -10953,6 +11135,7 @@ export type UserUncheckedUpdateWithoutMatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUnmatchedBankReconciliationsInput = {
@@ -11019,6 +11202,7 @@ export type UserUpdateWithoutUnmatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUnmatchedBankReconciliationsInput = {
@@ -11074,6 +11258,7 @@ export type UserUncheckedUpdateWithoutUnmatchedBankReconciliationsInput = {
   createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutRoleAssignmentsInput = {
@@ -11129,6 +11314,7 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -11184,6 +11370,7 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -11255,6 +11442,7 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -11310,6 +11498,7 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutBranchAccessInput = {
@@ -11365,6 +11554,7 @@ export type UserCreateWithoutBranchAccessInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutBranchAccessInput = {
@@ -11420,6 +11610,7 @@ export type UserUncheckedCreateWithoutBranchAccessInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutBranchAccessInput = {
@@ -11491,6 +11682,7 @@ export type UserUpdateWithoutBranchAccessInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchAccessInput = {
@@ -11546,6 +11738,7 @@ export type UserUncheckedUpdateWithoutBranchAccessInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutActorAuditLogsInput = {
@@ -11601,6 +11794,7 @@ export type UserCreateWithoutActorAuditLogsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutActorAuditLogsInput = {
@@ -11656,6 +11850,7 @@ export type UserUncheckedCreateWithoutActorAuditLogsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutActorAuditLogsInput = {
@@ -11727,6 +11922,7 @@ export type UserUpdateWithoutActorAuditLogsInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActorAuditLogsInput = {
@@ -11743,6 +11939,247 @@ export type UserUncheckedUpdateWithoutActorAuditLogsInput = {
   memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   branchAccess?: Prisma.UserBranchAccessUncheckedUpdateManyWithoutUserNestedInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUncheckedUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUncheckedUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUncheckedUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserCreateWithoutUpdatedCompanyProfilesInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedCompanyProfilesInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  branchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedCompanyProfilesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCompanyProfilesInput, Prisma.UserUncheckedCreateWithoutUpdatedCompanyProfilesInput>
+}
+
+export type UserUpsertWithoutUpdatedCompanyProfilesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedCompanyProfilesInput, Prisma.UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCompanyProfilesInput, Prisma.UserUncheckedCreateWithoutUpdatedCompanyProfilesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedCompanyProfilesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedCompanyProfilesInput, Prisma.UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput>
+}
+
+export type UserUpdateWithoutUpdatedCompanyProfilesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   createdLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLoans?: Prisma.LoanUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11849,6 +12286,7 @@ export type UserUpdateWithoutBranchInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchInput = {
@@ -11904,6 +12342,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
   matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -11966,6 +12405,7 @@ export type UserCountOutputType = {
   ignoredBankStatementLines: number
   matchedBankReconciliations: number
   unmatchedBankReconciliations: number
+  updatedCompanyProfiles: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -12011,6 +12451,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   ignoredBankStatementLines?: boolean | UserCountOutputTypeCountIgnoredBankStatementLinesArgs
   matchedBankReconciliations?: boolean | UserCountOutputTypeCountMatchedBankReconciliationsArgs
   unmatchedBankReconciliations?: boolean | UserCountOutputTypeCountUnmatchedBankReconciliationsArgs
+  updatedCompanyProfiles?: boolean | UserCountOutputTypeCountUpdatedCompanyProfilesArgs
 }
 
 /**
@@ -12317,6 +12758,13 @@ export type UserCountOutputTypeCountUnmatchedBankReconciliationsArgs<ExtArgs ext
   where?: Prisma.BankReconciliationMatchWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedCompanyProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CompanyProfileWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -12373,6 +12821,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   ignoredBankStatementLines?: boolean | Prisma.User$ignoredBankStatementLinesArgs<ExtArgs>
   matchedBankReconciliations?: boolean | Prisma.User$matchedBankReconciliationsArgs<ExtArgs>
   unmatchedBankReconciliations?: boolean | Prisma.User$unmatchedBankReconciliationsArgs<ExtArgs>
+  updatedCompanyProfiles?: boolean | Prisma.User$updatedCompanyProfilesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -12463,6 +12912,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   ignoredBankStatementLines?: boolean | Prisma.User$ignoredBankStatementLinesArgs<ExtArgs>
   matchedBankReconciliations?: boolean | Prisma.User$matchedBankReconciliationsArgs<ExtArgs>
   unmatchedBankReconciliations?: boolean | Prisma.User$unmatchedBankReconciliationsArgs<ExtArgs>
+  updatedCompanyProfiles?: boolean | Prisma.User$updatedCompanyProfilesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -12519,6 +12969,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     ignoredBankStatementLines: Prisma.$BankStatementLinePayload<ExtArgs>[]
     matchedBankReconciliations: Prisma.$BankReconciliationMatchPayload<ExtArgs>[]
     unmatchedBankReconciliations: Prisma.$BankReconciliationMatchPayload<ExtArgs>[]
+    updatedCompanyProfiles: Prisma.$CompanyProfilePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -12969,6 +13420,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   ignoredBankStatementLines<T extends Prisma.User$ignoredBankStatementLinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ignoredBankStatementLinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BankStatementLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   matchedBankReconciliations<T extends Prisma.User$matchedBankReconciliationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$matchedBankReconciliationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BankReconciliationMatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   unmatchedBankReconciliations<T extends Prisma.User$unmatchedBankReconciliationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$unmatchedBankReconciliationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BankReconciliationMatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedCompanyProfiles<T extends Prisma.User$updatedCompanyProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedCompanyProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14452,6 +14904,30 @@ export type User$unmatchedBankReconciliationsArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.BankReconciliationMatchScalarFieldEnum | Prisma.BankReconciliationMatchScalarFieldEnum[]
+}
+
+/**
+ * User.updatedCompanyProfiles
+ */
+export type User$updatedCompanyProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CompanyProfile
+   */
+  select?: Prisma.CompanyProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CompanyProfile
+   */
+  omit?: Prisma.CompanyProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyProfileInclude<ExtArgs> | null
+  where?: Prisma.CompanyProfileWhereInput
+  orderBy?: Prisma.CompanyProfileOrderByWithRelationInput | Prisma.CompanyProfileOrderByWithRelationInput[]
+  cursor?: Prisma.CompanyProfileWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CompanyProfileScalarFieldEnum | Prisma.CompanyProfileScalarFieldEnum[]
 }
 
 /**

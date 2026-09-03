@@ -84,7 +84,8 @@ export const ModelName = {
   RolePermission: 'RolePermission',
   UserRoleAssignment: 'UserRoleAssignment',
   UserBranchAccess: 'UserBranchAccess',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  CompanyProfile: 'CompanyProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -783,6 +784,36 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const CompanyProfileScalarFieldEnum = {
+  id: 'id',
+  legalName: 'legalName',
+  displayName: 'displayName',
+  tagline: 'tagline',
+  registrationNumber: 'registrationNumber',
+  taxId: 'taxId',
+  licenseNumber: 'licenseNumber',
+  email: 'email',
+  phone: 'phone',
+  website: 'website',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  timezone: 'timezone',
+  dateFormat: 'dateFormat',
+  timeFormat: 'timeFormat',
+  locale: 'locale',
+  logoUrl: 'logoUrl',
+  faviconUrl: 'faviconUrl',
+  metaDescription: 'metaDescription',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CompanyProfileScalarFieldEnum = (typeof CompanyProfileScalarFieldEnum)[keyof typeof CompanyProfileScalarFieldEnum]
 
 
 export const SortOrder = {

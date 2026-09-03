@@ -187,3 +187,8 @@ export type UserBranchAccess = Prisma.UserBranchAccessModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model CompanyProfile
+ * 
+ */
+export type CompanyProfile = Prisma.CompanyProfileModel

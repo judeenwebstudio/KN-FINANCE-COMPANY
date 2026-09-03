@@ -186,6 +186,7 @@ model User {
   ignoredBankStatementLines   BankStatementLine[]   @relation("BankStatementLineIgnoredBy")
   matchedBankReconciliations  BankReconciliationMatch[] @relation("BankMatchMatchedBy")
   unmatchedBankReconciliations BankReconciliationMatch[] @relation("BankMatchUnmatchedBy")
+  updatedCompanyProfiles     CompanyProfile[]          @relation("CompanyProfileUpdatedBy")
 
   @@index([branchId])
   @@index([role, status])
@@ -1155,6 +1156,34 @@ model AuditLog {
 
   @@index([actorUserId, createdAt])
   @@index([entityType, entityId])
+}
+
+model CompanyProfile {
+  id                 String   @id @default("company-profile-main")
+  legalName          String?
+  displayName        String   @default("KN Finance Company")
+  tagline            String?  @default("Empowering your future")
+  registrationNumber String?
+  taxId              String?
+  licenseNumber      String?
+  email              String?
+  phone              String?
+  website            String?
+  address            String?
+  city               String?
+  state              String?
+  country            String?
+  timezone           String?  @default("UTC")
+  dateFormat         String   @default("YYYY-MM-DD")
+  timeFormat         String   @default("12h")
+  locale             String   @default("en-US")
+  logoUrl            String?  @default("/branding/kn-finance-logo.png")
+  faviconUrl         String?  @default("/favicon.ico")
+  metaDescription    String?  @default("KN Finance Company — Empowering your future. Multi-branch credit and loan management platform.")
+  updatedById        String?
+  updatedBy          User?    @relation("CompanyProfileUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 

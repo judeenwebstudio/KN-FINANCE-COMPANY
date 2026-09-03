@@ -430,7 +430,8 @@ export const ModelName = {
   RolePermission: 'RolePermission',
   UserRoleAssignment: 'UserRoleAssignment',
   UserBranchAccess: 'UserBranchAccess',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  CompanyProfile: 'CompanyProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -446,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "branch" | "memberProfile" | "accountTypePolicy" | "account" | "loanPenaltyRule" | "loanProduct" | "loan" | "loanRepaymentSchedule" | "loanPenaltyAssessment" | "loanRepayment" | "loanRepaymentAllocation" | "collectionNote" | "transactionCategory" | "transaction" | "depositRequest" | "withdrawalRequest" | "expenseCategory" | "treasuryAccount" | "treasuryTransaction" | "bankAccount" | "bankTransaction" | "expense" | "transfer" | "bankStatementImport" | "bankStatementLine" | "bankStatementImportError" | "bankReconciliationMatch" | "permission" | "roleProfile" | "rolePermission" | "userRoleAssignment" | "userBranchAccess" | "auditLog"
+    modelProps: "user" | "branch" | "memberProfile" | "accountTypePolicy" | "account" | "loanPenaltyRule" | "loanProduct" | "loan" | "loanRepaymentSchedule" | "loanPenaltyAssessment" | "loanRepayment" | "loanRepaymentAllocation" | "collectionNote" | "transactionCategory" | "transaction" | "depositRequest" | "withdrawalRequest" | "expenseCategory" | "treasuryAccount" | "treasuryTransaction" | "bankAccount" | "bankTransaction" | "expense" | "transfer" | "bankStatementImport" | "bankStatementLine" | "bankStatementImportError" | "bankReconciliationMatch" | "permission" | "roleProfile" | "rolePermission" | "userRoleAssignment" | "userBranchAccess" | "auditLog" | "companyProfile"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2966,6 +2967,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CompanyProfile: {
+      payload: Prisma.$CompanyProfilePayload<ExtArgs>
+      fields: Prisma.CompanyProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CompanyProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CompanyProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.CompanyProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CompanyProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>
+        }
+        findMany: {
+          args: Prisma.CompanyProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>[]
+        }
+        create: {
+          args: Prisma.CompanyProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>
+        }
+        createMany: {
+          args: Prisma.CompanyProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CompanyProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.CompanyProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>
+        }
+        update: {
+          args: Prisma.CompanyProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.CompanyProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CompanyProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CompanyProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.CompanyProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.CompanyProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCompanyProfile>
+        }
+        groupBy: {
+          args: Prisma.CompanyProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompanyProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CompanyProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompanyProfileCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3685,6 +3760,36 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const CompanyProfileScalarFieldEnum = {
+  id: 'id',
+  legalName: 'legalName',
+  displayName: 'displayName',
+  tagline: 'tagline',
+  registrationNumber: 'registrationNumber',
+  taxId: 'taxId',
+  licenseNumber: 'licenseNumber',
+  email: 'email',
+  phone: 'phone',
+  website: 'website',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  timezone: 'timezone',
+  dateFormat: 'dateFormat',
+  timeFormat: 'timeFormat',
+  locale: 'locale',
+  logoUrl: 'logoUrl',
+  faviconUrl: 'faviconUrl',
+  metaDescription: 'metaDescription',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CompanyProfileScalarFieldEnum = (typeof CompanyProfileScalarFieldEnum)[keyof typeof CompanyProfileScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -4468,6 +4573,7 @@ export type GlobalOmitConfig = {
   userRoleAssignment?: Prisma.UserRoleAssignmentOmit
   userBranchAccess?: Prisma.UserBranchAccessOmit
   auditLog?: Prisma.AuditLogOmit
+  companyProfile?: Prisma.CompanyProfileOmit
 }
 
 /* Types for Logging */
