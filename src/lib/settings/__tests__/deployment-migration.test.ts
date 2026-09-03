@@ -9,10 +9,9 @@ test("Vercel production builds deploy Prisma migrations before rendering setting
   ) as { scripts?: Record<string, string> };
   const vercelBuild = packageJson.scripts?.["vercel-build"] ?? "";
 
-  assert.match(vercelBuild, /^prisma (?:migrate deploy|db execute)(?:\s|&&)/);
+  assert.match(vercelBuild, /^prisma migrate deploy(?:\s|&&)/);
   assert.ok(
-    Math.max(vercelBuild.indexOf("prisma migrate deploy"), vercelBuild.indexOf("prisma db execute")) <
-      vercelBuild.indexOf("next build"),
+    vercelBuild.indexOf("prisma migrate deploy") < vercelBuild.indexOf("next build"),
     "Database migrations must run before the Next.js production build",
   );
 });
