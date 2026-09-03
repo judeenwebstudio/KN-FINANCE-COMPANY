@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { updateGeneralSettingsAction, updateBrandingSettingsAction } from "./actions";
+import { createBranchAction, updateBranchAction, toggleBranchStatusAction } from "./branch-actions";
 
 export type CompanyProfileData = {
   id: string;
@@ -40,21 +42,30 @@ export type BranchOverviewData = {
   country: string;
   currency: string;
   status: string;
+  userCount?: number;
+  memberCount?: number;
+  accountCount?: number;
+  loanCount?: number;
 };
 
 export function SettingsClient({
   profile: initialProfile,
-  branches,
+  branches: initialBranches,
   canManageCompany,
+  canManageBranch,
+  canManageFinancial,
 }: {
   profile: CompanyProfileData;
   branches: BranchOverviewData[];
   canManageCompany: boolean;
+  canManageBranch: boolean;
+  canManageFinancial: boolean;
 }) {
   const [profile, setProfile] = useState<CompanyProfileData>(initialProfile);
+  const [branches, setBranches] = useState<BranchOverviewData[]>(initialBranches);
   const [activeTab, setActiveTab] = useState<"general" | "branding" | "branches" | "financial">("general");
 
-  // Form states
+  // General & Branding form states
   const [generalForm, setGeneralForm] = useState({
     displayName: profile.displayName || "KN Finance Company",
     legalName: profile.legalName || "",
@@ -83,8 +94,26 @@ export function SettingsClient({
     metaDescription: profile.metaDescription || "",
   });
 
+  // Branch management modal states
+  const [searchBranch, setSearchBranch] = useState("");
+  const [isBranchModalOpen, setIsBranchModalOpen] = useState(false);
+  const [editingBranch, setEditingBranch] = useState<BranchOverviewData | null>(null);
+  const [branchForm, setBranchForm] = useState({
+    name: "",
+    code: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    currency: "USD",
+  });
+
   const [isSavingGeneral, setIsSavingGeneral] = useState(false);
   const [isSavingBranding, setIsSavingBranding] = useState(false);
+  const [isSavingBranch, setIsSavingBranch] = useState(false);
+  const [togglingBranchId, setTogglingBranchId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const handleGeneralSubmit = async (e: React.FormEvent) => {
@@ -139,6 +168,97 @@ export function SettingsClient({
     }
   };
 
+  const handleOpenCreateBranch = () => {
+    setEditingBranch(null);
+    setBranchForm({
+      name: "",
+      code: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      state: "",
+      country: "",
+      currency: "USD",
+    });
+    setIsBranchModalOpen(true);
+  };
+
+  const handleOpenEditBranch = (b: BranchOverviewData) => {
+    setEditingBranch(b);
+    setBranchForm({
+      name: b.name,
+      code: b.code,
+      email: b.email,
+      phone: b.phone,
+      address: b.address,
+      city: b.city,
+      state: b.state,
+      country: b.country,
+      currency: b.currency || "USD",
+    });
+    setIsBranchModalOpen(true);
+  };
+
+  const handleBranchFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canManageBranch) return;
+    setIsSavingBranch(true);
+    setMessage(null);
+
+    try {
+      if (editingBranch) {
+        const res = await updateBranchAction(editingBranch.id, branchForm);
+        if (res.success && res.branch) {
+          setBranches(branches.map((b) => (b.id === res.branch.id ? { ...b, ...res.branch } : b)));
+          setMessage({ type: "success", text: `Branch '${res.branch.name}' (${res.branch.code}) updated successfully.` });
+        }
+      } else {
+        const res = await createBranchAction(branchForm);
+        if (res.success && res.branch) {
+          setBranches([...branches, { ...res.branch, userCount: 0, memberCount: 0, accountCount: 0, loanCount: 0 }]);
+          setMessage({ type: "success", text: `New branch '${res.branch.name}' (${res.branch.code}) created successfully.` });
+        }
+      }
+      setIsBranchModalOpen(false);
+    } catch (err: unknown) {
+      setMessage({ type: "error", text: err instanceof Error ? err.message : "Failed to save branch." });
+    } finally {
+      setIsSavingBranch(false);
+    }
+  };
+
+  const handleToggleStatus = async (b: BranchOverviewData) => {
+    if (!canManageBranch) return;
+    if (b.code === "HQ-01" && b.status === "ACTIVE") {
+      setMessage({ type: "error", text: "Headquarters branch (HQ-01) cannot be deactivated." });
+      return;
+    }
+
+    const newStatus = b.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    setTogglingBranchId(b.id);
+    setMessage(null);
+
+    try {
+      const res = await toggleBranchStatusAction(b.id, newStatus);
+      if (res.success && res.branch) {
+        setBranches(branches.map((item) => (item.id === res.branch.id ? { ...item, status: res.branch.status } : item)));
+        setMessage({ type: "success", text: `Branch '${b.name}' status set to ${newStatus}.` });
+      }
+    } catch (err: unknown) {
+      setMessage({ type: "error", text: err instanceof Error ? err.message : "Failed to update branch status." });
+    } finally {
+      setTogglingBranchId(null);
+    }
+  };
+
+  const filteredBranches = branches.filter(
+    (b) =>
+      b.name.toLowerCase().includes(searchBranch.toLowerCase()) ||
+      b.code.toLowerCase().includes(searchBranch.toLowerCase()) ||
+      b.city.toLowerCase().includes(searchBranch.toLowerCase())
+  );
+
   const inputClass = `w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm focus:border-[#1a2e5a] focus:outline-none focus:ring-1 focus:ring-[#1a2e5a] disabled:bg-slate-100 disabled:text-slate-500`;
   const labelClass = `block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5`;
 
@@ -170,7 +290,7 @@ export function SettingsClient({
           }`}
         >
           <span>{message.text}</span>
-          <button onClick={() => setMessage(null)} className="font-bold ml-4">
+          <button onClick={() => setMessage(null)} className="font-bold ml-4 text-slate-500 hover:text-slate-900">
             ×
           </button>
         </div>
@@ -561,12 +681,31 @@ export function SettingsClient({
         </div>
       )}
 
-      {/* Tab 3: Branches Overview */}
+      {/* Tab 3: Branches Management */}
       {activeTab === "branches" && (
-        <div className="space-y-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <div>
-            <h2 className="text-lg font-bold text-slate-900">Branch Directory & Status</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Operational branches linked to existing financial ledgers.</p>
+        <div className="space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Branch Directory & Operational Status</h2>
+              <p className="text-xs text-slate-500 mt-0.5">Manage operational branches and physical offices linked to financial ledgers.</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                placeholder="Search branches..."
+                value={searchBranch}
+                onChange={(e) => setSearchBranch(e.target.value)}
+                className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:border-[#1a2e5a] focus:outline-none"
+              />
+              {canManageBranch && (
+                <button
+                  onClick={handleOpenCreateBranch}
+                  className="rounded-lg bg-[#1a2e5a] px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-[#152548] focus:outline-none"
+                >
+                  + Add New Branch
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="overflow-x-auto border border-slate-200 rounded-lg">
@@ -575,28 +714,61 @@ export function SettingsClient({
                 <tr>
                   <th className="px-4 py-3 text-left">Code</th>
                   <th className="px-4 py-3 text-left">Branch Name</th>
-                  <th className="px-4 py-3 text-left">Contact Email / Phone</th>
-                  <th className="px-4 py-3 text-left">Address</th>
-                  <th className="px-4 py-3 text-left">Currency</th>
+                  <th className="px-4 py-3 text-left">Contact Info</th>
+                  <th className="px-4 py-3 text-left">Location</th>
+                  <th className="px-4 py-3 text-center">Entity Scope</th>
                   <th className="px-4 py-3 text-center">Status</th>
+                  {canManageBranch && <th className="px-4 py-3 text-right">Actions</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
-                {branches.map((b) => (
+                {filteredBranches.map((b) => (
                   <tr key={b.id} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-mono font-semibold text-[#1a2e5a]">{b.code}</td>
+                    <td className="px-4 py-3 font-mono font-bold text-[#1a2e5a]">{b.code}</td>
                     <td className="px-4 py-3 font-bold text-slate-900">{b.name}</td>
                     <td className="px-4 py-3 text-slate-600">
                       <div>{b.email}</div>
                       <div className="text-xs text-slate-400">{b.phone}</div>
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{b.address}, {b.city}, {b.state}, {b.country}</td>
-                    <td className="px-4 py-3 font-mono text-slate-800">{b.currency}</td>
+                    <td className="px-4 py-3 text-slate-600">{b.city}, {b.state}, {b.country}</td>
+                    <td className="px-4 py-3 text-center text-xs space-x-1">
+                      <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-600">
+                        👥 {b.userCount ?? 0} users
+                      </span>
+                      <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-600">
+                        💳 {b.accountCount ?? 0} accs
+                      </span>
+                    </td>
                     <td className="px-4 py-3 text-center">
-                      <span className="inline-flex rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                          b.status === "ACTIVE" ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-600"
+                        }`}
+                      >
                         {b.status}
                       </span>
                     </td>
+                    {canManageBranch && (
+                      <td className="px-4 py-3 text-right space-x-2">
+                        <button
+                          onClick={() => handleOpenEditBranch(b)}
+                          className="text-xs font-semibold text-[#1a2e5a] hover:underline"
+                        >
+                          Edit
+                        </button>
+                        {b.code !== "HQ-01" && (
+                          <button
+                            onClick={() => handleToggleStatus(b)}
+                            disabled={togglingBranchId === b.id}
+                            className={`text-xs font-semibold ${
+                              b.status === "ACTIVE" ? "text-rose-600 hover:underline" : "text-emerald-600 hover:underline"
+                            }`}
+                          >
+                            {b.status === "ACTIVE" ? "Deactivate" : "Activate"}
+                          </button>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -608,27 +780,211 @@ export function SettingsClient({
       {/* Tab 4: Financial Defaults */}
       {activeTab === "financial" && (
         <div className="space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <div>
-            <h2 className="text-lg font-bold text-slate-900">Financial Ledger & Accounting Defaults</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Read-only accounting rules enforcing financial ledger safety.</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Financial Accounting & Base Currency Defaults</h2>
+              <p className="text-xs text-slate-500 mt-0.5">Read-only accounting rules enforcing ledger safety across historical transactions.</p>
+            </div>
+            {!canManageFinancial && (
+              <span className="inline-flex items-center gap-1 rounded-md bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-800 border border-amber-200">
+                🔒 Restricted (`settings.financial.manage`)
+              </span>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Base Currency</span>
-              <p className="text-2xl font-bold text-[#1a2e5a] mt-1">USD ($)</p>
-              <p className="text-xs text-slate-500 mt-1">Single-currency ledger rule enforced across all branches.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Base Currency</span>
+                <span className="inline-flex rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+                  LOCKED
+                </span>
+              </div>
+              <p className="text-3xl font-extrabold text-[#1a2e5a]">USD ($)</p>
+              <p className="text-xs text-slate-600">
+                Single-currency ledger rule. Base currency changes are locked to prevent reinterpreting historical financial balances.
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Monetary Decimal Precision</span>
-              <p className="text-2xl font-bold text-[#1a2e5a] mt-1">2 Decimals ($0.00)</p>
-              <p className="text-xs text-slate-500 mt-1">Prisma Decimal(19,4) internal precision, formatted to 2 decimals.</p>
+
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Monetary Precision</span>
+                <span className="inline-flex rounded-full bg-slate-200 px-2.5 py-0.5 text-xs font-bold text-slate-700">
+                  SCHEMA FIXED
+                </span>
+              </div>
+              <p className="text-3xl font-extrabold text-[#1a2e5a]">2 Decimals</p>
+              <p className="text-xs text-slate-600">
+                Internal storage utilizes PostgreSQL `Decimal(19,4)`. Currency formatting displays 2 decimal places (`$0.00`).
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Accounting Safety Rule</span>
-              <p className="text-2xl font-bold text-emerald-700 mt-1">LOCKED</p>
-              <p className="text-xs text-slate-500 mt-1">Historical ledger entries remain immutable upon display settings change.</p>
+
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Processing Fee Engine</span>
+                <span className="inline-flex rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800">
+                  ACTIVE
+                </span>
+              </div>
+              <p className="text-xl font-bold text-slate-900 mt-1">Product & Policy Level</p>
+              <p className="text-xs text-slate-600">
+                Processing fees are defined on dedicated Loan Products and Account Type Policies to preserve ledger integrity.
+              </p>
             </div>
+          </div>
+
+          <div className="p-5 rounded-xl bg-slate-900 text-white space-y-3">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[#b8962e]">Dedicated Fee & Product Modules</h3>
+            <p className="text-xs text-slate-300">
+              To configure specific loan product processing fees, penalty rules, or account minimum opening balances, use the dedicated management modules:
+            </p>
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link
+                href="/admin/loan-products"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#1a2e5a] px-4 py-2 text-xs font-semibold text-white border border-[#b8962e]/40 hover:bg-[#152548]"
+              >
+                Manage Loan Product Fees →
+              </Link>
+              <Link
+                href="/admin/account-types"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-slate-800 px-4 py-2 text-xs font-semibold text-white border border-slate-700 hover:bg-slate-700"
+              >
+                Manage Account Type Policies →
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Branch Create / Edit Modal */}
+      {isBranchModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl border border-slate-200 space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h3 className="text-lg font-bold text-[#1a2e5a]">
+                {editingBranch ? `Edit Branch: ${editingBranch.name} (${editingBranch.code})` : "Create New Branch"}
+              </h3>
+              <button onClick={() => setIsBranchModalOpen(false)} className="text-slate-400 hover:text-slate-700 font-bold">
+                ×
+              </button>
+            </div>
+
+            <form onSubmit={handleBranchFormSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Branch Code *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. HQ-02"
+                    value={branchForm.code}
+                    onChange={(e) => setBranchForm({ ...branchForm, code: e.target.value.toUpperCase() })}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Branch Name *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. North City Branch"
+                    value={branchForm.name}
+                    onChange={(e) => setBranchForm({ ...branchForm, name: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Branch Email *</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="branch@knfinance.com"
+                    value={branchForm.email}
+                    onChange={(e) => setBranchForm({ ...branchForm, email: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Phone Number *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="+1 (800) 000-0000"
+                    value={branchForm.phone}
+                    onChange={(e) => setBranchForm({ ...branchForm, phone: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Street Address *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Street address"
+                  value={branchForm.address}
+                  onChange={(e) => setBranchForm({ ...branchForm, address: e.target.value })}
+                  className={inputClass}
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className={labelClass}>City *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="City"
+                    value={branchForm.city}
+                    onChange={(e) => setBranchForm({ ...branchForm, city: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>State *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="State"
+                    value={branchForm.state}
+                    onChange={(e) => setBranchForm({ ...branchForm, state: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Country *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Country"
+                    value={branchForm.country}
+                    onChange={(e) => setBranchForm({ ...branchForm, country: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-200 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsBranchModalOpen(false)}
+                  className="rounded-lg border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSavingBranch}
+                  className="rounded-lg bg-[#1a2e5a] px-5 py-2 text-xs font-semibold text-white hover:bg-[#152548] disabled:opacity-50"
+                >
+                  {isSavingBranch ? "Saving..." : editingBranch ? "Update Branch" : "Create Branch"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

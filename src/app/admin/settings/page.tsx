@@ -1,6 +1,6 @@
 import { requirePermission, getUserEffectivePermissions } from "@/lib/auth/authorize";
-import { prisma } from "@/lib/prisma";
 import { getCompanyProfile } from "@/lib/settings/company-profile";
+import { getAllBranchesWithCounts } from "@/lib/settings/branch-service";
 import { SettingsClient } from "./settings-client";
 
 export const dynamic = "force-dynamic";
@@ -8,12 +8,13 @@ export const dynamic = "force-dynamic";
 export default async function SettingsPage() {
   const actor = await requirePermission("settings.view");
   const permissions = await getUserEffectivePermissions(actor.id);
+
   const canManageCompany = permissions.has("settings.company.manage") || actor.role === "SUPER_ADMIN";
+  const canManageBranch = permissions.has("settings.branch.manage") || actor.role === "SUPER_ADMIN";
+  const canManageFinancial = permissions.has("settings.financial.manage") || actor.role === "SUPER_ADMIN";
 
   const rawProfile = await getCompanyProfile();
-  const branches = await prisma.branch.findMany({
-    orderBy: { code: "asc" },
-  });
+  const branches = await getAllBranchesWithCounts();
 
   const safeProfile = {
     id: rawProfile.id,
@@ -51,7 +52,19 @@ export default async function SettingsPage() {
     country: b.country,
     currency: b.currency,
     status: b.status,
+    userCount: b._count.users,
+    memberCount: b._count.members,
+    accountCount: b._count.accounts,
+    loanCount: b._count.loans,
   }));
 
-  return <SettingsClient profile={safeProfile} branches={safeBranches} canManageCompany={canManageCompany} />;
+  return (
+    <SettingsClient
+      profile={safeProfile}
+      branches={safeBranches}
+      canManageCompany={canManageCompany}
+      canManageBranch={canManageBranch}
+      canManageFinancial={canManageFinancial}
+    />
+  );
 }
