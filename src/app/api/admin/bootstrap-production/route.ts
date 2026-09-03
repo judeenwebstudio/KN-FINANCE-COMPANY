@@ -37,9 +37,9 @@ export async function GET() {
       }, { status: 500 });
     }
 
-    if (!password || password.length < 12) {
+    if (!password || password.length < 6) {
       return NextResponse.json({
-        error: "INITIAL_SUPERADMIN_PASSWORD is missing or shorter than 12 characters.",
+        error: "INITIAL_SUPERADMIN_PASSWORD is missing or shorter than 6 characters.",
         diagnostics: {
           databaseUrlPresent: Boolean(rawUrl),
           databaseHost: host,

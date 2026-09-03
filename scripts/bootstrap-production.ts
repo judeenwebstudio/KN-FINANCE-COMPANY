@@ -18,8 +18,8 @@ async function main() {
     process.exit(1);
   }
 
-  if (!password || password.length < 12) {
-    console.error("[Production Bootstrap] ERROR: INITIAL_SUPERADMIN_PASSWORD is required and must be at least 12 characters long.");
+  if (!password || password.length < 6) {
+    console.error("[Production Bootstrap] ERROR: INITIAL_SUPERADMIN_PASSWORD is required and must be at least 6 characters long.");
     process.exit(1);
   }
 
