@@ -2,6 +2,24 @@ import { prisma } from "../prisma";
 import { logAuditEvent } from "../audit/audit-logger";
 import { z } from "zod";
 
+function isValidAssetUrl(val: string | null | undefined): boolean {
+  if (!val || val.trim() === "") return true;
+  const trimmed = val.trim();
+  // Safe relative paths starting with /
+  if (trimmed.startsWith("/")) return true;
+  // Safe secure HTTPS URLs
+  if (trimmed.startsWith("https://")) {
+    try {
+      const parsed = new URL(trimmed);
+      return parsed.protocol === "https:";
+    } catch {
+      return false;
+    }
+  }
+  // Reject all unsafe schemes (javascript:, data:, http:, file:, blob:, vbscript:, etc.)
+  return false;
+}
+
 export const updateCompanyProfileSchema = z.object({
   legalName: z.string().trim().nullable().optional(),
   displayName: z.string().trim().min(1, "Display Name is required").max(100),
@@ -20,8 +38,18 @@ export const updateCompanyProfileSchema = z.object({
   dateFormat: z.string().trim().min(1, "Date format is required").optional(),
   timeFormat: z.string().trim().min(1, "Time format is required").optional(),
   locale: z.string().trim().min(1, "Locale is required").optional(),
-  logoUrl: z.string().trim().nullable().optional(),
-  faviconUrl: z.string().trim().nullable().optional(),
+  logoUrl: z
+    .string()
+    .trim()
+    .nullable()
+    .optional()
+    .refine(isValidAssetUrl, { message: "Logo URL must be a relative path (starting with /) or a secure HTTPS URL." }),
+  faviconUrl: z
+    .string()
+    .trim()
+    .nullable()
+    .optional()
+    .refine(isValidAssetUrl, { message: "Favicon URL must be a relative path (starting with /) or a secure HTTPS URL." }),
   metaDescription: z.string().trim().nullable().optional(),
 });
 
@@ -52,8 +80,9 @@ export const DEFAULT_COMPANY_PROFILE = {
 };
 
 /**
- * Retrieves the current CompanyProfile singleton record.
- * Ensures initial default record with official KN Finance branding if missing.
+ * Strictly READ-ONLY retrieval of CompanyProfile singleton record.
+ * Performs NO database mutations when the record does not exist in DB,
+ * returning in-memory default branding fallback.
  */
 export async function getCompanyProfile() {
   const profile = await prisma.companyProfile.findUnique({
@@ -62,7 +91,18 @@ export async function getCompanyProfile() {
 
   if (profile) return profile;
 
-  // Initialize singleton if missing
+  return {
+    ...DEFAULT_COMPANY_PROFILE,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    updatedById: null,
+  };
+}
+
+/**
+ * Explicit mutation initializer for bootstrap or write operations.
+ */
+export async function ensureCompanyProfile() {
   return await prisma.companyProfile.upsert({
     where: { id: "company-profile-main" },
     update: {},

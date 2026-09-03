@@ -5,24 +5,34 @@ import { getCompanyProfile, updateCompanyProfile, updateCompanyProfileSchema } f
 import { getUserEffectivePermissions } from "../../auth/authorize";
 
 describe("Phase 7A System Settings Unit & RBAC Tests", () => {
-  test("should retrieve CompanyProfile singleton record with default official branding", async () => {
-    const profile = await getCompanyProfile();
-    assert.ok(profile, "CompanyProfile singleton record should exist");
-    assert.equal(profile.id, "company-profile-main", "Profile ID should be singleton key");
-    assert.equal(profile.displayName, "KN Finance Company", "Default display name should be KN Finance Company");
-    assert.equal(profile.tagline, "Empowering your future", "Default tagline should be Empowering your future");
+  test("should retrieve CompanyProfile singleton record without database mutation if missing", async () => {
+    // Delete singleton if present to test read-only fallback
+    await prisma.companyProfile.deleteMany({ where: { id: "company-profile-main" } });
+
+    const fallbackProfile = await getCompanyProfile();
+    assert.ok(fallbackProfile, "Fallback CompanyProfile record should exist");
+    assert.equal(fallbackProfile.id, "company-profile-main", "Profile ID should be singleton key");
+    assert.equal(fallbackProfile.displayName, "KN Finance Company", "Default display name should be KN Finance Company");
+    assert.equal(fallbackProfile.tagline, "Empowering your future", "Default tagline should be Empowering your future");
+
+    // Verify read-only behavior (no row inserted into DB by getCompanyProfile)
+    const dbCheck = await prisma.companyProfile.findUnique({ where: { id: "company-profile-main" } });
+    assert.equal(dbCheck, null, "getCompanyProfile must remain strictly read-only and not insert DB records");
   });
 
-  test("should validate updateCompanyProfileSchema server-side validation rules", () => {
-    // Valid input
+  test("should validate updateCompanyProfileSchema server-side validation rules and asset URL schemes", () => {
+    // Valid input with safe relative logo path and HTTPS favicon
     const valid = updateCompanyProfileSchema.parse({
       displayName: "KN Finance Group",
       email: "admin@knfinance.com",
       website: "https://kn-finance-company.vercel.app",
       dateFormat: "YYYY-MM-DD",
+      logoUrl: "/branding/kn-finance-logo.png",
+      faviconUrl: "https://kn-finance-company.vercel.app/favicon.ico",
     });
     assert.equal(valid.displayName, "KN Finance Group");
     assert.equal(valid.email, "admin@knfinance.com");
+    assert.equal(valid.logoUrl, "/branding/kn-finance-logo.png");
 
     // Invalid email rejection
     assert.throws(() => {
@@ -32,13 +42,21 @@ describe("Phase 7A System Settings Unit & RBAC Tests", () => {
       });
     }, /Invalid email address/);
 
-    // Invalid URL rejection
+    // Unsafe javascript: scheme logo rejection
     assert.throws(() => {
       updateCompanyProfileSchema.parse({
         displayName: "Test",
-        website: "not-a-valid-url",
+        logoUrl: "javascript:alert(1)",
       });
-    }, /Invalid website URL/);
+    }, /Logo URL must be a relative path/);
+
+    // Unsafe data: scheme logo rejection
+    assert.throws(() => {
+      updateCompanyProfileSchema.parse({
+        displayName: "Test",
+        logoUrl: "data:text/html,<script>alert(1)</script>",
+      });
+    }, /Logo URL must be a relative path/);
   });
 
   test("should update CompanyProfile and log audit event atomically", async () => {
@@ -52,6 +70,7 @@ describe("Phase 7A System Settings Unit & RBAC Tests", () => {
       email: "support@knfinance.com",
       timezone: "UTC",
       dateFormat: "YYYY-MM-DD",
+      logoUrl: "/branding/kn-finance-logo.png",
     });
 
     assert.equal(updated.legalName, "KN Finance Corporate Ltd");

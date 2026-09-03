@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { getCompanyProfile } from "@/lib/settings/company-profile";
 import { SettingsClient } from "./settings-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function SettingsPage() {
   const actor = await requirePermission("settings.view");
   const permissions = await getUserEffectivePermissions(actor.id);
