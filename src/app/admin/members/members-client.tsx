@@ -1,0 +1,363 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Users,
+  Search,
+  UserPlus,
+  Edit,
+  Building2,
+  ChevronLeft,
+  ChevronRight,
+  ShieldCheck,
+  KeyRound,
+  CreditCard,
+  Banknote,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { StatusBadge } from "@/components/status-badge";
+import { SafeMemberListItemDTO, GetMembersResult } from "@/lib/members/member-service";
+import { CreateMemberModal } from "./create-member-modal";
+import { EditMemberModal } from "./edit-member-modal";
+
+type BranchDTO = { id: string; name: string; code: string };
+
+export function MembersClient({
+  initialData,
+  branches,
+  canCreate,
+  canEdit,
+  userBranchScopeGlobal,
+}: {
+  initialData: GetMembersResult;
+  branches: BranchDTO[];
+  canCreate: boolean;
+  canEdit: boolean;
+  userBranchScopeGlobal: boolean;
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [branchFilter, setBranchFilter] = useState(searchParams.get("branchId") || "");
+  const [statusFilter, setStatusFilter] = useState(searchParams.get("status") || "");
+
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [editingMember, setEditingMember] = useState<SafeMemberListItemDTO | null>(null);
+  const [tempPasswordNotice, setTempPasswordNotice] = useState<{ name: string; pass: string } | null>(null);
+
+  const updateFilters = (newParams: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(newParams).forEach(([k, v]) => {
+      if (v) params.set(k, v);
+      else params.delete(k);
+    });
+    params.set("page", "1"); // Reset to page 1 on filter change
+    router.push(`/admin/members?${params.toString()}`);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateFilters({ search, branchId: branchFilter, status: statusFilter });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", newPage.toString());
+    router.push(`/admin/members?${params.toString()}`);
+  };
+
+  const handleCreateSuccess = (newMember: SafeMemberListItemDTO, tempPass?: string) => {
+    setCreateModalOpen(false);
+    if (tempPass) {
+      setTempPasswordNotice({ name: newMember.name, pass: tempPass });
+    }
+    router.refresh();
+  };
+
+  const handleEditSuccess = () => {
+    setEditingMember(null);
+    router.refresh();
+  };
+
+  const { members, pagination } = initialData;
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-900">Member Directory</h1>
+            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 border border-emerald-200">
+              <ShieldCheck className="mr-1 h-3 w-3" /> Branch-Scoped
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-1">
+            Manage registered credit union members, identity records, and branch assignments.
+          </p>
+        </div>
+        {canCreate && (
+          <Button
+            onClick={() => setCreateModalOpen(true)}
+            className="gap-2 bg-[#275d4f] hover:bg-[#1e483d] text-white"
+          >
+            <UserPlus className="h-4 w-4" /> Register New Member
+          </Button>
+        )}
+      </div>
+
+      {/* Temp Password Notice banner if generated */}
+      {tempPasswordNotice && (
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-xs text-amber-900 flex items-start justify-between shadow-xs">
+          <div className="flex items-start gap-3">
+            <KeyRound className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold text-amber-950">
+                Temporary Password Generated for {tempPasswordNotice.name}
+              </p>
+              <p className="mt-1 text-amber-800">
+                Please securely copy this password for initial member onboarding:
+              </p>
+              <div className="mt-2 inline-block rounded-md bg-white px-3 py-1.5 font-mono text-sm font-bold text-amber-900 border border-amber-300 select-all">
+                {tempPasswordNotice.pass}
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={() => setTempPasswordNotice(null)}
+            className="text-amber-500 hover:text-amber-700"
+          >
+            <XIcon className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Filters Bar */}
+      <Card className="p-4 bg-slate-50/70">
+        <form onSubmit={handleSearchSubmit} className="flex flex-wrap items-center gap-3">
+          <div className="relative min-w-64 flex-1">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search member #, name, email, phone, ID..."
+              className="w-full rounded-md border border-slate-300 bg-white pl-9 pr-3 py-2 text-xs text-slate-800 shadow-xs focus:border-[#275d4f] focus:outline-none"
+            />
+          </div>
+
+          {userBranchScopeGlobal && (
+            <div className="w-44">
+              <select
+                value={branchFilter}
+                onChange={(e) => {
+                  setBranchFilter(e.target.value);
+                  updateFilters({ search, branchId: e.target.value, status: statusFilter });
+                }}
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 shadow-xs focus:border-[#275d4f] focus:outline-none"
+              >
+                <option value="">All Authorized Branches</option>
+                {branches.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name} ({b.code})
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <div className="w-36">
+            <select
+              value={statusFilter}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                updateFilters({ search, branchId: branchFilter, status: e.target.value });
+              }}
+              className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 shadow-xs focus:border-[#275d4f] focus:outline-none"
+            >
+              <option value="">All Statuses</option>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+              <option value="SUSPENDED">SUSPENDED</option>
+            </select>
+          </div>
+
+          <Button type="submit" variant="outline" className="text-xs">
+            Search
+          </Button>
+
+          {(search || branchFilter || statusFilter) && (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => {
+                setSearch("");
+                setBranchFilter("");
+                setStatusFilter("");
+                router.push("/admin/members");
+              }}
+              className="text-xs text-slate-500 hover:text-slate-700"
+            >
+              Clear Filters
+            </Button>
+          )}
+        </form>
+      </Card>
+
+      {/* Directory Table */}
+      <Card className="overflow-hidden border border-slate-200 shadow-xs">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase tracking-wider">
+              <tr>
+                <th className="px-4 py-3">Member Details</th>
+                <th className="px-4 py-3">Branch</th>
+                <th className="px-4 py-3">Identity / DOB</th>
+                <th className="px-4 py-3">Financial Products</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 bg-white">
+              {members.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-12 text-center text-slate-500">
+                    <Users className="mx-auto h-8 w-8 text-slate-300 mb-2" />
+                    <p className="font-semibold text-slate-700">No members found</p>
+                    <p className="text-xs mt-1 text-slate-400">
+                      Try adjusting your search query or filter selection.
+                    </p>
+                  </td>
+                </tr>
+              ) : (
+                members.map((m) => (
+                  <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="px-4 py-3">
+                      <div className="font-semibold text-slate-900">{m.name}</div>
+                      <div className="text-slate-500 font-mono text-[11px]">
+                        {m.memberNumber} • {m.email}
+                      </div>
+                      <div className="text-slate-400 text-[11px] mt-0.5">{m.phone}</div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-1.5 text-slate-800 font-medium">
+                        <Building2 className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                        <span>{m.branchName}</span>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-mono">{m.branchCode}</span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="text-slate-700">{m.identityNumber || "—"}</div>
+                      <div className="text-slate-400 text-[11px]">
+                        {m.dateOfBirth ? `DOB: ${m.dateOfBirth}` : "DOB: Unspecified"}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3 text-slate-600">
+                        <span className="inline-flex items-center gap-1 text-[11px]">
+                          <CreditCard className="h-3.5 w-3.5 text-[#275d4f]" />
+                          <strong>{m.accountsCount}</strong> Accounts
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-[11px]">
+                          <Banknote className="h-3.5 w-3.5 text-amber-600" />
+                          <strong>{m.loansCount}</strong> Loans
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <StatusBadge tone={m.status === "ACTIVE" ? "success" : m.status === "SUSPENDED" ? "danger" : "neutral"}>
+                        {m.status}
+                      </StatusBadge>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {canEdit && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setEditingMember(m)}
+                          className="h-8 gap-1 text-slate-700 hover:text-slate-900"
+                        >
+                          <Edit className="h-3.5 w-3.5" /> Edit
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination Footer */}
+        {pagination.totalPages > 1 && (
+          <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
+            <div>
+              Showing <strong>{(pagination.page - 1) * pagination.pageSize + 1}</strong> to{" "}
+              <strong>
+                {Math.min(pagination.page * pagination.pageSize, pagination.total)}
+              </strong>{" "}
+              of <strong>{pagination.total}</strong> members
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pagination.page <= 1}
+                onClick={() => handlePageChange(pagination.page - 1)}
+                className="h-7 px-2 text-xs"
+              >
+                <ChevronLeft className="h-3.5 w-3.5 mr-1" /> Previous
+              </Button>
+              <span className="font-semibold text-slate-700 px-1">
+                {pagination.page} / {pagination.totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pagination.page >= pagination.totalPages}
+                onClick={() => handlePageChange(pagination.page + 1)}
+                className="h-7 px-2 text-xs"
+              >
+                Next <ChevronRight className="h-3.5 w-3.5 ml-1" />
+              </Button>
+            </div>
+          </div>
+        )}
+      </Card>
+
+      {/* Modals */}
+      {createModalOpen && (
+        <CreateMemberModal
+          branches={branches}
+          onClose={() => setCreateModalOpen(false)}
+          onSuccess={handleCreateSuccess}
+        />
+      )}
+
+      {editingMember && (
+        <EditMemberModal
+          member={editingMember}
+          onClose={() => setEditingMember(null)}
+          onSuccess={handleEditSuccess}
+        />
+      )}
+    </div>
+  );
+}
+
+function XIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+  );
+}
