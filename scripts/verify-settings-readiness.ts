@@ -1,13 +1,17 @@
 import { prisma } from "../src/lib/prisma";
+import { initializeNotificationTemplates } from "../src/lib/settings/notification-service";
 
 const REQUIRED_SETTINGS_PERMISSIONS = [
   "settings.view",
   "settings.company.manage",
   "settings.branch.manage",
   "settings.financial.manage",
+  "settings.notifications.manage",
+  "settings.integrations.manage",
 ] as const;
 
 async function verifySettingsReadiness() {
+  await initializeNotificationTemplates();
   const [permissions, superAdminRole, activeSuperAdminAssignments, branches, companyProfileCount] =
     await Promise.all([
       prisma.permission.findMany({
