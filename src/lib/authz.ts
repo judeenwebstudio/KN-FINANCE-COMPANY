@@ -1,13 +1,14 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getUserEffectivePermissions, getUserAuthorizedBranchScope } from "@/lib/auth/authorize";
 
-export async function getCurrentUser() {
+export const getCurrentUser = cache(async () => {
   const session = await auth();
   if (!session?.user?.id) return null;
   return prisma.user.findUnique({ where: { id: session.user.id }, include: { memberProfile: true } });
-}
+});
 
 export async function requireAdmin() {
   const user = await getCurrentUser();

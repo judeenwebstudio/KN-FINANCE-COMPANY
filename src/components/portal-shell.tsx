@@ -10,7 +10,7 @@ import {
   Bell, BellDot, Building2, Calculator, CalendarClock, ChartNoAxesCombined,
   ChevronDown, CircleDollarSign, HandCoins, Languages, Landmark, LayoutDashboard,
   LogOut, Menu, PanelLeftClose, ReceiptText, Search, Settings, User, UserCog,
-  Users, WalletCards, X, type LucideIcon,
+  UserRound, Users, WalletCards, X, type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { memberNavigation, adminNavItems } from "@/lib/navigation";
@@ -46,15 +46,33 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notifMenuOpen, setNotifMenuOpen] = useState(false);
   const [selectedBranchId, setSelectedBranchId] = useState("all");
+
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const notifMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function closeMenu(event: MouseEvent) {
-      if (!userMenuRef.current?.contains(event.target as Node)) setUserMenuOpen(false);
+    function handleOutsideClick(event: MouseEvent) {
+      if (!userMenuRef.current?.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+      if (!notifMenuRef.current?.contains(event.target as Node)) {
+        setNotifMenuOpen(false);
+      }
     }
-    document.addEventListener("mousedown", closeMenu);
-    return () => document.removeEventListener("mousedown", closeMenu);
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setUserMenuOpen(false);
+        setNotifMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const sidebar = (
@@ -145,8 +163,8 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       {/* ── Dark Sidebar User Card ── */}
       <div className="border-t border-shell-border bg-shell-navy p-3 shrink-0">
         <div className={cn("flex items-center gap-3 rounded-xl border border-shell-border-subtle bg-shell-navy-surface p-2.5 shadow-xs", collapsed && "justify-center p-2")}>
-          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-shell-gold/20 text-xs font-bold text-shell-gold-light border border-shell-gold/30">
-            {user.name.slice(0, 2).toUpperCase()}
+          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-shell-gold/20 text-shell-gold-light border border-shell-gold/30">
+            <UserRound className="size-4.5 text-shell-gold-light" />
           </div>
           {!collapsed && (
             <div className="min-w-0">
@@ -238,15 +256,39 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
               </button>
             )}
 
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Notifications"
-              className="relative rounded-xl text-slate-300 hover:bg-shell-navy-elevated hover:text-white"
-            >
-              <Bell className="size-5" />
-              <span className="absolute right-2 top-2 size-2 rounded-full bg-rose-500 ring-2 ring-shell-navy" />
-            </Button>
+            {/* Notification Popover Dropdown */}
+            <div className="relative" ref={notifMenuRef}>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Notifications"
+                aria-expanded={notifMenuOpen}
+                onClick={() => setNotifMenuOpen(!notifMenuOpen)}
+                className="relative rounded-xl text-slate-300 hover:bg-shell-navy-elevated hover:text-white"
+              >
+                <Bell className="size-5" />
+              </Button>
+
+              {notifMenuOpen && (
+                <div
+                  role="dialog"
+                  aria-label="Notifications popover"
+                  className="absolute right-0 mt-2 w-72 origin-top-right rounded-xl border border-slate-200 bg-white p-4 shadow-2xl animate-in fade-in zoom-in-95 duration-150 z-50"
+                >
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 className="text-xs font-bold text-slate-900">Notifications</h3>
+                    <span className="text-[10px] font-medium text-slate-400">0 unread</span>
+                  </div>
+                  <div className="py-6 text-center text-slate-500">
+                    <Bell className="mx-auto size-7 text-slate-300 mb-2" />
+                    <p className="text-xs font-semibold text-slate-700">No new notifications</p>
+                    <p className="text-[11px] text-slate-400 mt-1">
+                      System alerts and activity updates will appear here.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Profile Dropdown */}
             <div className="relative" ref={userMenuRef}>
@@ -256,8 +298,8 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className="flex items-center gap-2 rounded-xl p-1.5 transition-colors hover:bg-shell-navy-elevated"
               >
-                <span className="grid size-8 place-items-center rounded-xl bg-shell-gold/20 text-xs font-bold text-shell-gold-light ring-1 ring-shell-gold/40">
-                  {user.name.slice(0, 2).toUpperCase()}
+                <span className="grid size-8 place-items-center rounded-xl bg-shell-gold/20 text-shell-gold-light ring-1 ring-shell-gold/40">
+                  <UserRound className="size-4 text-shell-gold-light" />
                 </span>
                 <span className="hidden text-left md:block">
                   <span className="block text-xs font-semibold text-white">{user.name}</span>

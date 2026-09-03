@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "../authz";
 import { prisma } from "../prisma";
@@ -26,8 +27,9 @@ export class BranchAccessDeniedError extends Error {
  * Resolves the effective permissions for a user authoritatively from relational RBAC.
  * Returns an empty Set if the user is INACTIVE or SUSPENDED.
  * Strictly FAILS CLOSED if relational RBAC assignments are missing (never falls back to legacy User.role).
+ * Deduplicated per-request via React cache.
  */
-export async function getUserEffectivePermissions(userId: string): Promise<Set<string>> {
+export const getUserEffectivePermissions = cache(async (userId: string): Promise<Set<string>> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
@@ -69,13 +71,14 @@ export async function getUserEffectivePermissions(userId: string): Promise<Set<s
   }
 
   return effectivePermissions;
-}
+});
 
 /**
  * Resolves the authorized branch scope for a user authoritatively.
  * Returns { global: false, branchIds: [] } if user is INACTIVE or SUSPENDED.
+ * Deduplicated per-request via React cache.
  */
-export async function getUserAuthorizedBranchScope(userId: string): Promise<BranchScope> {
+export const getUserAuthorizedBranchScope = cache(async (userId: string): Promise<BranchScope> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
@@ -110,7 +113,7 @@ export async function getUserAuthorizedBranchScope(userId: string): Promise<Bran
     global: false,
     branchIds: explicitBranchIds,
   };
-}
+});
 
 /**
  * Server guard checking if a user has a specific permission code.
