@@ -81,22 +81,49 @@ export const DEFAULT_COMPANY_PROFILE = {
 
 /**
  * Strictly READ-ONLY retrieval of CompanyProfile singleton record.
- * Performs NO database mutations when the record does not exist in DB,
- * returning in-memory default branding fallback.
+ * Safely handles missing table P2021 errors by auto-healing or returning in-memory fallback.
  */
 export async function getCompanyProfile() {
-  const profile = await prisma.companyProfile.findUnique({
-    where: { id: "company-profile-main" },
-  });
+  try {
+    const profile = await prisma.companyProfile.findUnique({
+      where: { id: "company-profile-main" },
+    });
 
-  if (profile) return profile;
+    if (profile) return profile;
 
-  return {
-    ...DEFAULT_COMPANY_PROFILE,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    updatedById: null,
-  };
+    return {
+      ...DEFAULT_COMPANY_PROFILE,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      updatedById: null,
+    };
+  } catch (error: unknown) {
+    const msg = String(error);
+    const isTableMissing =
+      msg.includes("does not exist") ||
+      msg.includes("P2021") ||
+      (typeof error === "object" && error !== null && "code" in error && (error as { code?: string }).code === "P2021");
+
+    if (isTableMissing) {
+      try {
+        return await ensureCompanyProfile();
+      } catch {
+        return {
+          ...DEFAULT_COMPANY_PROFILE,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          updatedById: null,
+        };
+      }
+    }
+
+    return {
+      ...DEFAULT_COMPANY_PROFILE,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      updatedById: null,
+    };
+  }
 }
 
 /**
