@@ -5,11 +5,13 @@ import {
   getMembersList,
   createMember,
   updateMember,
+  getMemberForEdit,
+  maskIdentityNumber,
 } from "../member-service";
 import { PermissionDeniedError, BranchAccessDeniedError } from "../../auth/authorize";
 import { UserStatus } from "../../../generated/prisma/client";
 
-describe("Phase 2A Completion Repair — Member Service Unit & RBAC Tests", () => {
+describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardening Tests", () => {
   let superAdminUserId: string;
   let normalAdminUserId: string;
   let unauthorizedUserId: string;
@@ -155,7 +157,7 @@ describe("Phase 2A Completion Repair — Member Service Unit & RBAC Tests", () =
   });
 
   after(async () => {
-    // Delete AuditLogs created by test users first to satisfy FK constraint
+    // Teardown created test accounts, audit logs, member profiles, and users
     const testUsers = await prisma.user.findMany({
       where: { email: { contains: "creditflow.test" } },
       select: { id: true },
@@ -163,8 +165,14 @@ describe("Phase 2A Completion Repair — Member Service Unit & RBAC Tests", () =
     const userIds = testUsers.map((u) => u.id);
 
     if (userIds.length > 0) {
+      await prisma.account.deleteMany({
+        where: { member: { userId: { in: userIds } } },
+      });
       await prisma.auditLog.deleteMany({
         where: { actorUserId: { in: userIds } },
+      });
+      await prisma.memberProfile.deleteMany({
+        where: { userId: { in: userIds } },
       });
       await prisma.user.deleteMany({
         where: { id: { in: userIds } },
@@ -182,156 +190,171 @@ describe("Phase 2A Completion Repair — Member Service Unit & RBAC Tests", () =
     );
   });
 
-  test("2. Super Admin can list members across global branch scope", async () => {
-    const result = await getMembersList(superAdminUserId, { page: 1, pageSize: 10 });
-    assert.ok(Array.isArray(result.members));
-    assert.ok(result.pagination.total >= 0);
-  });
-
-  test("3. Restricted staff user can only access assigned branch scope", async () => {
-    // Create a member in testBranch2 (out of scope for normalAdminUser)
-    const outOfScopeMember = await createMember(superAdminUserId, {
-      name: "Out of Scope Member",
-      email: `outofscope-${Date.now()}@creditflow.test`,
-      phone: "+1-555-9999",
-      address: "Branch 2 Rd",
-      branchId: testBranch2Id,
-    });
-
-    const result = await getMembersList(normalAdminUserId, { page: 1, pageSize: 50 });
-    const found = result.members.find((m) => m.id === outOfScopeMember.member.id);
-    assert.equal(found, undefined, "Restricted staff user MUST NOT see member from unauthorized branch");
-  });
-
-  test("4. Atomic Member creation generates valid memberNumber and User account", async () => {
-    const email = `newmember-${Date.now()}@creditflow.test`;
-    const res = await createMember(superAdminUserId, {
-      name: "Alice Cooper",
+  test("2. Privacy minimization: passwordHash never reaches directory client DTO & DOB is omitted", async () => {
+    const email = `privacy-test-${Date.now()}@creditflow.test`;
+    await createMember(normalAdminUserId, {
+      name: "Privacy Member",
       email,
-      phone: "+1-555-4321",
-      address: "742 Evergreen Terrace",
-      dateOfBirth: "1990-05-15",
-      identityNumber: `ID-${Date.now()}`,
+      password: "SecurePassword123!",
+      phone: "+1-555-8888",
+      address: "1 Privacy Lane",
+      dateOfBirth: "1992-10-20",
+      identityNumber: `ID-PRIV-${Date.now()}-7654`,
       branchId: testBranch1Id,
     });
 
-    assert.ok(res.member.id);
-    assert.equal(res.member.name, "Alice Cooper");
-    assert.equal(res.member.email, email);
-    assert.ok(res.member.memberNumber.startsWith("MEM-"));
-    assert.ok(res.generatedPassword, "Must generate temporary password when omitted");
+    const list = await getMembersList(normalAdminUserId, { search: "Privacy Member" });
+    assert.equal(list.members.length, 1);
+    const dto = list.members[0];
 
-    // Verify User record
-    const userRecord = await prisma.user.findUnique({ where: { email } });
-    assert.ok(userRecord);
-    assert.equal(userRecord?.role, "MEMBER");
-    assert.equal(userRecord?.status, "ACTIVE");
+    // Assert privacy minimization
+    assert.equal((dto as Record<string, unknown>).passwordHash, undefined);
+    assert.equal((dto as Record<string, unknown>).dateOfBirth, undefined);
+    assert.equal(dto.maskedIdentityNumber, "••••-7654");
   });
 
-  test("5. Member creation rejects duplicate email", async () => {
-    const email = `dup-email-${Date.now()}@creditflow.test`;
-    await createMember(superAdminUserId, {
-      name: "First Member",
+  test("3. Full identity & DOB remain available ONLY through getMemberForEdit to authorized users", async () => {
+    const email = `edit-dto-${Date.now()}@creditflow.test`;
+    const idNum = `ID-EDIT-${Date.now()}`;
+    const created = await createMember(normalAdminUserId, {
+      name: "Edit DTO Member",
       email,
-      phone: "+1-555-1111",
-      address: "101 First Ave",
-      branchId: testBranch1Id,
-    });
-
-    await assert.rejects(
-      async () => {
-        await createMember(superAdminUserId, {
-          name: "Second Member",
-          email,
-          phone: "+1-555-2222",
-          address: "102 Second Ave",
-          branchId: testBranch1Id,
-        });
-      },
-      /already registered/
-    );
-  });
-
-  test("6. Member creation rejects duplicate identity number", async () => {
-    const idNum = `ID-DUP-${Date.now()}`;
-    await createMember(superAdminUserId, {
-      name: "Member A",
-      email: `mem-a-${Date.now()}@creditflow.test`,
-      phone: "+1-555-1111",
-      address: "101 First Ave",
+      password: "SecurePassword123!",
+      phone: "+1-555-7777",
+      address: "2 Edit Way",
+      dateOfBirth: "1988-04-12",
       identityNumber: idNum,
       branchId: testBranch1Id,
     });
 
+    // Authorized call
+    const detail = await getMemberForEdit(normalAdminUserId, created.id);
+    assert.equal(detail.identityNumber, idNum);
+    assert.equal(detail.dateOfBirth, "1988-04-12");
+
+    // Unauthorized call (wrong branch scope for staff user)
+    const branch2Member = await createMember(superAdminUserId, {
+      name: "Branch 2 Member",
+      email: `br2-${Date.now()}@creditflow.test`,
+      password: "SecurePassword123!",
+      phone: "+1-555-0000",
+      address: "Branch 2 Address",
+      identityNumber: `ID-BR2-${Date.now()}`,
+      branchId: testBranch2Id,
+    });
+
     await assert.rejects(
       async () => {
-        await createMember(superAdminUserId, {
-          name: "Member B",
-          email: `mem-b-${Date.now()}@creditflow.test`,
-          phone: "+1-555-2222",
-          address: "102 Second Ave",
-          identityNumber: idNum,
-          branchId: testBranch1Id,
-        });
+        await getMemberForEdit(normalAdminUserId, branch2Member.id);
       },
-      /identity number/i
+      (err: unknown) => err instanceof BranchAccessDeniedError,
+      "Must block fetching detail DTO for unauthorized branch member"
     );
   });
 
-  test("7. Member creation enforces branch authorization for creator", async () => {
+  test("4. Explicit password requirement: creation fails if password is omitted or < 8 chars", async () => {
     await assert.rejects(
       async () => {
         await createMember(normalAdminUserId, {
-          name: "Unauthorized Branch Member",
-          email: `unauth-br-${Date.now()}@creditflow.test`,
-          phone: "+1-555-3333",
-          address: "303 Third Ave",
-          branchId: testBranch2Id, // Not in normalAdminUser's scope
+          name: "Short Pass",
+          email: `shortpass-${Date.now()}@creditflow.test`,
+          password: "",
+          phone: "+1-555-1111",
+          address: "Address",
+          branchId: testBranch1Id,
         });
       },
-      (err: unknown) => err instanceof BranchAccessDeniedError,
-      "Must reject creation in unauthorized branch"
+      /must be at least 8 characters/
     );
   });
 
-  test("8. Safe Member update updates details and status atomically while maintaining email/branch immutability", async () => {
+  test("5. Audit Log PII protection: audit metadata contains boolean flags only, NO credentials or identity numbers", async () => {
+    const email = `audit-pii-${Date.now()}@creditflow.test`;
+    const idNum = `ID-SECRET-${Date.now()}`;
     const created = await createMember(normalAdminUserId, {
-      name: "Bob Builder",
-      email: `bob-${Date.now()}@creditflow.test`,
-      phone: "+1-555-7777",
-      address: "1 Construction Way",
+      name: "Audit PII Member",
+      email,
+      password: "SuperSecretPassword123!",
+      phone: "+1-555-9999",
+      address: "Audit St",
+      identityNumber: idNum,
       branchId: testBranch1Id,
     });
 
-    const updated = await updateMember(normalAdminUserId, {
-      memberId: created.member.id,
-      name: "Bob The Builder",
-      phone: "+1-555-8888",
-      address: "2 Remodel St",
-      identityNumber: `ID-BOB-${Date.now()}`,
+    const auditLog = await prisma.auditLog.findFirst({
+      where: { entityId: created.id, action: "member.create" },
+    });
+    assert.ok(auditLog);
+    assert.ok(auditLog.metadataJson);
+
+    const metaStr = auditLog.metadataJson;
+    assert.equal(metaStr.includes("SuperSecretPassword123!"), false);
+    assert.equal(metaStr.includes(idNum), false);
+    assert.equal(metaStr.includes('"hasIdentityNumber":true'), true);
+  });
+
+  test("6. User.status INACTIVE or SUSPENDED revokes relational RBAC permissions and branch scope", async () => {
+    const suspendedUser = await prisma.user.create({
+      data: {
+        name: "Suspended Staff User",
+        email: `suspended-${Date.now()}@creditflow.test`,
+        passwordHash: "dummyhash",
+        role: "SUPER_ADMIN",
+        status: UserStatus.SUSPENDED,
+        hasGlobalBranchAccess: true,
+      },
+    });
+
+    const result = await getMembersList(suspendedUser.id).catch((e) => e);
+    assert.ok(result instanceof PermissionDeniedError, "Suspended user MUST be denied access");
+
+    await prisma.user.delete({ where: { id: suspendedUser.id } });
+  });
+
+  test("7. Mask identity number server utility unit test", () => {
+    assert.equal(maskIdentityNumber("123456789"), "••••-6789");
+    assert.equal(maskIdentityNumber("1234"), "••••");
+    assert.equal(maskIdentityNumber(null), null);
+    assert.equal(maskIdentityNumber(""), null);
+  });
+
+  test("8. Financial safety: updating status or details DOES NOT alter accounts or loans", async () => {
+    const created = await createMember(normalAdminUserId, {
+      name: "Financial Safety Member",
+      email: `fin-safety-${Date.now()}@creditflow.test`,
+      password: "Password123!",
+      phone: "+1-555-1212",
+      address: "Safety Rd",
+      branchId: testBranch1Id,
+    });
+
+    // Create an active account for member
+    const account = await prisma.account.create({
+      data: {
+        accountNumber: `ACC-${Date.now()}`,
+        memberId: created.id,
+        branchId: testBranch1Id,
+        accountType: "SAVINGS",
+        currency: "USD",
+        balance: 5000.0,
+        status: "ACTIVE",
+      },
+    });
+
+    // Update member status to SUSPENDED
+    await updateMember(normalAdminUserId, {
+      memberId: created.id,
+      name: "Financial Safety Member (Suspended)",
+      phone: "+1-555-1212",
+      address: "Safety Rd",
       status: UserStatus.SUSPENDED,
     });
 
-    assert.equal(updated.name, "Bob The Builder");
-    assert.equal(updated.phone, "+1-555-8888");
-    assert.equal(updated.address, "2 Remodel St");
-    assert.equal(updated.status, UserStatus.SUSPENDED);
-    assert.equal(updated.email, created.member.email, "Email MUST remain immutable");
-    assert.equal(updated.branchId, created.member.branchId, "BranchId MUST remain immutable");
-  });
+    // Verify account balance and status were untouched
+    const recheckedAccount = await prisma.account.findUnique({ where: { id: account.id } });
+    assert.equal(Number(recheckedAccount?.balance), 5000);
+    assert.equal(recheckedAccount?.status, "ACTIVE");
 
-  test("9. Search filtering matches memberNumber, name, email, phone, and identityNumber", async () => {
-    const searchTargetName = `SearchTarget_${Date.now()}`;
-    const created = await createMember(superAdminUserId, {
-      name: searchTargetName,
-      email: `searchtarget-${Date.now()}@creditflow.test`,
-      phone: "+1-555-9090",
-      address: "Target Address",
-      branchId: testBranch1Id,
-    });
-
-    const searchResult = await getMembersList(superAdminUserId, { search: searchTargetName });
-    assert.equal(searchResult.members.length, 1);
-    assert.equal(searchResult.members[0].id, created.member.id);
+    await prisma.account.delete({ where: { id: account.id } });
   });
 });

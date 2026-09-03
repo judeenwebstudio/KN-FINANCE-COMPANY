@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/authz";
 import {
   createMember as createMemberService,
   updateMember as updateMemberService,
+  getMemberForEdit as getMemberForEditService,
   CreateMemberInput,
   UpdateMemberInput,
 } from "@/lib/members/member-service";
@@ -29,5 +30,17 @@ export async function updateMemberAction(input: UpdateMemberInput) {
     return { success: true, data: result };
   } catch (err: any) {
     return { success: false, error: err.message || "Failed to update member." };
+  }
+}
+
+export async function getMemberForEditAction(memberId: string) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return { success: false, error: "Unauthorized. Please log in." };
+
+    const result = await getMemberForEditService(user.id, memberId);
+    return { success: true, data: result };
+  } catch (err: any) {
+    return { success: false, error: err.message || "Failed to fetch member for edit." };
   }
 }

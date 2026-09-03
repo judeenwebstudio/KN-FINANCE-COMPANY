@@ -11,14 +11,13 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  KeyRound,
   CreditCard,
   Banknote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import { SafeMemberListItemDTO, GetMembersResult } from "@/lib/members/member-service";
+import { GetMembersResult } from "@/lib/members/member-service";
 import { CreateMemberModal } from "./create-member-modal";
 import { EditMemberModal } from "./edit-member-modal";
 
@@ -45,8 +44,7 @@ export function MembersClient({
   const [statusFilter, setStatusFilter] = useState(searchParams.get("status") || "");
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [editingMember, setEditingMember] = useState<SafeMemberListItemDTO | null>(null);
-  const [tempPasswordNotice, setTempPasswordNotice] = useState<{ name: string; pass: string } | null>(null);
+  const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
 
   const updateFilters = (newParams: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -54,7 +52,7 @@ export function MembersClient({
       if (v) params.set(k, v);
       else params.delete(k);
     });
-    params.set("page", "1"); // Reset to page 1 on filter change
+    params.set("page", "1");
     router.push(`/admin/members?${params.toString()}`);
   };
 
@@ -69,16 +67,13 @@ export function MembersClient({
     router.push(`/admin/members?${params.toString()}`);
   };
 
-  const handleCreateSuccess = (newMember: SafeMemberListItemDTO, tempPass?: string) => {
+  const handleCreateSuccess = () => {
     setCreateModalOpen(false);
-    if (tempPass) {
-      setTempPasswordNotice({ name: newMember.name, pass: tempPass });
-    }
     router.refresh();
   };
 
   const handleEditSuccess = () => {
-    setEditingMember(null);
+    setEditingMemberId(null);
     router.refresh();
   };
 
@@ -108,32 +103,6 @@ export function MembersClient({
           </Button>
         )}
       </div>
-
-      {/* Temp Password Notice banner if generated */}
-      {tempPasswordNotice && (
-        <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-xs text-amber-900 flex items-start justify-between shadow-xs">
-          <div className="flex items-start gap-3">
-            <KeyRound className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-amber-950">
-                Temporary Password Generated for {tempPasswordNotice.name}
-              </p>
-              <p className="mt-1 text-amber-800">
-                Please securely copy this password for initial member onboarding:
-              </p>
-              <div className="mt-2 inline-block rounded-md bg-white px-3 py-1.5 font-mono text-sm font-bold text-amber-900 border border-amber-300 select-all">
-                {tempPasswordNotice.pass}
-              </div>
-            </div>
-          </div>
-          <button
-            onClick={() => setTempPasswordNotice(null)}
-            className="text-amber-500 hover:text-amber-700"
-          >
-            <XIcon className="h-4 w-4" />
-          </button>
-        </div>
-      )}
 
       {/* Filters Bar */}
       <Card className="p-4 bg-slate-50/70">
@@ -215,8 +184,8 @@ export function MembersClient({
               <tr>
                 <th className="px-4 py-3">Member Details</th>
                 <th className="px-4 py-3">Branch</th>
-                <th className="px-4 py-3">Identity / DOB</th>
-                <th className="px-4 py-3">Financial Products</th>
+                <th className="px-4 py-3">Masked ID</th>
+                <th className="px-4 py-3">Active Products</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3 text-right">Actions</th>
               </tr>
@@ -249,11 +218,8 @@ export function MembersClient({
                       </div>
                       <span className="text-[10px] text-slate-400 font-mono">{m.branchCode}</span>
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="text-slate-700">{m.identityNumber || "—"}</div>
-                      <div className="text-slate-400 text-[11px]">
-                        {m.dateOfBirth ? `DOB: ${m.dateOfBirth}` : "DOB: Unspecified"}
-                      </div>
+                    <td className="px-4 py-3 font-mono text-slate-700">
+                      {m.maskedIdentityNumber || "—"}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3 text-slate-600">
@@ -277,7 +243,7 @@ export function MembersClient({
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => setEditingMember(m)}
+                          onClick={() => setEditingMemberId(m.id)}
                           className="h-8 gap-1 text-slate-700 hover:text-slate-900"
                         >
                           <Edit className="h-3.5 w-3.5" /> Edit
@@ -337,27 +303,13 @@ export function MembersClient({
         />
       )}
 
-      {editingMember && (
+      {editingMemberId && (
         <EditMemberModal
-          member={editingMember}
-          onClose={() => setEditingMember(null)}
+          memberId={editingMemberId}
+          onClose={() => setEditingMemberId(null)}
           onSuccess={handleEditSuccess}
         />
       )}
     </div>
-  );
-}
-
-function XIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <path d="M18 6L6 18M6 6l12 12" />
-    </svg>
   );
 }

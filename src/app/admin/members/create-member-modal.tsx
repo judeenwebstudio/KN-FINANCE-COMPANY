@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, UserPlus, ShieldAlert, KeyRound } from "lucide-react";
+import { X, UserPlus, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createMemberAction } from "./actions";
 import { SafeMemberListItemDTO } from "@/lib/members/member-service";
@@ -18,7 +18,7 @@ export function CreateMemberModal({
 }: {
   branches: BranchDTO[];
   onClose: () => void;
-  onSuccess: (newMember: SafeMemberListItemDTO, tempPassword?: string) => void;
+  onSuccess: (newMember: SafeMemberListItemDTO) => void;
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,13 +33,17 @@ export function CreateMemberModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!password || password.length < 8) {
+      setError("Initial password must be at least 8 characters long.");
+      return;
+    }
     setLoading(true);
     setError(null);
 
     const res = await createMemberAction({
       name,
       email,
-      password: password ? password : undefined,
+      password,
       phone,
       address,
       dateOfBirth: dateOfBirth ? dateOfBirth : null,
@@ -51,7 +55,7 @@ export function CreateMemberModal({
     if (!res.success || !res.data) {
       setError(res.error || "Failed to create member.");
     } else {
-      onSuccess(res.data.member, res.data.generatedPassword);
+      onSuccess(res.data);
     }
   };
 
@@ -170,22 +174,17 @@ export function CreateMemberModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Initial Password</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Initial Password *</label>
               <input
                 type="password"
+                required
+                minLength={8}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                placeholder="Leave blank for random temp"
+                placeholder="Minimum 8 characters..."
                 className={inputClasses}
               />
             </div>
-          </div>
-
-          <div className="rounded-lg bg-amber-50 p-3 text-xs text-amber-800 border border-amber-200 flex items-start gap-2">
-            <KeyRound className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-            <p>
-              If password is left blank, a secure random password will be generated automatically and displayed for distribution.
-            </p>
           </div>
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">

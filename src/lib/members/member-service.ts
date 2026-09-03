@@ -7,7 +7,7 @@ import {
   PermissionDeniedError,
 } from "../auth/authorize";
 import { logAuditEvent } from "../audit/audit-logger";
-import { Role, UserStatus } from "../../generated/prisma/client";
+import { Role, UserStatus, AccountStatus, LoanStatus } from "../../generated/prisma/client";
 
 export type GetMembersParams = {
   search?: string;
@@ -17,7 +17,34 @@ export type GetMembersParams = {
   pageSize?: number;
 };
 
+/**
+ * Privacy-minimized DTO for directory list rendering.
+ * Does NOT contain passwordHash, unmasked identityNumber, or dateOfBirth.
+ */
 export type SafeMemberListItemDTO = {
+  id: string;
+  userId: string;
+  memberNumber: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  maskedIdentityNumber: string | null;
+  branchId: string;
+  branchName: string;
+  branchCode: string;
+  status: UserStatus;
+  accountsCount: number;
+  loansCount: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+/**
+ * Authorized Detail DTO for editing member details.
+ * Exposed ONLY to authorized users with `members.edit` within authorized branch scope.
+ */
+export type SafeMemberDetailDTO = {
   id: string;
   userId: string;
   memberNumber: string;
@@ -31,10 +58,6 @@ export type SafeMemberListItemDTO = {
   branchName: string;
   branchCode: string;
   status: UserStatus;
-  accountsCount: number;
-  loansCount: number;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type GetMembersResult = {
@@ -50,7 +73,7 @@ export type GetMembersResult = {
 export type CreateMemberInput = {
   name: string;
   email: string;
-  password?: string;
+  password: string; // Required explicit password (min 8 chars)
   phone: string;
   address: string;
   dateOfBirth?: string | null;
@@ -68,13 +91,14 @@ export type UpdateMemberInput = {
   status: UserStatus;
 };
 
-function generateSecureRandomPassword(length = 12): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-  let pass = "";
-  for (let i = 0; i < length; i++) {
-    pass += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return pass;
+/**
+ * Server-side privacy utility to mask identity numbers (shows only last 4 digits).
+ */
+export function maskIdentityNumber(val: string | null | undefined): string | null {
+  if (!val) return null;
+  const trimmed = val.trim();
+  if (trimmed.length <= 4) return "••••";
+  return `••••-${trimmed.slice(-4)}`;
 }
 
 /**
@@ -105,6 +129,7 @@ async function generateMemberNumber(tx: Parameters<Parameters<typeof prisma.$tra
 
 /**
  * Retrieves paginated, search-filtered member directory matching authorized branch scope.
+ * Returned DTO is strictly privacy-minimized (masked identity number, DOB omitted, zero credentials).
  */
 export async function getMembersList(
   executorUserId: string,
@@ -129,7 +154,6 @@ export async function getMembersList(
   let targetBranchIds = branchScope.branchIds;
   if (params.branchId) {
     if (!branchScope.global && !branchScope.branchIds.includes(params.branchId)) {
-      // Requested branch out of scope
       return {
         members: [],
         pagination: { total: 0, page: 1, pageSize: params.pageSize || 10, totalPages: 0 },
@@ -165,7 +189,7 @@ export async function getMembersList(
     ];
   }
 
-  // 4. Execute queries
+  // 4. Execute queries with authoritative ACTIVE account and loan counts
   const [total, records] = await Promise.all([
     prisma.memberProfile.count({ where }),
     prisma.memberProfile.findMany({
@@ -176,7 +200,12 @@ export async function getMembersList(
       include: {
         user: { select: { name: true, email: true, status: true } },
         branch: { select: { name: true, code: true } },
-        _count: { select: { accounts: true, loans: true } },
+        _count: {
+          select: {
+            accounts: { where: { status: AccountStatus.ACTIVE } },
+            loans: { where: { status: LoanStatus.ACTIVE } },
+          },
+        },
       },
     }),
   ]);
@@ -191,8 +220,7 @@ export async function getMembersList(
     email: m.user.email,
     phone: m.phone,
     address: m.address,
-    dateOfBirth: m.dateOfBirth ? m.dateOfBirth.toISOString().split("T")[0] : null,
-    identityNumber: m.identityNumber || null,
+    maskedIdentityNumber: maskIdentityNumber(m.identityNumber),
     branchId: m.branchId,
     branchName: m.branch.name,
     branchCode: m.branch.code,
@@ -215,12 +243,57 @@ export async function getMembersList(
 }
 
 /**
+ * Fetches detail DTO for editing an existing member.
+ * Requires `members.edit` and branch scope authorization.
+ */
+export async function getMemberForEdit(
+  executorUserId: string,
+  memberId: string
+): Promise<SafeMemberDetailDTO> {
+  const allowed = await hasPermission(executorUserId, "members.edit");
+  if (!allowed) {
+    throw new PermissionDeniedError("Required permission missing: members.edit");
+  }
+
+  const member = await prisma.memberProfile.findUnique({
+    where: { id: memberId },
+    include: {
+      user: { select: { name: true, email: true, status: true } },
+      branch: { select: { name: true, code: true } },
+    },
+  });
+
+  if (!member) {
+    throw new Error(`Member with ID '${memberId}' not found.`);
+  }
+
+  await assertBranchAccess(executorUserId, member.branchId);
+
+  return {
+    id: member.id,
+    userId: member.userId,
+    memberNumber: member.memberNumber,
+    name: member.user.name,
+    email: member.user.email,
+    phone: member.phone,
+    address: member.address,
+    dateOfBirth: member.dateOfBirth ? member.dateOfBirth.toISOString().split("T")[0] : null,
+    identityNumber: member.identityNumber || null,
+    branchId: member.branchId,
+    branchName: member.branch.name,
+    branchCode: member.branch.code,
+    status: member.user.status,
+  };
+}
+
+/**
  * Creates a new Member Profile + User account atomically.
+ * Requires explicit initial password (minimum 8 characters).
  */
 export async function createMember(
   executorUserId: string,
   input: CreateMemberInput
-): Promise<{ member: SafeMemberListItemDTO; generatedPassword?: string }> {
+): Promise<SafeMemberListItemDTO> {
   // 1. RBAC & Branch Scope checks
   const canCreate = await hasPermission(executorUserId, "members.create");
   if (!canCreate) {
@@ -235,11 +308,15 @@ export async function createMember(
   const address = input.address.trim();
   const identityNumber = input.identityNumber?.trim() || null;
   const dateOfBirth = input.dateOfBirth ? new Date(input.dateOfBirth) : null;
+  const plainPassword = input.password?.trim();
 
   if (!name) throw new Error("Member full name is required.");
   if (!email || !email.includes("@")) throw new Error("Valid email address is required.");
   if (!phone) throw new Error("Phone number is required.");
   if (!address) throw new Error("Residential address is required.");
+  if (!plainPassword || plainPassword.length < 8) {
+    throw new Error("Initial password is required and must be at least 8 characters long.");
+  }
 
   // Check unique email
   const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -253,16 +330,6 @@ export async function createMember(
     if (existingIdentity) {
       throw new Error(`Identity number '${identityNumber}' is already registered to another member.`);
     }
-  }
-
-  // Determine credential password
-  let plainPassword = input.password?.trim();
-  let generatedPassword: string | undefined = undefined;
-  if (!plainPassword) {
-    plainPassword = generateSecureRandomPassword();
-    generatedPassword = plainPassword;
-  } else if (plainPassword.length < 8) {
-    throw new Error("Password must be at least 8 characters long.");
   }
 
   const passwordHash = await hash(plainPassword, 12);
@@ -304,11 +371,16 @@ export async function createMember(
           include: {
             user: { select: { name: true, email: true, status: true } },
             branch: { select: { name: true, code: true } },
-            _count: { select: { accounts: true, loans: true } },
+            _count: {
+              select: {
+                accounts: { where: { status: AccountStatus.ACTIVE } },
+                loans: { where: { status: LoanStatus.ACTIVE } },
+              },
+            },
           },
         });
 
-        // Audit Log (Sanitized)
+        // Audit Log (Sanitized - NO plaintext passwords, hashes, or full identity numbers)
         await logAuditEvent(
           {
             actorUserId: executorUserId,
@@ -330,7 +402,7 @@ export async function createMember(
         return profile;
       });
 
-      const memberDto: SafeMemberListItemDTO = {
+      return {
         id: result.id,
         userId: result.userId,
         memberNumber: result.memberNumber,
@@ -338,8 +410,7 @@ export async function createMember(
         email: result.user.email,
         phone: result.phone,
         address: result.address,
-        dateOfBirth: result.dateOfBirth ? result.dateOfBirth.toISOString().split("T")[0] : null,
-        identityNumber: result.identityNumber || null,
+        maskedIdentityNumber: maskIdentityNumber(result.identityNumber),
         branchId: result.branchId,
         branchName: result.branch.name,
         branchCode: result.branch.code,
@@ -349,12 +420,9 @@ export async function createMember(
         createdAt: result.createdAt.toISOString(),
         updatedAt: result.updatedAt.toISOString(),
       };
-
-      return { member: memberDto, generatedPassword };
     } catch (err: unknown) {
       const isPrismaUnique = (err as { code?: string })?.code === "P2002";
       if (isPrismaUnique && attempts < maxAttempts) {
-        // Unique constraint race condition retry
         continue;
       }
       throw err;
@@ -366,11 +434,12 @@ export async function createMember(
 
 /**
  * Updates editable fields of an existing Member Profile & User status.
+ * Audit metadata strictly protects PII (records identityNumberUpdated boolean, never raw identity string).
  */
 export async function updateMember(
   executorUserId: string,
   input: UpdateMemberInput
-): Promise<SafeMemberListItemDTO> {
+): Promise<SafeMemberDetailDTO> {
   // 1. Permission check
   const canEdit = await hasPermission(executorUserId, "members.edit");
   if (!canEdit) {
@@ -438,11 +507,10 @@ export async function updateMember(
       include: {
         user: { select: { name: true, email: true, status: true } },
         branch: { select: { name: true, code: true } },
-        _count: { select: { accounts: true, loans: true } },
       },
     });
 
-    // Audit Log
+    // Audit Log (PII Protected: boolean flags only, NO identityNumber strings)
     const statusChanged = status !== existing.user.status;
     await logAuditEvent(
       {
@@ -459,8 +527,8 @@ export async function updateMember(
             name: name !== existing.user.name,
             phone: phone !== existing.phone,
             address: address !== existing.address,
-            dateOfBirth: dateOfBirth?.toISOString() !== existing.dateOfBirth?.toISOString(),
-            identityNumber: identityNumber !== existing.identityNumber,
+            dateOfBirthChanged: dateOfBirth?.toISOString() !== existing.dateOfBirth?.toISOString(),
+            identityNumberChanged: identityNumber !== existing.identityNumber,
           },
         },
       },
@@ -484,9 +552,5 @@ export async function updateMember(
     branchName: result.branch.name,
     branchCode: result.branch.code,
     status: result.user.status,
-    accountsCount: result._count.accounts,
-    loansCount: result._count.loans,
-    createdAt: result.createdAt.toISOString(),
-    updatedAt: result.updatedAt.toISOString(),
   };
 }
