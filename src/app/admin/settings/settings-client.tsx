@@ -876,11 +876,15 @@ export function SettingsClient({
                   <input
                     type="text"
                     required
+                    disabled={!!editingBranch}
                     placeholder="e.g. HQ-02"
                     value={branchForm.code}
                     onChange={(e) => setBranchForm({ ...branchForm, code: e.target.value.toUpperCase() })}
                     className={inputClass}
                   />
+                  {editingBranch && (
+                    <p className="text-[10px] text-slate-400 mt-1">Branch code is immutable after creation.</p>
+                  )}
                 </div>
                 <div>
                   <label className={labelClass}>Branch Name *</label>

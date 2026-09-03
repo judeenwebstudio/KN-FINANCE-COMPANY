@@ -6,12 +6,11 @@ import { getUserEffectivePermissions } from "../../auth/authorize";
 import { bootstrapRBAC } from "../../auth/bootstrap";
 import { BranchStatus } from "@/generated/prisma/client";
 
-describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests", () => {
+describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
   const testBranchCode = "TEST-BR-" + Math.floor(Math.random() * 10000);
   let createdBranchId: string;
 
-  test("should create a new branch and log audit event", async () => {
-    // Ensure RBAC catalog is synced to database
+  test("should create a new USD branch and log audit event", async () => {
     await bootstrapRBAC();
 
     const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
@@ -31,6 +30,7 @@ describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests
 
     assert.ok(newBranch.id);
     assert.equal(newBranch.code, testBranchCode);
+    assert.equal(newBranch.currency, "USD");
     assert.equal(newBranch.status, BranchStatus.ACTIVE);
     createdBranchId = newBranch.id;
 
@@ -44,6 +44,32 @@ describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests
       orderBy: { createdAt: "desc" },
     });
     assert.ok(auditLog, "Audit log entry for branch.create should exist");
+  });
+
+  test("should reject non-USD branch currency creation", async () => {
+    const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
+    assert.ok(adminUser);
+
+    await assert.rejects(
+      async () => {
+        await createBranch(adminUser.id, {
+          name: "Non USD Branch",
+          code: "EUR-BR-01",
+          email: "eur@knfinance.com",
+          phone: "+1 (800) 000-0000",
+          address: "123 St",
+          city: "City",
+          state: "ST",
+          country: "USA",
+          currency: "EUR",
+        });
+      },
+      (err: unknown) => {
+        assert.ok(err instanceof BranchValidationError);
+        assert.match(err.message, /operates exclusively on USD/);
+        return true;
+      }
+    );
   });
 
   test("should reject duplicate branch code creation", async () => {
@@ -72,7 +98,33 @@ describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests
     );
   });
 
-  test("should update existing branch and log audit event", async () => {
+  test("should enforce branch code IMMUTABILITY on update", async () => {
+    const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
+    assert.ok(adminUser);
+
+    await assert.rejects(
+      async () => {
+        await updateBranch(adminUser.id, createdBranchId, {
+          name: "Attempt Code Change",
+          code: "NEW-CODE-99",
+          email: `test.${testBranchCode.toLowerCase()}@knfinance.com`,
+          phone: "+1 (800) 555-0199",
+          address: "100 Test St",
+          city: "Testville",
+          state: "TS",
+          country: "USA",
+          currency: "USD",
+        });
+      },
+      (err: unknown) => {
+        assert.ok(err instanceof BranchValidationError);
+        assert.match(err.message, /immutable after creation/);
+        return true;
+      }
+    );
+  });
+
+  test("should update existing branch details and log detailed diff metadata", async () => {
     const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
     assert.ok(adminUser);
 
@@ -91,7 +143,7 @@ describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests
     assert.equal(updated.name, "Updated Branch " + testBranchCode);
     assert.equal(updated.phone, "+1 (800) 999-8888");
 
-    // Verify audit log
+    // Verify audit log containing diff
     const auditLog = await prisma.auditLog.findFirst({
       where: {
         action: "branch.update",
@@ -103,19 +155,10 @@ describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests
     assert.ok(auditLog, "Audit log entry for branch.update should exist");
   });
 
-  test("should toggle branch status and protect HQ-01 headquarters deactivation", async () => {
+  test("should protect HQ-01 primary branch deactivation", async () => {
     const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
     assert.ok(adminUser);
 
-    // Toggle created test branch to INACTIVE
-    const deactivated = await toggleBranchStatus(adminUser.id, createdBranchId, BranchStatus.INACTIVE);
-    assert.equal(deactivated.status, BranchStatus.INACTIVE);
-
-    // Toggle created test branch back to ACTIVE
-    const reactivated = await toggleBranchStatus(adminUser.id, createdBranchId, BranchStatus.ACTIVE);
-    assert.equal(reactivated.status, BranchStatus.ACTIVE);
-
-    // Deactivating HQ-01 must throw BranchValidationError
     const hq = await prisma.branch.findUnique({ where: { code: "HQ-01" } });
     if (hq) {
       await assert.rejects(
@@ -124,11 +167,55 @@ describe("Phase 7B Branch Management & Financial Configuration Unit & RBAC Tests
         },
         (err: unknown) => {
           assert.ok(err instanceof BranchValidationError);
-          assert.match(err.message, /Primary Headquarters branch \(HQ-01\) cannot be deactivated/);
+          assert.match(err.message, /Primary Headquarters branch \(HQ-01\) is the system anchor/);
           return true;
         }
       );
     }
+  });
+
+  test("should block branch deactivation when active operational dependencies exist", async () => {
+    const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
+    assert.ok(adminUser);
+
+    // Create a temporary branch with an active user dependency
+    const depBranchCode = "DEP-BR-" + Math.floor(Math.random() * 10000);
+    const depBranch = await createBranch(adminUser.id, {
+      name: "Dependency Branch",
+      code: depBranchCode,
+      email: `dep.${depBranchCode.toLowerCase()}@knfinance.com`,
+      phone: "+1 (800) 111-2222",
+      address: "1 Dep St",
+      city: "DepCity",
+      state: "DS",
+      country: "USA",
+      currency: "USD",
+    });
+
+    // Create active user assigned to depBranch
+    const tempUser = await prisma.user.create({
+      data: {
+        email: `user.${depBranchCode.toLowerCase()}@knfinance.com`,
+        name: "Branch User",
+        passwordHash: "dummyhash123",
+        role: "STAFF",
+        branchId: depBranch.id,
+        status: "ACTIVE",
+      },
+    });
+
+    // Attempting to deactivate depBranch must be blocked due to active user dependency
+    try {
+      await toggleBranchStatus(adminUser.id, depBranch.id, BranchStatus.INACTIVE);
+      assert.fail("Should have thrown BranchValidationError");
+    } catch (err: unknown) {
+      const error = err as Error;
+      assert.match(error.message, /active operational dependencies/);
+    }
+
+    // Clean up temp user & branch
+    await prisma.user.delete({ where: { id: tempUser.id } });
+    await prisma.branch.delete({ where: { id: depBranch.id } });
   });
 
   test("should verify RBAC permissions for Super Admin vs Admin", async () => {

@@ -1,7 +1,7 @@
 import { prisma } from "../prisma";
 import { logAuditEvent } from "../audit/audit-logger";
 import { z } from "zod";
-import { BranchStatus } from "@/generated/prisma/client";
+import { BranchStatus, LoanStatus } from "@/generated/prisma/client";
 
 export const branchInputSchema = z.object({
   name: z.string().trim().min(2, "Branch name is required").max(100),
@@ -25,7 +25,7 @@ export class BranchValidationError extends Error {
 }
 
 /**
- * Retrieves all branches with associated entity counts.
+ * Retrieves all branches with associated operational entity counts.
  */
 export async function getAllBranchesWithCounts() {
   return await prisma.branch.findMany({
@@ -36,8 +36,6 @@ export async function getAllBranchesWithCounts() {
           members: true,
           accounts: true,
           loans: true,
-          bankAccounts: true,
-          treasuryAccounts: true,
         },
       },
     },
@@ -47,9 +45,15 @@ export async function getAllBranchesWithCounts() {
 
 /**
  * Atomically creates a new operational branch and logs audit event.
+ * Enforces single-currency USD system rule.
  */
 export async function createBranch(actorUserId: string, input: BranchInput) {
   const validated = branchInputSchema.parse(input);
+
+  // Enforce single-currency USD system
+  if (validated.currency !== "USD") {
+    throw new BranchValidationError(`KN Finance Company operates exclusively on USD. Branch currency '${validated.currency}' is invalid.`);
+  }
 
   // Uniqueness check for branch code & email
   const existingCode = await prisma.branch.findUnique({ where: { code: validated.code } });
@@ -72,7 +76,7 @@ export async function createBranch(actorUserId: string, input: BranchInput) {
       city: validated.city,
       state: validated.state,
       country: validated.country,
-      currency: validated.currency || "USD",
+      currency: "USD",
       status: BranchStatus.ACTIVE,
     },
   });
@@ -86,6 +90,8 @@ export async function createBranch(actorUserId: string, input: BranchInput) {
       code: newBranch.code,
       name: newBranch.name,
       currency: newBranch.currency,
+      city: newBranch.city,
+      country: newBranch.country,
     },
   });
 
@@ -94,6 +100,7 @@ export async function createBranch(actorUserId: string, input: BranchInput) {
 
 /**
  * Updates existing branch details cleanly.
+ * Enforces Branch Code IMMUTABILITY after creation.
  */
 export async function updateBranch(actorUserId: string, branchId: string, input: BranchInput) {
   const validated = branchInputSchema.parse(input);
@@ -103,12 +110,11 @@ export async function updateBranch(actorUserId: string, branchId: string, input:
     throw new BranchValidationError("Target branch does not exist.");
   }
 
-  // If branch code changes, check uniqueness
+  // Enforce Branch Code IMMUTABILITY
   if (validated.code !== existingBranch.code) {
-    const codeConflict = await prisma.branch.findUnique({ where: { code: validated.code } });
-    if (codeConflict) {
-      throw new BranchValidationError(`Branch code '${validated.code}' is already in use.`);
-    }
+    throw new BranchValidationError(
+      `Branch code '${existingBranch.code}' is immutable after creation and cannot be changed.`
+    );
   }
 
   // If email changes, check uniqueness
@@ -119,11 +125,20 @@ export async function updateBranch(actorUserId: string, branchId: string, input:
     }
   }
 
+  // Compute detailed before/after audit changes
+  const changes: Record<string, { from: string | null; to: string | null }> = {};
+  if (existingBranch.name !== validated.name) changes.name = { from: existingBranch.name, to: validated.name };
+  if (existingBranch.email !== validated.email) changes.email = { from: existingBranch.email, to: validated.email };
+  if (existingBranch.phone !== validated.phone) changes.phone = { from: existingBranch.phone, to: validated.phone };
+  if (existingBranch.address !== validated.address) changes.address = { from: existingBranch.address, to: validated.address };
+  if (existingBranch.city !== validated.city) changes.city = { from: existingBranch.city, to: validated.city };
+  if (existingBranch.state !== validated.state) changes.state = { from: existingBranch.state, to: validated.state };
+  if (existingBranch.country !== validated.country) changes.country = { from: existingBranch.country, to: validated.country };
+
   const updatedBranch = await prisma.branch.update({
     where: { id: branchId },
     data: {
       name: validated.name,
-      code: validated.code,
       email: validated.email,
       phone: validated.phone,
       address: validated.address,
@@ -141,7 +156,7 @@ export async function updateBranch(actorUserId: string, branchId: string, input:
     metadata: {
       code: updatedBranch.code,
       name: updatedBranch.name,
-      previousCode: existingBranch.code,
+      changes: Object.keys(changes).length > 0 ? changes : undefined,
     },
   });
 
@@ -150,7 +165,7 @@ export async function updateBranch(actorUserId: string, branchId: string, input:
 
 /**
  * Safely toggles branch status between ACTIVE and INACTIVE.
- * Prevents deactivating the primary branch (HQ-01).
+ * Protects Headquarters anchor and checks active operational dependencies before deactivating.
  */
 export async function toggleBranchStatus(actorUserId: string, branchId: string, newStatus: BranchStatus) {
   const branch = await prisma.branch.findUnique({ where: { id: branchId } });
@@ -158,8 +173,22 @@ export async function toggleBranchStatus(actorUserId: string, branchId: string, 
     throw new BranchValidationError("Target branch does not exist.");
   }
 
+  // Headquarters protection invariant
   if (branch.code === "HQ-01" && newStatus === BranchStatus.INACTIVE) {
-    throw new BranchValidationError("Primary Headquarters branch (HQ-01) cannot be deactivated.");
+    throw new BranchValidationError("Primary Headquarters branch (HQ-01) is the system anchor and cannot be deactivated.");
+  }
+
+  // If deactivating, check active operational dependencies
+  if (newStatus === BranchStatus.INACTIVE) {
+    const activeUsers = await prisma.user.count({ where: { branchId, status: "ACTIVE" } });
+    const activeAccounts = await prisma.account.count({ where: { branchId, status: "ACTIVE" } });
+    const activeLoans = await prisma.loan.count({ where: { branchId, status: { in: [LoanStatus.APPROVED, LoanStatus.ACTIVE] } } });
+
+    if (activeUsers > 0 || activeAccounts > 0 || activeLoans > 0) {
+      throw new BranchValidationError(
+        `Cannot deactivate branch '${branch.name}' (${branch.code}) with active operational dependencies (${activeUsers} active users, ${activeAccounts} active accounts, ${activeLoans} active loans). Reassign or close active entities before deactivating.`
+      );
+    }
   }
 
   const updatedBranch = await prisma.branch.update({
