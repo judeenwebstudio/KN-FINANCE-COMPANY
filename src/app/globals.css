@@ -17,11 +17,68 @@
   --loan-soft: #f5f3ff;
   --info: #0284c7;
   --info-soft: #f0f9ff;
+
+  /* KN Finance Corporate Dark Shell Tokens */
+  --shell-navy: #071426;
+  --shell-navy-surface: #0b1c34;
+  --shell-navy-elevated: #0e223d;
+  --shell-navy-hover: #10243e;
+  --shell-navy-active: #153056;
+  --shell-border: #142845;
+  --shell-border-subtle: #1b365d;
+  --shell-text-primary: #f8fafc;
+  --shell-text-secondary: #94a3b8;
+  --shell-gold: #c5a059;
+  --shell-gold-light: #e6ca85;
 }
-* { border-color: #e4e7ec; scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
-html { background: var(--background); }
-body { background: var(--background); color: var(--foreground); font-family: "Geist", Arial, Helvetica, sans-serif; }
-button, a, input, select { outline-color: var(--brand); }
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-button { cursor: pointer; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+
+* {
+  border-color: #e4e7ec;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Custom dark scrollbar for sidebar shell */
+.dark-sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #1b365d transparent;
+}
+.dark-sidebar-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.dark-sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #1b365d;
+  border-radius: 9999px;
+}
+.dark-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #274878;
+}
+
+html {
+  background: var(--background);
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Geist", Arial, Helvetica, sans-serif;
+}
+button, a, input, select {
+  outline-color: var(--brand);
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+button {
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
