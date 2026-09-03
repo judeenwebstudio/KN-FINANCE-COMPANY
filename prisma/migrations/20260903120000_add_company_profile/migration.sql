@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "CompanyProfile" (
+CREATE TABLE IF NOT EXISTS "CompanyProfile" (
     "id" TEXT NOT NULL DEFAULT 'company-profile-main',
     "legalName" TEXT,
     "displayName" TEXT NOT NULL DEFAULT 'KN Finance Company',
@@ -29,4 +29,11 @@ CREATE TABLE "CompanyProfile" (
 );
 
 -- AddForeignKey
-ALTER TABLE "CompanyProfile" ADD CONSTRAINT "CompanyProfile_updatedById_fkey" FOREIGN KEY ("updatedById") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'CompanyProfile_updatedById_fkey'
+    ) THEN
+        ALTER TABLE "CompanyProfile" ADD CONSTRAINT "CompanyProfile_updatedById_fkey" FOREIGN KEY ("updatedById") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    END IF;
+END $$;

@@ -10,9 +10,9 @@ async function loadSettingsData() {
     const actor = await requirePermission("settings.view");
     const permissions = await getUserEffectivePermissions(actor.id);
 
-    const canManageCompany = permissions.has("settings.company.manage") || actor.role === "SUPER_ADMIN";
-    const canManageBranch = permissions.has("settings.branch.manage") || actor.role === "SUPER_ADMIN";
-    const canManageFinancial = permissions.has("settings.financial.manage") || actor.role === "SUPER_ADMIN";
+    const canManageCompany = permissions.has("settings.company.manage");
+    const canManageBranch = permissions.has("settings.branch.manage");
+    const canManageFinancial = permissions.has("settings.financial.manage");
 
     const rawProfile = await getCompanyProfile();
     const branches = await getAllBranchesWithCounts();

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "prisma db execute --file prisma/migrations/20260903120000_add_company_profile/migration.sql && (prisma migrate resolve --applied 20260903120000_add_company_profile || prisma migrate deploy) && tsx scripts/verify-settings-readiness.ts && next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

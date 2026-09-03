@@ -180,50 +180,59 @@ export async function bootstrapRBAC(): Promise<{
   let usersMigrated = 0;
 
   for (const user of users) {
-    let targetSlug: string | null = null;
-    let grantGlobal = false;
+    try {
+      let targetSlug: string | null = null;
+      let grantGlobal = false;
 
-    if (user.role === "SUPER_ADMIN") {
-      targetSlug = "super_admin";
-      grantGlobal = true;
-    } else if (user.role === "ADMIN") {
-      targetSlug = "admin";
-      grantGlobal = true; // Preserved for legacy ADMIN users
-    } else if (user.role === "BRANCH_MANAGER") {
-      targetSlug = "branch_manager";
-      grantGlobal = false;
-    } else if (user.role === "STAFF") {
-      targetSlug = "staff";
-      grantGlobal = false;
-    }
+      if (user.role === "SUPER_ADMIN") {
+        targetSlug = "super_admin";
+        grantGlobal = true;
+      } else if (user.role === "ADMIN") {
+        targetSlug = "admin";
+        grantGlobal = true; // Preserved for legacy ADMIN users
+      } else if (user.role === "BRANCH_MANAGER") {
+        targetSlug = "branch_manager";
+        grantGlobal = false;
+      } else if (user.role === "STAFF") {
+        targetSlug = "staff";
+        grantGlobal = false;
+      }
 
-    if (grantGlobal && !user.hasGlobalBranchAccess) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { hasGlobalBranchAccess: true },
-      });
-    }
+      if (grantGlobal && !user.hasGlobalBranchAccess) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { hasGlobalBranchAccess: true },
+        });
+      }
 
-    if (targetSlug) {
-      const roleId = roleMap.get(targetSlug);
-      if (roleId) {
-        const hasAssignment = user.roleAssignments.some((ra) => ra.roleId === roleId);
-        if (!hasAssignment) {
-          await prisma.userRoleAssignment.create({
-            data: { userId: user.id, roleId },
-          });
-          usersMigrated++;
+      if (targetSlug) {
+        const roleId = roleMap.get(targetSlug);
+        if (roleId) {
+          const hasAssignment = user.roleAssignments.some((ra) => ra.roleId === roleId);
+          if (!hasAssignment) {
+            await prisma.userRoleAssignment.create({
+              data: { userId: user.id, roleId },
+            });
+            usersMigrated++;
+          }
         }
       }
-    }
 
-    // Migrate branch access for non-global users with a branchId
-    if (!grantGlobal && user.branchId) {
-      const hasBranchAccess = user.branchAccess.some((ba) => ba.branchId === user.branchId);
-      if (!hasBranchAccess) {
-        await prisma.userBranchAccess.create({
-          data: { userId: user.id, branchId: user.branchId },
-        });
+      // Migrate branch access for non-global users with a branchId
+      if (!grantGlobal && user.branchId) {
+        const hasBranchAccess = user.branchAccess.some((ba) => ba.branchId === user.branchId);
+        if (!hasBranchAccess) {
+          await prisma.userBranchAccess.create({
+            data: { userId: user.id, branchId: user.branchId },
+          });
+        }
+      }
+    } catch (error: unknown) {
+      const code = typeof error === "object" && error !== null && "code" in error
+        ? String((error as { code?: unknown }).code)
+        : null;
+      if (code !== "P2003" && code !== "P2025") {
+        throw error;
       }
     }
   }
