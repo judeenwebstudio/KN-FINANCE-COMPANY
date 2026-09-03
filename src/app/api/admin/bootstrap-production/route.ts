@@ -151,7 +151,7 @@ export async function GET() {
     }
 
     // RBAC Bootstrap (Seeds 50 permissions & 8 roles, maps relational role to superAdmin)
-    const rbacSummary = await bootstrapRBAC();
+    await bootstrapRBAC();
 
     // 3. Post-Bootstrap Read-Only Verification
     const branchCheck = await prisma.branch.findUnique({ where: { code: branchCode } });
