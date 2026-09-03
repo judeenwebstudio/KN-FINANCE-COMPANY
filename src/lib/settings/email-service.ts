@@ -44,6 +44,7 @@ export async function getEmailConfiguration() {
 
     if (config) return config;
 
+    // TABLE EXISTS + ROW MISSING: return safe in-memory fallback without insert
     return {
       ...DEFAULT_EMAIL_CONFIG,
       createdAt: new Date(),
@@ -53,12 +54,7 @@ export async function getEmailConfiguration() {
   } catch (error: unknown) {
     const msg = String(error);
     if (msg.includes("does not exist") || msg.includes("P2021")) {
-      return {
-        ...DEFAULT_EMAIL_CONFIG,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedById: null,
-      };
+      throw new Error("Email configuration schema is missing or uninitialized.");
     }
     throw error;
   }

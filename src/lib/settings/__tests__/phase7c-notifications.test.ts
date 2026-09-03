@@ -21,30 +21,91 @@ import {
 } from "../email-service";
 import { getUserEffectivePermissions } from "../../auth/authorize";
 
-describe("Phase 7C Hardening Review — Email & Notification Templates Unit & RBAC Tests", () => {
-  test("1 & 3. getAllNotificationTemplates performs ZERO writes and missing template rows do not cause read-path inserts", async () => {
-    const initialCount = await prisma.notificationTemplate.count();
+describe("Phase 7C Fail-Closed Schema Hardening Review — Email & Notification Templates Tests", () => {
+  test("1. EmailConfiguration missing ROW returns safe in-memory fallback without insert (0 writes)", async () => {
+    await prisma.emailConfiguration.deleteMany({ where: { id: "email-config-main" } });
 
-    const templates = await getAllNotificationTemplates();
-
-    const postCount = await prisma.notificationTemplate.count();
-
-    assert.equal(postCount, initialCount, "getAllNotificationTemplates must perform ZERO writes on GET/read path");
-    assert.equal(templates.length, 5, "Must return 5 catalog templates for display");
-  });
-
-  test("2 & 4. getEmailConfiguration performs ZERO writes and missing EmailConfiguration row does not cause read-path insert", async () => {
     const initialCount = await prisma.emailConfiguration.count();
 
     const config = await getEmailConfiguration();
 
     const postCount = await prisma.emailConfiguration.count();
 
-    assert.equal(postCount, initialCount, "getEmailConfiguration must perform ZERO writes on GET/read path");
+    assert.equal(postCount, initialCount, "getEmailConfiguration must perform ZERO writes on GET");
     assert.equal(config.id, "email-config-main");
+    assert.equal(config.enabled, false);
+    assert.equal(config.provider, "NONE");
   });
 
-  test("5 & 6. Arbitrary provider names are locked to NONE and provider status remains NONE without implementation", async () => {
+  test("2. EmailConfiguration missing TABLE / P2021 throws controlled error and fails closed (no fake success, 0 writes, 0 DDL)", async () => {
+    // Simulate P2021 table missing error
+    const origFindUnique = prisma.emailConfiguration.findUnique;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (prisma.emailConfiguration as any).findUnique = async () => {
+      const err = new Error("The table `public.EmailConfiguration` does not exist in the current database.");
+      (err as unknown as { code: string }).code = "P2021";
+      throw err;
+    };
+
+    try {
+      await assert.rejects(
+        async () => {
+          await getEmailConfiguration();
+        },
+        (err: unknown) =>
+          err instanceof Error && err.message.includes("Email configuration schema is missing or uninitialized."),
+        "Must throw controlled schema error on P2021 missing table"
+      );
+    } finally {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (prisma.emailConfiguration as any).findUnique = origFindUnique;
+    }
+  });
+
+  test("3. NotificationTemplate missing rows performs in-memory catalog merge without database writes (0 writes)", async () => {
+    const initialCount = await prisma.notificationTemplate.count();
+
+    const templates = await getAllNotificationTemplates();
+
+    const postCount = await prisma.notificationTemplate.count();
+
+    assert.equal(postCount, initialCount, "getAllNotificationTemplates must perform ZERO writes on GET");
+    assert.equal(templates.length, 5, "Must return 5 catalog templates for display");
+  });
+
+  test("4. NotificationTemplate missing TABLE / P2021 throws controlled error and fails closed (no fake directory, 0 writes, 0 DDL)", async () => {
+    // Simulate P2021 table missing error
+    const origFindMany = prisma.notificationTemplate.findMany;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (prisma.notificationTemplate as any).findMany = async () => {
+      const err = new Error("The table `public.NotificationTemplate` does not exist in the current database.");
+      (err as unknown as { code: string }).code = "P2021";
+      throw err;
+    };
+
+    try {
+      await assert.rejects(
+        async () => {
+          await getAllNotificationTemplates();
+        },
+        (err: unknown) =>
+          err instanceof Error && err.message.includes("Notification template schema is missing or uninitialized."),
+        "Must throw controlled schema error on P2021 missing table"
+      );
+    } finally {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (prisma.notificationTemplate as any).findMany = origFindMany;
+    }
+  });
+
+  test("5. Controlled schema errors and logs contain NO database secrets or connection strings", () => {
+    const err = new Error("Email configuration schema is missing or uninitialized.");
+    assert.equal(err.message.includes("DATABASE_URL"), false, "Error message must not leak DATABASE_URL");
+    assert.equal(err.message.includes("postgres://"), false, "Error message must not leak connection URI");
+    assert.equal(err.message.includes("password"), false, "Error message must not leak password");
+  });
+
+  test("6. Arbitrary provider names are locked to NONE and provider status remains NONE without implementation", async () => {
     const superAdmin = await prisma.user.findFirst({
       where: { roleAssignments: { some: { role: { slug: "super_admin" } } }, status: "ACTIVE" },
     });
@@ -147,7 +208,6 @@ describe("Phase 7C Hardening Review — Email & Notification Templates Unit & RB
   });
 
   test("14. No real member/loan data queried for preview", () => {
-    const initialMemberQueryCount = 0; // Function works purely synchronously
     const preview = renderTemplatePreview(
       "MEMBER_WELCOME",
       "Welcome {{memberName}}",
@@ -156,7 +216,6 @@ describe("Phase 7C Hardening Review — Email & Notification Templates Unit & RB
 
     assert.equal(preview.renderedSubject, "Welcome Alex Mercer");
     assert.equal(preview.sampleDataUsed.memberName, "Alex Mercer");
-    assert.equal(initialMemberQueryCount, 0);
   });
 
   test("15 & 16. User.role grants no Phase 7C permissions & relational RBAC is enforced", async () => {

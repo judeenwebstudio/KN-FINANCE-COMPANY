@@ -226,20 +226,7 @@ export async function getAllNotificationTemplates() {
   } catch (error: unknown) {
     const msg = String(error);
     if (msg.includes("does not exist") || msg.includes("P2021")) {
-      return NOTIFICATION_CATALOG.map((catItem) => ({
-        id: `temp-${catItem.code}`,
-        code: catItem.code,
-        name: catItem.name,
-        description: catItem.description,
-        channel: catItem.channel,
-        subject: catItem.defaultSubject,
-        bodyTemplate: catItem.defaultBody,
-        variables: catItem.allowedPlaceholders,
-        isEnabled: true,
-        updatedById: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }));
+      throw new Error("Notification template schema is missing or uninitialized.");
     }
     throw error;
   }
