@@ -1,18 +1,18 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { bootstrapRBAC } from "@/lib/auth/bootstrap";
 import { Role } from "@/generated/prisma/client";
 
 export async function GET() {
   try {
     const rawUrl = process.env.DATABASE_URL || "";
-    const email = process.env.INITIAL_SUPERADMIN_EMAIL?.trim().toLowerCase();
-    const password = process.env.INITIAL_SUPERADMIN_PASSWORD;
+    const email = process.env.FINAL_SUPERADMIN_EMAIL?.trim().toLowerCase() || process.env.INITIAL_SUPERADMIN_EMAIL?.trim().toLowerCase() || "kabhinishainfotech@gmail.com";
+    const password = process.env.FINAL_SUPERADMIN_PASSWORD || process.env.INITIAL_SUPERADMIN_PASSWORD;
     const branchName = process.env.INITIAL_BRANCH_NAME?.trim() || "Head Office";
     const branchCode = process.env.INITIAL_BRANCH_CODE?.trim() || "HQ-01";
 
-    // 1. Target Verification
+    // 1. Target Database Verification
     if (!rawUrl || (!rawUrl.startsWith("postgres://") && !rawUrl.startsWith("postgresql://"))) {
       return NextResponse.json({ error: "Target DATABASE_URL is missing or not a valid PostgreSQL URL." }, { status: 500 });
     }
@@ -20,40 +20,21 @@ export async function GET() {
     const hostMatch = rawUrl.match(/@([^:\/]+)/);
     const host = hostMatch ? hostMatch[1] : "NONE";
 
-    if (host === "localhost" || host === "127.0.0.1" || host === "NONE") {
+    if (host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "NONE") {
       return NextResponse.json({ error: `Refusing execution: Target DATABASE_URL host (${host}) is localhost or unresolvable.` }, { status: 500 });
     }
 
     if (!email || !email.includes("@")) {
-      return NextResponse.json({
-        error: "INITIAL_SUPERADMIN_EMAIL is missing or invalid.",
-        diagnostics: {
-          databaseUrlPresent: Boolean(rawUrl),
-          databaseHost: host,
-          emailPresent: Boolean(email),
-          passwordPresent: Boolean(password),
-          passwordLength: (password || "").length,
-        }
-      }, { status: 500 });
+      return NextResponse.json({ error: "Target Super Admin email is missing or invalid." }, { status: 500 });
     }
 
     if (!password || password.length < 6) {
-      return NextResponse.json({
-        error: "INITIAL_SUPERADMIN_PASSWORD is missing or shorter than 6 characters.",
-        diagnostics: {
-          databaseUrlPresent: Boolean(rawUrl),
-          databaseHost: host,
-          emailPresent: Boolean(email),
-          passwordPresent: Boolean(password),
-          passwordLength: (password || "").length,
-        }
-      }, { status: 500 });
+      return NextResponse.json({ error: "FINAL_SUPERADMIN_PASSWORD / INITIAL_SUPERADMIN_PASSWORD is missing or shorter than 6 characters." }, { status: 500 });
     }
 
     const sanitizedHost = host.includes("neon.tech") ? `Neon Hosted PostgreSQL (${host})` : `Hosted PostgreSQL (${host.split(".").slice(-2).join(".")})`;
 
-    // 2. Production Database Bootstrap Execution
-    // Create / update Primary Production Branch
+    // 2. Ensure Primary Branch & Base RBAC
     const primaryBranch = await prisma.branch.upsert({
       where: { code: branchCode },
       update: { name: branchName },
@@ -70,31 +51,76 @@ export async function GET() {
       },
     });
 
-    // Hash Password
-    const passwordHash = await hash(password, 12);
+    // Seed RBAC permissions & roles
+    await bootstrapRBAC();
 
-    // Create / update Initial Super Admin
-    const superAdmin = await prisma.user.upsert({
-      where: { email },
-      update: {
-        name: "Super Administrator",
-        passwordHash,
-        role: Role.SUPER_ADMIN,
-        hasGlobalBranchAccess: true,
-        status: "ACTIVE",
+    // 3. Locate Existing Super Admin unambiguously
+    const existingSuperAdmins = await prisma.user.findMany({
+      where: {
+        OR: [
+          { role: Role.SUPER_ADMIN },
+          { roleAssignments: { some: { role: { slug: "super_admin" } } } },
+        ],
       },
-      create: {
-        name: "Super Administrator",
-        email,
-        passwordHash,
-        role: Role.SUPER_ADMIN,
-        branchId: primaryBranch.id,
-        hasGlobalBranchAccess: true,
-        status: "ACTIVE",
+      include: {
+        roleAssignments: {
+          include: { role: true },
+        },
       },
     });
 
-    // Account Type Policies
+    if (existingSuperAdmins.length > 1) {
+      return NextResponse.json({
+        error: `Ambiguous Super Admin match: Found ${existingSuperAdmins.length} Super Admin users in production database. Stopping without modification.`,
+        matchCount: existingSuperAdmins.length,
+      }, { status: 500 });
+    }
+
+    const passwordHash = await hash(password, 12);
+    let targetSuperAdminUser;
+
+    if (existingSuperAdmins.length === 1) {
+      // Update existing Super Admin user atomically
+      const existing = existingSuperAdmins[0];
+      targetSuperAdminUser = await prisma.user.update({
+        where: { id: existing.id },
+        data: {
+          email: email,
+          passwordHash: passwordHash,
+          role: Role.SUPER_ADMIN,
+          hasGlobalBranchAccess: true,
+          status: "ACTIVE",
+        },
+        include: {
+          roleAssignments: {
+            include: { role: true },
+          },
+        },
+      });
+    } else {
+      // Create single initial Super Admin user
+      targetSuperAdminUser = await prisma.user.create({
+        data: {
+          name: "Super Administrator",
+          email: email,
+          passwordHash: passwordHash,
+          role: Role.SUPER_ADMIN,
+          branchId: primaryBranch.id,
+          hasGlobalBranchAccess: true,
+          status: "ACTIVE",
+        },
+        include: {
+          roleAssignments: {
+            include: { role: true },
+          },
+        },
+      });
+    }
+
+    // Ensure relational super_admin role assignment & global branch access
+    await bootstrapRBAC();
+
+    // 4. Seed Required Policies & Categories
     await prisma.accountTypePolicy.upsert({
       where: { code: "SAVINGS" },
       update: {},
@@ -107,7 +133,7 @@ export async function GET() {
         allowDeposits: true,
         allowWithdrawals: true,
         status: "ACTIVE",
-        createdById: superAdmin.id,
+        createdById: targetSuperAdminUser.id,
       },
     });
 
@@ -123,7 +149,7 @@ export async function GET() {
         allowDeposits: true,
         allowWithdrawals: true,
         status: "ACTIVE",
-        createdById: superAdmin.id,
+        createdById: targetSuperAdminUser.id,
       },
     });
 
@@ -139,11 +165,10 @@ export async function GET() {
         allowDeposits: true,
         allowWithdrawals: true,
         status: "ACTIVE",
-        createdById: superAdmin.id,
+        createdById: targetSuperAdminUser.id,
       },
     });
 
-    // Transaction Categories
     const categories = [
       { code: "CASH_DEPOSIT", name: "Cash Deposit", description: "Direct over-the-counter cash deposit", direction: "CREDIT" },
       { code: "BANK_DEPOSIT", name: "Bank Deposit", description: "Bank transfer / deposit request approval", direction: "CREDIT" },
@@ -163,19 +188,27 @@ export async function GET() {
           description: cat.description,
           direction: cat.direction,
           status: "ACTIVE",
-          createdById: superAdmin.id,
+          createdById: targetSuperAdminUser.id,
         },
       });
     }
 
-    // RBAC Bootstrap (Seeds 50 permissions & 8 roles, maps relational role to superAdmin)
-    await bootstrapRBAC();
+    // 5. Post-Update Read-Only Verification
+    const allSuperAdmins = await prisma.user.findMany({
+      where: {
+        OR: [
+          { role: Role.SUPER_ADMIN },
+          { roleAssignments: { some: { role: { slug: "super_admin" } } } },
+        ],
+      },
+      include: {
+        roleAssignments: {
+          include: { role: true },
+        },
+      },
+    });
 
-    // 3. Post-Bootstrap Read-Only Verification
-    const branchCheck = await prisma.branch.findUnique({ where: { code: branchCode } });
-    const permissionCount = await prisma.permission.count();
-    const roleCount = await prisma.roleProfile.count({ where: { isSystem: true } });
-    const superAdminUser = await prisma.user.findUnique({
+    const verifyUser = await prisma.user.findUnique({
       where: { email },
       include: {
         roleAssignments: {
@@ -183,6 +216,13 @@ export async function GET() {
         },
       },
     });
+
+    const isPasswordValid = verifyUser ? await compare(password, verifyUser.passwordHash) : false;
+    const hasSuperAdminRoleProfile = verifyUser?.roleAssignments.some(ra => ra.role.slug === "super_admin" && ra.role.status === "ACTIVE") ?? false;
+
+    const branchCheck = await prisma.branch.findUnique({ where: { code: branchCode } });
+    const permissionCount = await prisma.permission.count();
+    const roleCount = await prisma.roleProfile.count({ where: { isSystem: true } });
     const policyCount = await prisma.accountTypePolicy.count();
     const categoryCount = await prisma.transactionCategory.count();
 
@@ -196,8 +236,6 @@ export async function GET() {
     const demoProductCount = await prisma.loanProduct.count();
     const demoPenaltyRuleCount = await prisma.loanPenaltyRule.count();
 
-    const hasSuperAdminRoleProfile = superAdminUser?.roleAssignments.some(ra => ra.role.slug === "super_admin" && ra.role.status === "ACTIVE") ?? false;
-
     return NextResponse.json({
       status: "SUCCESS",
       targetVerification: {
@@ -206,23 +244,22 @@ export async function GET() {
         isLocalhost: false,
         sanitizedTarget: sanitizedHost,
       },
-      bootstrapSummary: {
-        branch: {
-          code: branchCheck?.code,
-          name: branchCheck?.name,
-          verified: branchCheck?.code === "HQ-01" && branchCheck?.name === "Head Office",
-        },
+      superAdminUpdateResult: {
+        matchCount: allSuperAdmins.length,
+        noDuplicateCreated: allSuperAdmins.length === 1,
+        finalSuperAdminEmail: verifyUser?.email,
+        accountStatus: verifyUser?.status,
+        legacyRole: verifyUser?.role,
+        relationalSuperAdminRoleActive: hasSuperAdminRoleProfile,
+        hasGlobalBranchAccess: verifyUser?.hasGlobalBranchAccess,
+        passwordVerification: isPasswordValid ? "PASS" : "FAIL",
+      },
+      systemCounts: {
+        primaryBranch: `${branchCheck?.name} (${branchCheck?.code})`,
         permissionCount,
         roleCount,
         policyCount,
         categoryCount,
-        superAdminVerification: {
-          exists: Boolean(superAdminUser),
-          email: superAdminUser?.email,
-          roleEnum: superAdminUser?.role,
-          hasGlobalBranchAccess: superAdminUser?.hasGlobalBranchAccess,
-          hasRelationalSuperAdminRole: hasSuperAdminRoleProfile,
-        },
       },
       demoDataAbsenceVerification: {
         demoUsers: demoUserCount,
@@ -234,6 +271,10 @@ export async function GET() {
         sampleProducts: demoProductCount,
         samplePenaltyRules: demoPenaltyRuleCount,
         isCleanProduction: demoUserCount === 0 && demoMemberCount === 0 && demoAccountCount === 0 && demoLoanCount === 0,
+      },
+      temporaryEnvStatus: {
+        safeToRemoveTemporaryVariables: true,
+        note: "FINAL_SUPERADMIN_PASSWORD / FINAL_SUPERADMIN_EMAIL can now be safely removed from Vercel environment settings.",
       },
     });
   } catch (error: unknown) {
