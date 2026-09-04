@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Search, DollarSign, RotateCcw, X, Download } from "lucide-react";
+import { Plus, Search, IndianRupee, RotateCcw, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
 import { formatMoney } from "@/lib/money";
@@ -203,7 +203,7 @@ export function ExpensesClient({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-            <DollarSign className="size-6 text-rose-600" /> Operational Expenses Ledger
+            <IndianRupee className="size-6 text-rose-600" /> Operational Expenses Ledger
           </h1>
           <p className="text-sm text-slate-500">
             Record outgoing company costs funded from Treasury Cash or Bank Accounts with atomic subledger posting.

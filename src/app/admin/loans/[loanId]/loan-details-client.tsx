@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowLeft, CheckCircle2, XCircle, DollarSign, Calendar,
+  ArrowLeft, CheckCircle2, XCircle, IndianRupee, Calendar,
   LoaderCircle, PhoneCall, AlertTriangle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -176,7 +176,7 @@ export function AdminLoanDetailsClient({
 
             {loan.status === "APPROVED" && (
               <Button onClick={() => setDisburseModalOpen(true)} className="bg-emerald-600 hover:bg-emerald-700 shadow-sm">
-                <DollarSign className="mr-2 size-4" /> Disburse Funds
+                <IndianRupee className="mr-2 size-4" /> Disburse Funds
               </Button>
             )}
 
@@ -187,7 +187,7 @@ export function AdminLoanDetailsClient({
                 </Button>
 
                 <Button onClick={() => setRepaymentModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 shadow-sm">
-                  <DollarSign className="mr-2 size-4" /> Record Repayment
+                  <IndianRupee className="mr-2 size-4" /> Record Repayment
                 </Button>
               </>
             )}

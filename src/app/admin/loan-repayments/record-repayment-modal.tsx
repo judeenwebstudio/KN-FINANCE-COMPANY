@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, LoaderCircle, Calculator, DollarSign } from "lucide-react";
+import { X, LoaderCircle, Calculator, IndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatMoney } from "@/lib/money";
 import { recordLoanRepaymentAction, previewRepaymentAllocationAction } from "./actions";
@@ -112,7 +112,7 @@ export function RecordRepaymentModal({
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div>
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="size-5 text-indigo-600" /> Record Loan Repayment
+              <IndianRupee className="size-5 text-indigo-600" /> Record Loan Repayment
             </h2>
             <p className="text-xs text-slate-500">
               Select loan facility, destination payment account, and preview repayment allocation.

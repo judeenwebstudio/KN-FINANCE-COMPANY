@@ -1,4 +1,4 @@
-import { ArrowDownToLine, ArrowUpFromLine, HandCoins, Users, AlertTriangle, DollarSign } from "lucide-react";
+import { ArrowDownToLine, ArrowUpFromLine, HandCoins, Users, AlertTriangle, IndianRupee } from "lucide-react";
 import { ExpenseChart, MovementChart } from "@/components/dashboard-charts";
 import { PageHeader } from "@/components/page-header";
 import { StatCard } from "@/components/stat-card";
@@ -9,6 +9,7 @@ import { getAccessibleBranchIds } from "@/lib/authz";
 import { prisma } from "@/lib/prisma";
 import { calculateLoanDelinquencySummary } from "@/lib/loans/overdue";
 import { Prisma } from "@/generated/prisma/client";
+import { formatMoney } from "@/lib/money";
 
 export default async function AdminDashboard() {
   const branchIds = await getAccessibleBranchIds();
@@ -143,7 +144,7 @@ export default async function AdminDashboard() {
         <StatCard label="Deposit Requests" value={pendingDepositsCount.toString()} hint="Pending operational review" icon={ArrowDownToLine} tone="emerald" />
         <StatCard label="Withdraw Requests" value={pendingWithdrawalsCount.toString()} hint="Pending operational review" icon={ArrowUpFromLine} tone="amber" />
         <StatCard label="Pending Loans" value={pendingLoans.toString()} hint="Applications to review" icon={HandCoins} tone="violet" />
-        <StatCard label="Posted Expenses" value={postedExpensesCount.toString()} hint="Operational expense ledger" icon={DollarSign} tone="rose" />
+        <StatCard label="Posted Expenses" value={formatMoney(postedExpensesCount)} hint="Operational expense ledger" icon={IndianRupee} tone="rose" />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-2">

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, Download, AlertTriangle, PhoneCall, DollarSign } from "lucide-react";
+import { Search, Download, AlertTriangle, PhoneCall, IndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
 import { formatMoney } from "@/lib/money";
@@ -293,7 +293,7 @@ export function AdminOverdueClient({
                           if (targetLoan) setRepaymentLoan(targetLoan);
                         }}
                       >
-                        <DollarSign className="mr-1 size-3.5" /> Repay
+                        <IndianRupee className="mr-1 size-3.5" /> Repay
                       </Button>
                     </td>
                   </tr>

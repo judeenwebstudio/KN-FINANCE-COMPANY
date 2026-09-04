@@ -6,9 +6,9 @@ import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
-  ArrowDownToLine, ArrowLeftRight, ArrowUpFromLine, BadgeDollarSign, Banknote,
+  ArrowDownToLine, ArrowLeftRight, ArrowUpFromLine, BadgeIndianRupee, Banknote,
   Bell, BellDot, Building2, Calculator, CalendarClock, ChartNoAxesCombined,
-  ChevronDown, CircleDollarSign, HandCoins, Languages, Landmark, LayoutDashboard,
+  ChevronDown, HandCoins, IndianRupee, Languages, Landmark, LayoutDashboard,
   LogOut, Menu, PanelLeftClose, ReceiptText, Search, Settings, User, UserCog,
   UserRound, Users, WalletCards, X, type LucideIcon,
 } from "lucide-react";
@@ -21,8 +21,8 @@ const iconMap: Record<string, LucideIcon> = {
   "layout-dashboard": LayoutDashboard, building: Building2, users: Users,
   loans: HandCoins, calendar: CalendarClock, receipt: ReceiptText,
   accounts: WalletCards, deposit: ArrowDownToLine, withdrawal: ArrowUpFromLine,
-  transfer: ArrowLeftRight, expense: Banknote, "deposit-method": BadgeDollarSign,
-  "withdraw-method": CircleDollarSign, bank: Landmark, "user-settings": UserCog,
+  transfer: ArrowLeftRight, expense: Banknote, "deposit-method": BadgeIndianRupee,
+  "withdraw-method": IndianRupee, bank: Landmark, "user-settings": UserCog,
   languages: Languages, reports: ChartNoAxesCombined, settings: Settings,
   calculator: Calculator, pending: BellDot,
 };

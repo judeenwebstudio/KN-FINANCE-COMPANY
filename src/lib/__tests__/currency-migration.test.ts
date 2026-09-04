@@ -4,6 +4,8 @@ import { formatMoney } from "../money";
 import { branchInputSchema } from "../settings/branch-service";
 import { loanProductSchema } from "../validations";
 import { Prisma } from "@/generated/prisma/client";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 describe("System-Wide INR Currency Policy & Safety Verification", () => {
   test("1. Base money formatter formats in INR with en-IN Indian digit grouping and ₹ symbol", () => {
@@ -24,6 +26,19 @@ describe("System-Wide INR Currency Policy & Safety Verification", () => {
     const formatted = formatMoney(1250);
     assert.ok(formatted.includes("₹"));
     assert.ok(formatted.includes("1,250.00"));
+  });
+
+  test("Admin Dashboard Posted Expenses uses the centralized INR formatter", () => {
+    const dashboardSource = readFileSync(resolve(process.cwd(), "src/app/admin/dashboard/page.tsx"), "utf8");
+
+    assert.match(
+      dashboardSource,
+      /label="Posted Expenses"\s+value=\{formatMoney\(postedExpensesCount\)\}/,
+      "Posted Expenses must be formatted by the centralized INR money formatter",
+    );
+    assert.equal(formatMoney(0), "₹0.00");
+    assert.equal(formatMoney(1000), "₹1,000.00");
+    assert.equal(formatMoney(100000), "₹1,00,000.00");
   });
 
   test("3. Branch creation service enforces INR and rejects non-INR payloads", async () => {
