@@ -5,6 +5,7 @@ import { maskIdentityNumber } from "@/lib/members/member-service";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
 import { User, Mail, Phone, MapPin, Calendar, Building2, ShieldCheck, Lock } from "lucide-react";
+import { MemberDocumentsSection } from "@/components/member-documents-section";
 
 export default async function MemberProfilePage() {
   const user = await requireMember();
@@ -138,6 +139,7 @@ export default async function MemberProfilePage() {
           </div>
         </div>
       </Card>
+      <MemberDocumentsSection memberId={profile.id} canManage />
     </div>
   );
 }

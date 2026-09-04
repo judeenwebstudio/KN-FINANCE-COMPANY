@@ -21,9 +21,11 @@ type TabKey = "overview" | "accounts" | "loans" | "repayments" | "schedules" | "
 export function Member360Client({
   profile,
   canEdit,
+  canManageDocuments,
 }: {
   profile: Member360ProfileDTO;
   canEdit: boolean;
+  canManageDocuments: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -763,7 +765,7 @@ export function Member360Client({
 
       {/* 9. DOCUMENTS & KYC TAB */}
       {activeTab === "documents" && (
-        <MemberDocumentsSection memberId={header.id} canManage={canEdit} />
+        <MemberDocumentsSection memberId={header.id} canManage={canManageDocuments} />
       )}
 
       {/* Modals */}

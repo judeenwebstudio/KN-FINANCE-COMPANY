@@ -54,5 +54,5 @@ export default async function Member360Page({
     );
   }
 
-  return <Member360Client profile={profile} canEdit={permissions.has("members.edit") || permissions.has("members.manage")} />;
+  return <Member360Client profile={profile} canEdit={permissions.has("members.edit") || permissions.has("members.manage")} canManageDocuments={permissions.has("members.documents.manage")} />;
 }

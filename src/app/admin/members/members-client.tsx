@@ -439,7 +439,11 @@ export function MembersClient({
                 members.map((m) => (
                   <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="px-4 py-3">
-                      <Link
+                      <div className="flex items-center gap-3">
+                        <div className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-xl bg-slate-100 text-xs font-bold text-slate-500">
+                          {m.photoUrl ? <img src={m.photoUrl} alt="" className="size-full object-cover" /> : m.name.slice(0, 2).toUpperCase()}
+                        </div>
+                        <div><Link
                         href={`/admin/members/${m.id}`}
                         className="font-bold text-[#275d4f] hover:underline"
                       >
@@ -451,7 +455,8 @@ export function MembersClient({
                         </Link>{" "}
                         • {m.email}
                       </div>
-                      <div className="text-slate-400 text-[11px] mt-0.5">{m.phone}</div>
+                      <div className="text-slate-400 text-[11px] mt-0.5">{m.phone}</div></div>
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5 text-slate-800 font-medium">

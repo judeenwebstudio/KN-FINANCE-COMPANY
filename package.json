@@ -27,6 +27,7 @@
     "@radix-ui/react-avatar": "latest",
     "@radix-ui/react-dropdown-menu": "latest",
     "@radix-ui/react-slot": "latest",
+    "@vercel/blob": "^2.8.0",
     "bcryptjs": "latest",
     "class-variance-authority": "latest",
     "clsx": "latest",

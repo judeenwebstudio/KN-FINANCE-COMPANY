@@ -1,213 +1,108 @@
-import { prisma } from "../prisma";
+import { DocumentCategory } from "@/generated/prisma/client";
 import { getUserAuthorizedBranchScope, hasPermission } from "../auth/authorize";
 import { logAuditEvent } from "../audit/audit-logger";
-import { DocumentCategory } from "@/generated/prisma/client";
+import { prisma } from "../prisma";
+import { createPrivateObjectKey, deletePrivateFile, getPrivateFile, isStorageConfigured, uploadPrivateFile } from "../storage/private-file-storage";
 
-export function isStorageConfigured(): boolean {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-    process.env.S3_BUCKET ||
-    process.env.AWS_S3_BUCKET
-  );
+export { isStorageConfigured };
+export const ALLOWED_DOCUMENT_MIME_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"] as const;
+export const ALLOWED_PHOTO_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+export const MAX_DOCUMENT_SIZE_BYTES = 5 * 1024 * 1024;
+export const MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024;
+
+export type MemberDocumentDTO = { id: string; memberId: string; category: DocumentCategory; fileName: string; mimeType: string; sizeBytes: number; uploadedByName: string; createdAt: string; fileUrl: string };
+
+export function sanitizeFileName(name: string): string {
+  const leaf = name.replace(/\\/g, "/").split("/").pop() || "document";
+  return leaf.replace(/[^a-zA-Z0-9_. -]/g, "_").slice(0, 120) || "document";
 }
 
-export const ALLOWED_DOCUMENT_MIME_TYPES = [
-  "application/pdf",
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-];
-
-export const MAX_DOCUMENT_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
-
-export type MemberDocumentDTO = {
-  id: string;
-  memberId: string;
-  category: DocumentCategory;
-  fileName: string;
-  mimeType: string;
-  sizeBytes: number;
-  storageKey: string;
-  uploadedById: string;
-  uploadedByName: string;
-  createdAt: string;
-};
-
-export async function getMemberDocuments(
-  memberId: string,
-  executorUserId?: string,
-): Promise<MemberDocumentDTO[]> {
-  const member = await prisma.memberProfile.findUnique({
-    where: { id: memberId },
-    select: { id: true, userId: true, branchId: true },
-  });
-
-  if (!member) {
-    throw new Error("Member profile not found.");
-  }
-
-  if (executorUserId && executorUserId !== member.userId) {
-    const hasViewPerm = await hasPermission(executorUserId, "members.documents.view");
-    if (!hasViewPerm) {
-      throw new Error("Unauthorized: Missing members.documents.view permission.");
-    }
-    const scope = await getUserAuthorizedBranchScope(executorUserId);
-    if (!scope.global && !scope.branchIds.includes(member.branchId)) {
-      throw new Error("Unauthorized: Member branch is outside your authorized scope.");
-    }
-  }
-
-  const docs = await prisma.memberDocument.findMany({
-    where: { memberId },
-    include: {
-      uploadedBy: { select: { name: true } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
-
-  return docs.map((d) => ({
-    id: d.id,
-    memberId: d.memberId,
-    category: d.category,
-    fileName: d.fileName,
-    mimeType: d.mimeType,
-    sizeBytes: d.sizeBytes,
-    storageKey: d.storageKey,
-    uploadedById: d.uploadedById,
-    uploadedByName: d.uploadedBy?.name || "System",
-    createdAt: d.createdAt.toISOString(),
-  }));
+export function validateFileSignature(bytes: Uint8Array, mime: string): boolean {
+  if (mime === "application/pdf") return String.fromCharCode(...bytes.slice(0, 5)) === "%PDF-";
+  if (mime === "image/jpeg") return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  if (mime === "image/png") return bytes.slice(0, 8).every((v, i) => v === [137, 80, 78, 71, 13, 10, 26, 10][i]);
+  if (mime === "image/webp") return String.fromCharCode(...bytes.slice(0, 4)) === "RIFF" && String.fromCharCode(...bytes.slice(8, 12)) === "WEBP";
+  return false;
 }
 
-export async function uploadMemberDocument(input: {
-  memberId: string;
-  category: DocumentCategory;
-  fileName: string;
-  mimeType: string;
-  sizeBytes: number;
-  uploadedById?: string;
-  bypassStorageCheckForTest?: boolean;
-}): Promise<MemberDocumentDTO> {
-  const member = await prisma.memberProfile.findUnique({
-    where: { id: input.memberId },
-    select: { id: true, userId: true, branchId: true },
-  });
-
-  if (!member) {
-    throw new Error("Member profile not found.");
-  }
-
-  if (input.uploadedById && input.uploadedById !== member.userId) {
-    const hasManagePerm = await hasPermission(input.uploadedById, "members.documents.manage");
-    if (!hasManagePerm) {
-      throw new Error("Unauthorized: Missing members.documents.manage permission.");
-    }
-    const scope = await getUserAuthorizedBranchScope(input.uploadedById);
-    if (!scope.global && !scope.branchIds.includes(member.branchId)) {
-      throw new Error("Unauthorized: Member branch is outside your authorized scope.");
-    }
-  }
-
-  if (!ALLOWED_DOCUMENT_MIME_TYPES.includes(input.mimeType)) {
-    throw new Error(`Unsupported document file type '${input.mimeType}'. Allowed formats: PDF, JPEG, PNG, WEBP.`);
-  }
-
-  if (input.sizeBytes > MAX_DOCUMENT_SIZE_BYTES) {
-    throw new Error(`File size exceeds maximum allowed limit of 5MB. Provided: ${(input.sizeBytes / (1024 * 1024)).toFixed(2)}MB`);
-  }
-
-  if (!input.bypassStorageCheckForTest && !isStorageConfigured()) {
-    throw new Error("Storage provider not configured in environment. Binary uploads are disabled.");
-  }
-
-  const sanitizedFileName = input.fileName.replace(/[^a-zA-Z0-9_.-]/g, "_");
-  const randomKey = `docs/${member.id}/${input.category.toLowerCase()}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}_${sanitizedFileName}`;
-
-  const doc = await prisma.memberDocument.create({
-    data: {
-      memberId: member.id,
-      category: input.category,
-      fileName: sanitizedFileName,
-      mimeType: input.mimeType,
-      sizeBytes: input.sizeBytes,
-      storageKey: randomKey,
-      uploadedById: input.uploadedById || member.userId,
-    },
-    include: {
-      uploadedBy: { select: { name: true } },
-    },
-  });
-
-  if (input.uploadedById) {
-    await logAuditEvent({
-      actorUserId: input.uploadedById,
-      action: "MEMBER_DOCUMENT_UPLOADED",
-      entityType: "MemberDocument",
-      entityId: doc.id,
-      branchId: member.branchId,
-      metadata: {
-        memberId: member.id,
-        category: input.category,
-        fileName: sanitizedFileName,
-        sizeBytes: input.sizeBytes,
-      },
-    });
-  }
-
-  return {
-    id: doc.id,
-    memberId: doc.memberId,
-    category: doc.category,
-    fileName: doc.fileName,
-    mimeType: doc.mimeType,
-    sizeBytes: doc.sizeBytes,
-    storageKey: doc.storageKey,
-    uploadedById: doc.uploadedById,
-    uploadedByName: doc.uploadedBy?.name || "System",
-    createdAt: doc.createdAt.toISOString(),
-  };
+async function authorizeMember(memberId: string, actorId: string, permission: "members.documents.view" | "members.documents.manage") {
+  const member = await prisma.memberProfile.findUnique({ where: { id: memberId }, select: { id: true, userId: true, branchId: true } });
+  if (!member) throw new Error("Member profile not found.");
+  if (actorId === member.userId) return member;
+  if (!(await hasPermission(actorId, permission))) throw new Error(`Unauthorized: Missing ${permission} permission.`);
+  const scope = await getUserAuthorizedBranchScope(actorId);
+  if (!scope.global && !scope.branchIds.includes(member.branchId)) throw new Error("Unauthorized: Member branch is outside your authorized scope.");
+  return member;
 }
 
-export async function deleteMemberDocument(
-  documentId: string,
-  executorUserId?: string,
-): Promise<{ success: boolean }> {
-  const doc = await prisma.memberDocument.findUnique({
-    where: { id: documentId },
-    include: { member: { select: { id: true, userId: true, branchId: true } } },
-  });
+export async function getMemberDocuments(memberId: string, actorId: string): Promise<MemberDocumentDTO[]> {
+  await authorizeMember(memberId, actorId, "members.documents.view");
+  const docs = await prisma.memberDocument.findMany({ where: { memberId }, include: { uploadedBy: { select: { name: true } } }, orderBy: { createdAt: "desc" } });
+  return docs.map((d) => ({ id: d.id, memberId: d.memberId, category: d.category, fileName: d.fileName, mimeType: d.mimeType, sizeBytes: d.sizeBytes, uploadedByName: d.uploadedBy.name, createdAt: d.createdAt.toISOString(), fileUrl: `/api/member-documents/${d.id}/file` }));
+}
 
-  if (!doc) {
-    throw new Error("Document not found.");
-  }
+export async function uploadMemberDocument(input: { memberId: string; category: DocumentCategory; fileName: string; mimeType: string; bytes?: Uint8Array; sizeBytes?: number; uploadedById: string; bypassStorageCheckForTest?: boolean }): Promise<MemberDocumentDTO> {
+  const member = await authorizeMember(input.memberId, input.uploadedById, "members.documents.manage");
+  if (!ALLOWED_DOCUMENT_MIME_TYPES.includes(input.mimeType as (typeof ALLOWED_DOCUMENT_MIME_TYPES)[number])) throw new Error("Unsupported document file type. Use PDF, JPEG, PNG, or WebP.");
+  const size = input.bytes?.length ?? input.sizeBytes ?? 0;
+  if (!size || size > MAX_DOCUMENT_SIZE_BYTES) throw new Error("File size exceeds maximum allowed limit of 5 MB.");
+  if (!input.bypassStorageCheckForTest && (!input.bytes || !validateFileSignature(input.bytes, input.mimeType))) throw new Error("File content does not match its declared type.");
+  const key = input.bypassStorageCheckForTest ? `test/${createPrivateObjectKey(member.id, "documents")}` : createPrivateObjectKey(member.id, "documents");
+  if (!input.bypassStorageCheckForTest) await uploadPrivateFile({ key, bytes: input.bytes!, contentType: input.mimeType });
+  try {
+    const doc = await prisma.memberDocument.create({ data: { memberId: member.id, category: input.category, fileName: sanitizeFileName(input.fileName), mimeType: input.mimeType, sizeBytes: size, storageKey: key, uploadedById: input.uploadedById }, include: { uploadedBy: { select: { name: true } } } });
+    await logAuditEvent({ actorUserId: input.uploadedById, action: "MEMBER_DOCUMENT_UPLOADED", entityType: "MemberDocument", entityId: doc.id, branchId: member.branchId, metadata: { memberId: member.id, category: input.category, mimeType: input.mimeType, sizeBytes: size } });
+    return { id: doc.id, memberId: doc.memberId, category: doc.category, fileName: doc.fileName, mimeType: doc.mimeType, sizeBytes: doc.sizeBytes, uploadedByName: doc.uploadedBy.name, createdAt: doc.createdAt.toISOString(), fileUrl: `/api/member-documents/${doc.id}/file` };
+  } catch (error) { if (!input.bypassStorageCheckForTest) await deletePrivateFile(key).catch(() => undefined); throw error; }
+}
 
-  if (executorUserId && executorUserId !== doc.member.userId) {
-    const hasManagePerm = await hasPermission(executorUserId, "members.documents.manage");
-    if (!hasManagePerm) {
-      throw new Error("Unauthorized: Missing members.documents.manage permission.");
-    }
-    const scope = await getUserAuthorizedBranchScope(executorUserId);
-    if (!scope.global && !scope.branchIds.includes(doc.member.branchId)) {
-      throw new Error("Unauthorized: Member branch is outside your authorized scope.");
-    }
-  }
+export async function getAuthorizedDocumentFile(documentId: string, actorId: string) {
+  const doc = await prisma.memberDocument.findUnique({ where: { id: documentId } });
+  if (!doc) throw new Error("Document not found.");
+  await authorizeMember(doc.memberId, actorId, "members.documents.view");
+  const blob = await getPrivateFile(doc.storageKey);
+  if (!blob) throw new Error("Stored document not found.");
+  return { doc, stream: blob.stream };
+}
 
+export async function deleteMemberDocument(documentId: string, actorId: string): Promise<{ success: true }> {
+  const doc = await prisma.memberDocument.findUnique({ where: { id: documentId }, include: { member: { select: { branchId: true } } } });
+  if (!doc) throw new Error("Document not found.");
+  await authorizeMember(doc.memberId, actorId, "members.documents.manage");
   await prisma.memberDocument.delete({ where: { id: documentId } });
-
-  if (executorUserId) {
-    await logAuditEvent({
-      actorUserId: executorUserId,
-      action: "MEMBER_DOCUMENT_DELETED",
-      entityType: "MemberDocument",
-      entityId: documentId,
-      branchId: doc.member.branchId,
-      metadata: {
-        memberId: doc.memberId,
-        category: doc.category,
-        fileName: doc.fileName,
-      },
-    });
-  }
-
+  if (!doc.storageKey.startsWith("test/")) await deletePrivateFile(doc.storageKey);
+  await logAuditEvent({ actorUserId: actorId, action: "MEMBER_DOCUMENT_DELETED", entityType: "MemberDocument", entityId: documentId, branchId: doc.member.branchId, metadata: { memberId: doc.memberId, category: doc.category, mimeType: doc.mimeType } });
   return { success: true };
+}
+
+export async function uploadMemberPhoto(input: { memberId: string; mimeType: string; bytes: Uint8Array; actorId: string }) {
+  const member = await authorizeMember(input.memberId, input.actorId, "members.documents.manage");
+  if (!ALLOWED_PHOTO_MIME_TYPES.includes(input.mimeType as (typeof ALLOWED_PHOTO_MIME_TYPES)[number])) throw new Error("Photo must be JPEG, PNG, or WebP.");
+  if (!input.bytes.length || input.bytes.length > MAX_PHOTO_SIZE_BYTES) throw new Error("Photo must be between 1 byte and 5 MB.");
+  if (!validateFileSignature(input.bytes, input.mimeType)) throw new Error("Photo content does not match its declared type.");
+  const key = createPrivateObjectKey(member.id, "photo");
+  await uploadPrivateFile({ key, bytes: input.bytes, contentType: input.mimeType });
+  const previous = await prisma.memberProfile.findUnique({ where: { id: member.id }, select: { photoStorageKey: true } });
+  try {
+    await prisma.memberProfile.update({ where: { id: member.id }, data: { photoStorageKey: key } });
+    await logAuditEvent({ actorUserId: input.actorId, action: previous?.photoStorageKey ? "MEMBER_PHOTO_REPLACED" : "MEMBER_PHOTO_UPLOADED", entityType: "MemberProfile", entityId: member.id, branchId: member.branchId, metadata: { mimeType: input.mimeType, sizeBytes: input.bytes.length } });
+  } catch (error) { await deletePrivateFile(key).catch(() => undefined); throw error; }
+  if (previous?.photoStorageKey) await deletePrivateFile(previous.photoStorageKey).catch(() => undefined);
+  return { photoUrl: `/api/member-photo/${member.id}` };
+}
+
+export async function getAuthorizedMemberPhoto(memberId: string, actorId: string) {
+  const member = await authorizeMember(memberId, actorId, "members.documents.view");
+  const row = await prisma.memberProfile.findUnique({ where: { id: member.id }, select: { photoStorageKey: true } });
+  return row?.photoStorageKey ? getPrivateFile(row.photoStorageKey) : null;
+}
+
+export async function deleteMemberPhoto(memberId: string, actorId: string) {
+  const member = await authorizeMember(memberId, actorId, "members.documents.manage");
+  const row = await prisma.memberProfile.findUnique({ where: { id: member.id }, select: { photoStorageKey: true } });
+  if (!row?.photoStorageKey) return { success: true } as const;
+  await prisma.memberProfile.update({ where: { id: member.id }, data: { photoStorageKey: null } });
+  await deletePrivateFile(row.photoStorageKey);
+  await logAuditEvent({ actorUserId: actorId, action: "MEMBER_PHOTO_REMOVED", entityType: "MemberProfile", entityId: member.id, branchId: member.branchId, metadata: {} });
+  return { success: true } as const;
 }

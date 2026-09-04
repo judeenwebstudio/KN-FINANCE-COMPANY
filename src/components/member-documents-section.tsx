@@ -1,16 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FileText, Upload, Trash2, AlertCircle, ShieldCheck, Download, FileCheck } from "lucide-react";
+import { FileText, Upload, Trash2, AlertCircle, ShieldCheck, Download, FileCheck, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { DocumentCategory } from "@/generated/prisma/client";
 import {
   getMemberDocumentsAction,
-  uploadMemberDocumentAction,
   deleteMemberDocumentAction,
 } from "@/app/admin/members/document-actions";
-import { MemberDocumentDTO } from "@/lib/members/document-service";
+import type { MemberDocumentDTO } from "@/lib/members/document-service";
+import { MemberPhotoManager } from "@/components/member-photo-manager";
 
 export function MemberDocumentsSection({
   memberId,
@@ -66,16 +66,15 @@ export function MemberDocumentsSection({
     setUploading(true);
     setError(null);
 
-    const res = await uploadMemberDocumentAction({
-      memberId,
-      category,
-      fileName: selectedFile.name,
-      mimeType: selectedFile.type,
-      sizeBytes: selectedFile.size,
-    });
+    const form = new FormData();
+    form.set("memberId", memberId);
+    form.set("category", category);
+    form.set("file", selectedFile);
+    const response = await fetch("/api/member-documents", { method: "POST", body: form });
+    const res = await response.json() as { error?: string };
 
     setUploading(false);
-    if (!res.success) {
+    if (!response.ok) {
       setError(res.error || "Upload failed.");
     } else {
       setSelectedFile(null);
@@ -84,7 +83,7 @@ export function MemberDocumentsSection({
   };
 
   const handleDelete = async (docId: string) => {
-    if (!confirm("Are you sure you want to remove this document metadata record?")) return;
+    if (!confirm("Remove this private document? This cannot be undone.")) return;
     setError(null);
     const res = await deleteMemberDocumentAction(docId);
     if (res.success) {
@@ -122,11 +121,13 @@ export function MemberDocumentsSection({
         </div>
       )}
 
+      <MemberPhotoManager memberId={memberId} canManage={canManage} />
+
       {/* Upload Form */}
       {canManage && (
         <Card className="p-4 bg-slate-50/70 border-slate-200 space-y-3">
           <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Upload Document Record
+            Upload Private Document
           </h4>
           <form onSubmit={handleUploadSubmit} className="flex flex-wrap items-center gap-3">
             <div className="w-44">
@@ -135,8 +136,8 @@ export function MemberDocumentsSection({
                 onChange={(e) => setCategory(e.target.value as DocumentCategory)}
                 className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-[#275d4f] focus:outline-none"
               >
-                <option value="IDENTITY">IDENTITY (Passport / ID)</option>
-                <option value="ADDRESS_PROOF">ADDRESS PROOF (Utility Bill)</option>
+                <option value="IDENTITY">IDENTITY (Aadhaar / PAN / Passport / ID)</option>
+                <option value="ADDRESS_PROOF">ADDRESS PROOF (Aadhaar / Utility Bill)</option>
                 <option value="OTHER">OTHER (Supporting File)</option>
               </select>
             </div>
@@ -221,8 +222,8 @@ export function MemberDocumentsSection({
                   <td className="px-4 py-2.5 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       {isStorageConfigured ? (
-                        <Button variant="ghost" size="sm" className="h-7 gap-1 text-slate-600 hover:text-slate-900">
-                          <Download className="size-3.5" /> View
+                        <Button asChild variant="ghost" size="sm" className="h-7 gap-1 text-slate-600 hover:text-slate-900">
+                          <a href={doc.fileUrl} target="_blank" rel="noreferrer"><Eye className="size-3.5" /> View</a>
                         </Button>
                       ) : (
                         <span className="text-[10px] text-slate-400 italic mr-2">Storage pending</span>
@@ -237,6 +238,7 @@ export function MemberDocumentsSection({
                           <Trash2 className="size-3.5" />
                         </Button>
                       )}
+                      {isStorageConfigured && <a href={`${doc.fileUrl}?download=1`} className="inline-flex h-7 items-center gap-1 px-2 text-slate-600 hover:text-slate-900"><Download className="size-3.5" /> Download</a>}
                     </div>
                   </td>
                 </tr>

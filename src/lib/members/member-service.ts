@@ -39,6 +39,7 @@ export type SafeMemberListItemDTO = {
   loansCount: number;
   createdAt: string;
   updatedAt: string;
+  photoUrl: string | null;
 };
 
 /**
@@ -402,6 +403,7 @@ export async function getMembersList(
     loansCount: m._count.loans,
     createdAt: m.createdAt.toISOString(),
     updatedAt: m.updatedAt.toISOString(),
+    photoUrl: m.photoStorageKey ? `/api/member-photo/${m.id}` : null,
   }));
 
   return {
@@ -932,6 +934,7 @@ export async function createMember(
         loansCount: result._count.loans,
         createdAt: result.createdAt.toISOString(),
         updatedAt: result.updatedAt.toISOString(),
+        photoUrl: result.photoStorageKey ? `/api/member-photo/${result.id}` : null,
       };
     } catch (err: unknown) {
       const isPrismaUnique = (err as { code?: string })?.code === "P2002";
