@@ -42,7 +42,7 @@ async function loadSettingsData() {
       timezone: rawProfile.timezone ?? "UTC",
       dateFormat: rawProfile.dateFormat ?? "YYYY-MM-DD",
       timeFormat: rawProfile.timeFormat ?? "12h",
-      locale: rawProfile.locale ?? "en-US",
+      locale: rawProfile.locale ?? "en-IN",
       logoUrl: rawProfile.logoUrl ?? "/branding/kn-finance-logo.png",
       faviconUrl: rawProfile.faviconUrl ?? "/favicon.ico",
       metaDescription: rawProfile.metaDescription ?? null,

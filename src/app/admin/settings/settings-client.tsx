@@ -131,7 +131,7 @@ export function SettingsClient({
     timezone: profile.timezone || "UTC",
     dateFormat: profile.dateFormat || "YYYY-MM-DD",
     timeFormat: profile.timeFormat || "12h",
-    locale: profile.locale || "en-US",
+    locale: profile.locale || "en-IN",
   });
 
   const [brandingForm, setBrandingForm] = useState({

@@ -23,7 +23,7 @@ export default async function MemberProfilePage() {
 
   const formatDate = (date: Date | null | undefined) => {
     if (!date) return "—";
-    return new Date(date).toLocaleDateString("en-US", {
+    return new Date(date).toLocaleDateString("en-IN", {
       year: "numeric",
       month: "long",
       day: "numeric",

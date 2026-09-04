@@ -85,7 +85,7 @@ export default async function AdminMemberRequestsPage() {
   };
 
   const formatDate = (isoStr: string) => {
-    return new Date(isoStr).toLocaleDateString("en-US", {
+    return new Date(isoStr).toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",
       day: "numeric",

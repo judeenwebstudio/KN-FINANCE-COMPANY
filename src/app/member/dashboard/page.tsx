@@ -23,7 +23,7 @@ export default async function MemberDashboard() {
     prisma.loan.count({ where: { memberId, status: "PENDING" } }),
   ]) : [[], 0, 0];
   const totalByCurrency = accounts.reduce<Record<string, number>>((sum, account) => { sum[account.currency] = (sum[account.currency] ?? 0) + Number(account.balance); return sum; }, {});
-  const totalLabel = Object.entries(totalByCurrency).map(([currency, value]) => new Intl.NumberFormat("en-US", { notation: "compact", style: "currency", currency }).format(value)).join(" · ") || "—";
+  const totalLabel = Object.entries(totalByCurrency).map(([currency, value]) => new Intl.NumberFormat("en-IN", { notation: "compact", style: "currency", currency }).format(value)).join(" · ") || "—";
 
   return <>
     <PageHeader title={`Welcome back, ${user.name.split(" ")[0]}`} description="Your accounts, loan position, and pending activity at a glance." />

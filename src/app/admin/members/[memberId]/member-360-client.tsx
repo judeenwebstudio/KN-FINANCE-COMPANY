@@ -49,7 +49,7 @@ export function Member360Client({
 
   const formatDate = (isoStr: string | null) => {
     if (!isoStr) return "—";
-    return new Date(isoStr).toLocaleDateString("en-US", {
+    return new Date(isoStr).toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",
       day: "numeric",

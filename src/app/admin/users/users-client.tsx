@@ -18,7 +18,7 @@ type SafeUserDTO = {
   createdAt: string;
 };
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
+const dateFormatter = new Intl.DateTimeFormat("en-IN", {
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
