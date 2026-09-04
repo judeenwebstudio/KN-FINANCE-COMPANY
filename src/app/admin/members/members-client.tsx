@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -18,17 +18,149 @@ import {
   FileSpreadsheet,
   Trash2,
   AlertTriangle,
+  ChevronDown,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import { GetMembersResult } from "@/lib/members/member-service";
+import { GetMembersResult, SafeMemberListItemDTO } from "@/lib/members/member-service";
 import { CreateMemberModal } from "./create-member-modal";
 import { EditMemberModal } from "./edit-member-modal";
 import { BulkImportModal } from "./bulk-import-modal";
 import { purgeEmptyMemberAction } from "./actions";
 
 type BranchDTO = { id: string; name: string; code: string };
+
+function MemberActionMenu({
+  member,
+  canEdit,
+  userBranchScopeGlobal,
+  onEdit,
+  onPurge,
+}: {
+  member: SafeMemberListItemDTO;
+  canEdit: boolean;
+  userBranchScopeGlobal: boolean;
+  onEdit: () => void;
+  onPurge: () => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+        buttonRef.current?.focus();
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
+  const isPurgeEligible = userBranchScopeGlobal && member.accountsCount === 0 && member.loansCount === 0;
+
+  return (
+    <div className="relative inline-block text-left" ref={menuRef}>
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-haspopup="menu"
+        aria-label={`Actions for member ${member.name}`}
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-md shadow-xs hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#275d4f] focus:ring-offset-1 transition-colors cursor-pointer"
+      >
+        Actions
+        <ChevronDown className={`h-3.5 w-3.5 text-slate-500 transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <div
+          role="menu"
+          aria-orientation="vertical"
+          className="absolute right-0 mt-1 w-48 rounded-lg bg-white border border-slate-200 shadow-xl py-1 z-30 divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-100"
+        >
+          <div className="py-1">
+            <Link
+              href={`/admin/members/${member.id}`}
+              role="menuitem"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors w-full text-left"
+            >
+              <Eye className="h-3.5 w-3.5 text-[#275d4f] shrink-0" />
+              View 360° Profile
+            </Link>
+
+            {canEdit && (
+              <>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setIsOpen(false);
+                    onEdit();
+                  }}
+                  className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors w-full text-left cursor-pointer"
+                >
+                  <Edit className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
+                  Edit Member
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setIsOpen(false);
+                    onEdit();
+                  }}
+                  className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors w-full text-left cursor-pointer"
+                >
+                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                  Change Status
+                </button>
+              </>
+            )}
+          </div>
+
+          {isPurgeEligible && (
+            <div className="py-1">
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setIsOpen(false);
+                  onPurge();
+                }}
+                className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-colors w-full text-left cursor-pointer"
+              >
+                <Trash2 className="h-3.5 w-3.5 text-rose-600 shrink-0" />
+                Purge Empty Member
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function MembersClient({
   initialData,
@@ -123,7 +255,17 @@ export function MembersClient({
             Manage registered credit union members, identity records, and branch assignments.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-9 gap-1.5 border-slate-300 text-slate-700 hover:bg-slate-50 text-xs"
+          >
+            <Link href="/admin/member-requests">
+              <FileText className="h-3.5 w-3.5 text-amber-600" /> Member Requests
+            </Link>
+          </Button>
           {canCreate && (
             <>
               <Button
@@ -289,42 +431,16 @@ export function MembersClient({
                       </StatusBadge>
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          asChild
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 gap-1 text-slate-700 hover:text-slate-900"
-                        >
-                          <Link href={`/admin/members/${m.id}`}>
-                            <Eye className="h-3.5 w-3.5 text-[#275d4f]" /> View 360°
-                          </Link>
-                        </Button>
-                        {canEdit && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setEditingMemberId(m.id)}
-                            className="h-8 gap-1 text-slate-700 hover:text-slate-900"
-                          >
-                            <Edit className="h-3.5 w-3.5" /> Edit
-                          </Button>
-                        )}
-                        {userBranchScopeGlobal && m.accountsCount === 0 && m.loansCount === 0 && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              setPurgeError(null);
-                              setPurgingMember({ id: m.id, name: m.name, memberNumber: m.memberNumber });
-                            }}
-                            title="Purge empty member (Super Admin only)"
-                            className="h-8 w-8 p-0 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        )}
-                      </div>
+                      <MemberActionMenu
+                        member={m}
+                        canEdit={canEdit}
+                        userBranchScopeGlobal={userBranchScopeGlobal}
+                        onEdit={() => setEditingMemberId(m.id)}
+                        onPurge={() => {
+                          setPurgeError(null);
+                          setPurgingMember({ id: m.id, name: m.name, memberNumber: m.memberNumber });
+                        }}
+                      />
                     </td>
                   </tr>
                 ))
