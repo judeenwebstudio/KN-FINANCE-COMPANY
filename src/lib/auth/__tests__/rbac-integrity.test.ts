@@ -1,9 +1,13 @@
-import test, { describe } from "node:test";
+import test, { describe, before } from "node:test";
 import assert from "node:assert/strict";
 import { prisma } from "../../prisma";
 import { getUserEffectivePermissions, getUserAuthorizedBranchScope } from "../authorize";
+import { bootstrapRBAC } from "../bootstrap";
 
 describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
+  before(async () => {
+    await bootstrapRBAC();
+  });
   test("A. User with User.role = SUPER_ADMIN but NO relational assignment MUST NOT receive privileges", async () => {
     // Create temporary test user with legacy User.role = SUPER_ADMIN but NO relational UserRoleAssignment
     const testUser = await prisma.user.create({

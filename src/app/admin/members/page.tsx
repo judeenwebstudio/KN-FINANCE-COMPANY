@@ -28,8 +28,9 @@ export default async function AdminMembersPage({
     redirect("/admin/dashboard");
   }
 
-  const canCreate = permissions.has("members.create") || permissions.has("members.manage");
-  const canEdit = permissions.has("members.edit") || permissions.has("members.manage");
+  const canCreate = permissions.has("members.create") || permissions.has("members.import");
+  const canEdit = permissions.has("members.update");
+  const canPurge = permissions.has("members.delete");
 
   // Branch Scope
   const branchScope = await getUserAuthorizedBranchScope(user.id);
@@ -59,6 +60,7 @@ export default async function AdminMembersPage({
       branches={branches}
       canCreate={canCreate}
       canEdit={canEdit}
+      canPurge={canPurge}
       userBranchScopeGlobal={branchScope.global}
     />
   );

@@ -35,31 +35,77 @@ type BranchDTO = { id: string; name: string; code: string };
 function MemberActionMenu({
   member,
   canEdit,
+  canPurge,
   userBranchScopeGlobal,
   onEdit,
   onPurge,
 }: {
   member: SafeMemberListItemDTO;
   canEdit: boolean;
+  canPurge: boolean;
   userBranchScopeGlobal: boolean;
   onEdit: () => void;
   onPurge: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuStyle, setMenuStyle] = useState<React.CSSProperties>({});
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const updatePosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const menuWidth = 192; // 12rem (w-48)
+      let left = rect.right - menuWidth;
+      if (left < 8) left = 8;
+      let top = rect.bottom + 4;
+      if (top + 180 > window.innerHeight && rect.top > 180) {
+        top = rect.top - 180;
+      }
+      setMenuStyle({
+        position: "fixed",
+        top: `${top}px`,
+        left: `${left}px`,
+        width: `${menuWidth}px`,
+        zIndex: 9999,
+      });
+    }
+  };
+
+  const toggleMenu = () => {
+    if (!isOpen) {
+      updatePosition();
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  };
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    function handleScrollOrResize() {
+      if (isOpen) {
         setIsOpen(false);
       }
     }
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScrollOrResize, true);
+      window.addEventListener("resize", handleScrollOrResize);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScrollOrResize, true);
+      window.removeEventListener("resize", handleScrollOrResize);
     };
   }, [isOpen]);
 
@@ -76,14 +122,14 @@ function MemberActionMenu({
     };
   }, [isOpen]);
 
-  const isPurgeEligible = userBranchScopeGlobal && member.accountsCount === 0 && member.loansCount === 0;
+  const isPurgeEligible = canPurge && userBranchScopeGlobal && member.accountsCount === 0 && member.loansCount === 0;
 
   return (
-    <div className="relative inline-block text-left" ref={menuRef}>
+    <div className="inline-block text-left">
       <button
         ref={buttonRef}
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleMenu}
         aria-expanded={isOpen}
         aria-haspopup="menu"
         aria-label={`Actions for member ${member.name}`}
@@ -95,9 +141,11 @@ function MemberActionMenu({
 
       {isOpen && (
         <div
+          ref={menuRef}
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 mt-1 w-48 rounded-lg bg-white border border-slate-200 shadow-xl py-1 z-30 divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-100"
+          style={menuStyle}
+          className="rounded-lg bg-white border border-slate-200 shadow-2xl py-1 divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-100 text-left"
         >
           <div className="py-1">
             <Link
@@ -167,12 +215,14 @@ export function MembersClient({
   branches,
   canCreate,
   canEdit,
+  canPurge,
   userBranchScopeGlobal,
 }: {
   initialData: GetMembersResult;
   branches: BranchDTO[];
   canCreate: boolean;
   canEdit: boolean;
+  canPurge: boolean;
   userBranchScopeGlobal: boolean;
 }) {
   const router = useRouter();
@@ -434,6 +484,7 @@ export function MembersClient({
                       <MemberActionMenu
                         member={m}
                         canEdit={canEdit}
+                        canPurge={canPurge}
                         userBranchScopeGlobal={userBranchScopeGlobal}
                         onEdit={() => setEditingMemberId(m.id)}
                         onPurge={() => {

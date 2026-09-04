@@ -605,4 +605,13 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
     await prisma.memberProfile.delete({ where: { id: mem.id } });
     await prisma.user.delete({ where: { email: mem.email } });
   });
+
+  test("15. Member Directory Actions Menu Permissions: verifies members.update and members.delete resolution", async () => {
+    const { getUserEffectivePermissions } = await import("../../auth/authorize");
+    const perms = await getUserEffectivePermissions(superAdminUserId);
+    
+    assert.equal(perms.has("members.view"), true, "Super admin must have members.view");
+    assert.equal(perms.has("members.update"), true, "Super admin must have members.update for Edit & Status actions");
+    assert.equal(perms.has("members.delete"), true, "Super admin must have members.delete for Purge action");
+  });
 });
