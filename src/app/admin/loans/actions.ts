@@ -49,7 +49,7 @@ export async function approveLoanAction(loanId: string): Promise<AdminLoanAction
         userId: updated.member.user.id,
         eventKey: "LOAN_APPROVED",
         title: "Loan Application Approved",
-        message: `Your loan application ${updated.loanNumber} for $${updated.approvedAmount?.toString()} has been approved.`,
+        message: `Your loan application ${updated.loanNumber} for ₹${updated.approvedAmount?.toString()} has been approved.`,
         targetUrl: `/member/loans/${updated.id}`,
       }).catch(() => {});
     }

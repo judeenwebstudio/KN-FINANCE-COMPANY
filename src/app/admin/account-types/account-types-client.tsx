@@ -171,8 +171,8 @@ export function AccountTypesClient({ accountTypes: initialList }: AccountTypesCl
                   <td className="px-5 py-4 font-mono font-medium text-slate-700">
                     {t.currency ? t.currency : <span className="text-slate-400">ANY</span>}
                   </td>
-                  <td className="px-5 py-4 font-semibold text-slate-800">${t.minimumOpeningBalance}</td>
-                  <td className="px-5 py-4 font-semibold text-slate-800">${t.minimumBalance}</td>
+                  <td className="px-5 py-4 font-semibold text-slate-800">₹{t.minimumOpeningBalance}</td>
+                  <td className="px-5 py-4 font-semibold text-slate-800">₹{t.minimumBalance}</td>
                   <td className="px-5 py-4">
                     {t.allowDeposits ? (
                       <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
