@@ -37,12 +37,13 @@ export function Member360Client({
     router.push(`/admin/members/${header.id}?${params.toString()}`);
   };
 
-  const formatCurrency = (val: number, currency: string = header.currency) => {
+  const formatCurrency = (val: number | string, currency: string = header.currency) => {
+    const num = typeof val === "number" ? val : parseFloat(val || "0");
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: currency || "USD",
       minimumFractionDigits: 2,
-    }).format(val);
+    }).format(isNaN(num) ? 0 : num);
   };
 
   const formatDate = (isoStr: string | null) => {
@@ -307,10 +308,6 @@ export function Member360Client({
                 <div>
                   <span className="text-slate-400 block text-[10px] uppercase font-semibold">Branch Code</span>
                   <span className="text-slate-800 font-mono">{header.branchCode} ({header.branchName})</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px] uppercase font-semibold">System User ID</span>
-                  <span className="text-slate-600 font-mono text-[11px]">{header.userId}</span>
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px] uppercase font-semibold">Record Updated</span>

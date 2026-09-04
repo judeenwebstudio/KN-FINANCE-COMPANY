@@ -99,8 +99,8 @@ export type Member360AccountDTO = {
   accountType: string;
   accountTypeName: string | null;
   currency: string;
-  balance: number;
-  loanGuarantee: number;
+  balance: string;
+  loanGuarantee: string;
   status: string;
   createdAt: string;
 };
@@ -111,10 +111,10 @@ export type Member360LoanDTO = {
   productName: string | null;
   productCode: string | null;
   currency: string;
-  principalAmount: number;
-  approvedAmount: number | null;
-  paidAmount: number;
-  outstandingAmount: number;
+  principalAmount: string;
+  approvedAmount: string | null;
+  paidAmount: string;
+  outstandingAmount: string;
   interestRate: number;
   interestType: string;
   termMonths: number;
@@ -124,7 +124,7 @@ export type Member360LoanDTO = {
   disbursementDate: string | null;
   maturityDate: string | null;
   overdueDays: number;
-  overdueAmount: number;
+  overdueAmount: string;
 };
 
 export type Member360RepaymentDTO = {
@@ -134,11 +134,11 @@ export type Member360RepaymentDTO = {
   loanNumber: string;
   accountId: string;
   accountNumber: string;
-  amount: number;
-  principalAmount: number;
-  interestAmount: number;
-  feeAmount: number;
-  penaltyAmount: number;
+  amount: string;
+  principalAmount: string;
+  interestAmount: string;
+  feeAmount: string;
+  penaltyAmount: string;
   paymentDate: string;
   status: string;
   reference: string | null;
@@ -151,16 +151,16 @@ export type Member360RepaymentScheduleDTO = {
   loanNumber: string;
   installmentNumber: number;
   dueDate: string;
-  principalDue: number;
-  interestDue: number;
-  feeDue: number;
-  penaltyDue: number;
-  totalDue: number;
-  principalPaid: number;
-  interestPaid: number;
-  feePaid: number;
-  penaltyPaid: number;
-  totalPaid: number;
+  principalDue: string;
+  interestDue: string;
+  feeDue: string;
+  penaltyDue: string;
+  totalDue: string;
+  principalPaid: string;
+  interestPaid: string;
+  feePaid: string;
+  penaltyPaid: string;
+  totalPaid: string;
   status: string;
   overdueDays: number;
   paidAt: string | null;
@@ -171,7 +171,7 @@ export type Member360TransactionDTO = {
   accountId: string | null;
   accountNumber: string | null;
   type: string;
-  amount: number;
+  amount: string;
   currency: string;
   reference: string;
   description: string | null;
@@ -184,7 +184,7 @@ export type Member360DepositRequestDTO = {
   requestNumber: string;
   accountId: string;
   accountNumber: string;
-  amount: number;
+  amount: string;
   currency: string;
   paymentMethod: string | null;
   reference: string | null;
@@ -197,7 +197,7 @@ export type Member360WithdrawalRequestDTO = {
   requestNumber: string;
   accountId: string;
   accountNumber: string;
-  amount: number;
+  amount: string;
   currency: string;
   paymentMethod: string | null;
   reference: string | null;
@@ -213,7 +213,7 @@ export type Member360CollectionNoteDTO = {
   notes: string;
   actionDate: string;
   followUpDate: string | null;
-  promiseToPayAmount: number | null;
+  promiseToPayAmount: string | null;
   promiseToPayDate: string | null;
   createdBy: string | null;
 };
@@ -221,7 +221,6 @@ export type Member360CollectionNoteDTO = {
 export type Member360ProfileDTO = {
   header: {
     id: string;
-    userId: string;
     memberNumber: string;
     name: string;
     email: string;
@@ -243,8 +242,8 @@ export type Member360ProfileDTO = {
     totalLoans: number;
     activeLoans: number;
     overdueLoans: number;
-    totalAccountBalance: number;
-    totalLoanPrincipalOutstanding: number;
+    totalAccountBalance: string;
+    totalLoanPrincipalOutstanding: string;
   };
   accounts: Member360AccountDTO[];
   loans: Member360LoanDTO[];
@@ -586,8 +585,8 @@ export async function getMember360Profile(
       accountType: acc.accountType,
       accountTypeName: acc.accountTypePolicy?.name || null,
       currency: acc.currency,
-      balance: acc.balance.toNumber(),
-      loanGuarantee: acc.loanGuarantee.toNumber(),
+      balance: acc.balance.toFixed(2),
+      loanGuarantee: acc.loanGuarantee.toFixed(2),
       status: acc.status,
       createdAt: acc.createdAt.toISOString(),
     };
@@ -630,16 +629,16 @@ export async function getMember360Profile(
         loanNumber: loan.loanNumber,
         installmentNumber: sch.installmentNumber,
         dueDate: sch.dueDate.toISOString(),
-        principalDue: sch.principalDue.toNumber(),
-        interestDue: sch.interestDue.toNumber(),
-        feeDue: sch.feeDue.toNumber(),
-        penaltyDue: sch.penaltyDue.toNumber(),
-        totalDue: sch.totalDue.toNumber(),
-        principalPaid: sch.principalPaid.toNumber(),
-        interestPaid: sch.interestPaid.toNumber(),
-        feePaid: sch.feePaid.toNumber(),
-        penaltyPaid: sch.penaltyPaid.toNumber(),
-        totalPaid: sch.totalPaid.toNumber(),
+        principalDue: sch.principalDue.toFixed(2),
+        interestDue: sch.interestDue.toFixed(2),
+        feeDue: sch.feeDue.toFixed(2),
+        penaltyDue: sch.penaltyDue.toFixed(2),
+        totalDue: sch.totalDue.toFixed(2),
+        principalPaid: sch.principalPaid.toFixed(2),
+        interestPaid: sch.interestPaid.toFixed(2),
+        feePaid: sch.feePaid.toFixed(2),
+        penaltyPaid: sch.penaltyPaid.toFixed(2),
+        totalPaid: sch.totalPaid.toFixed(2),
         status: sch.status,
         overdueDays: sch.overdueDays,
         paidAt: sch.paidAt ? sch.paidAt.toISOString() : null,
@@ -656,10 +655,10 @@ export async function getMember360Profile(
       productName: loan.product?.name || null,
       productCode: loan.product?.code || null,
       currency: loan.currency,
-      principalAmount: loan.principalAmount.toNumber(),
-      approvedAmount: loan.approvedAmount ? loan.approvedAmount.toNumber() : null,
-      paidAmount: loan.paidAmount.toNumber(),
-      outstandingAmount: outstanding.toNumber(),
+      principalAmount: loan.principalAmount.toFixed(2),
+      approvedAmount: loan.approvedAmount ? loan.approvedAmount.toFixed(2) : null,
+      paidAmount: loan.paidAmount.toFixed(2),
+      outstandingAmount: outstanding.toFixed(2),
       interestRate: loan.interestRate.toNumber(),
       interestType: loan.interestType,
       termMonths: loan.termMonths,
@@ -669,7 +668,7 @@ export async function getMember360Profile(
       disbursementDate: loan.disbursementDate ? loan.disbursementDate.toISOString() : null,
       maturityDate: loan.maturityDate ? loan.maturityDate.toISOString() : null,
       overdueDays: maxOverdueDays,
-      overdueAmount: loanOverdueAmountDecimal.toNumber(),
+      overdueAmount: loanOverdueAmountDecimal.toFixed(2),
     };
   });
 
@@ -680,11 +679,11 @@ export async function getMember360Profile(
     loanNumber: rep.loan.loanNumber,
     accountId: rep.accountId,
     accountNumber: rep.account.accountNumber,
-    amount: rep.amount.toNumber(),
-    principalAmount: rep.principalAmount.toNumber(),
-    interestAmount: rep.interestAmount.toNumber(),
-    feeAmount: rep.feeAmount.toNumber(),
-    penaltyAmount: rep.penaltyAmount.toNumber(),
+    amount: rep.amount.toFixed(2),
+    principalAmount: rep.principalAmount.toFixed(2),
+    interestAmount: rep.interestAmount.toFixed(2),
+    feeAmount: rep.feeAmount.toFixed(2),
+    penaltyAmount: rep.penaltyAmount.toFixed(2),
     paymentDate: rep.paymentDate.toISOString(),
     status: rep.status,
     reference: rep.reference || null,
@@ -696,7 +695,7 @@ export async function getMember360Profile(
     accountId: tx.accountId,
     accountNumber: tx.account?.accountNumber || null,
     type: tx.type,
-    amount: tx.amount.toNumber(),
+    amount: tx.amount.toFixed(2),
     currency: tx.currency,
     reference: tx.reference,
     description: tx.description || null,
@@ -709,7 +708,7 @@ export async function getMember360Profile(
     requestNumber: dr.requestNumber,
     accountId: dr.accountId,
     accountNumber: dr.account.accountNumber,
-    amount: dr.amount.toNumber(),
+    amount: dr.amount.toFixed(2),
     currency: dr.currency,
     paymentMethod: dr.paymentMethod || null,
     reference: dr.reference || null,
@@ -722,7 +721,7 @@ export async function getMember360Profile(
     requestNumber: wr.requestNumber,
     accountId: wr.accountId,
     accountNumber: wr.account.accountNumber,
-    amount: wr.amount.toNumber(),
+    amount: wr.amount.toFixed(2),
     currency: wr.currency,
     paymentMethod: wr.paymentMethod || null,
     reference: wr.reference || null,
@@ -738,7 +737,7 @@ export async function getMember360Profile(
     notes: cn.notes,
     actionDate: cn.actionDate.toISOString(),
     followUpDate: cn.followUpDate ? cn.followUpDate.toISOString() : null,
-    promiseToPayAmount: cn.promiseToPayAmount ? cn.promiseToPayAmount.toNumber() : null,
+    promiseToPayAmount: cn.promiseToPayAmount ? cn.promiseToPayAmount.toFixed(2) : null,
     promiseToPayDate: cn.promiseToPayDate ? cn.promiseToPayDate.toISOString() : null,
     createdBy: cn.createdBy?.name || null,
   }));
@@ -748,7 +747,6 @@ export async function getMember360Profile(
   return {
     header: {
       id: member.id,
-      userId: member.userId,
       memberNumber: member.memberNumber,
       name: member.user.name,
       email: member.user.email,
@@ -770,8 +768,8 @@ export async function getMember360Profile(
       totalLoans: loansRecords.length,
       activeLoans: activeLoansCount,
       overdueLoans: overdueLoansCount,
-      totalAccountBalance: totalAccountBalanceDecimal.toNumber(),
-      totalLoanPrincipalOutstanding: totalLoanOutstandingDecimal.toNumber(),
+      totalAccountBalance: totalAccountBalanceDecimal.toFixed(2),
+      totalLoanPrincipalOutstanding: totalLoanOutstandingDecimal.toFixed(2),
     },
     accounts: accountsDTO,
     loans: loansDTO,
@@ -1058,5 +1056,211 @@ export async function updateMember(
     branchName: result.branch.name,
     branchCode: result.branch.code,
     status: result.user.status,
+  };
+}
+
+/**
+ * Purges an empty member profile and user account (Super Admin ONLY).
+ * Strictly verifies ZERO linked financial or operational records across all 7 relations before proceeding.
+ */
+export async function purgeEmptyMember(
+  executorUserId: string,
+  memberId: string
+): Promise<{ success: true; purgedMemberNumber: string }> {
+  const user = await prisma.user.findUnique({
+    where: { id: executorUserId },
+    include: { roleAssignments: { include: { role: true } } },
+  });
+  if (!user || user.status !== "ACTIVE") {
+    throw new PermissionDeniedError("Account is inactive or suspended.");
+  }
+  const isSuperAdmin = user.roleAssignments.some(
+    (ra) => ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
+  );
+  if (!isSuperAdmin) {
+    throw new PermissionDeniedError("Super Admin privileges required to purge empty member records.");
+  }
+
+  const member = await prisma.memberProfile.findUnique({
+    where: { id: memberId },
+    include: {
+      user: { select: { name: true, email: true } },
+      _count: {
+        select: {
+          accounts: true,
+          loans: true,
+          repayments: true,
+          transactions: true,
+          depositRequests: true,
+          withdrawalRequests: true,
+          collectionNotes: true,
+        },
+      },
+    },
+  });
+
+  if (!member) {
+    throw new Error(`Member with ID '${memberId}' not found.`);
+  }
+
+  const counts = member._count;
+  const totalLinkedRecords =
+    counts.accounts +
+    counts.loans +
+    counts.repayments +
+    counts.transactions +
+    counts.depositRequests +
+    counts.withdrawalRequests +
+    counts.collectionNotes;
+
+  if (totalLinkedRecords > 0) {
+    throw new Error(
+      `Cannot purge member '${member.memberNumber}': Member has ${totalLinkedRecords} linked financial or operational records.`
+    );
+  }
+
+  const purgedMemberNumber = member.memberNumber;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.memberProfile.delete({ where: { id: member.id } });
+    await tx.user.delete({ where: { id: member.userId } });
+
+    await logAuditEvent(
+      {
+        actorUserId: executorUserId,
+        action: "MEMBER_PURGED",
+        entityType: "MemberProfile",
+        entityId: member.id,
+        metadata: {
+          purgedMemberNumber,
+          memberName: member.user.name,
+          memberEmail: member.user.email,
+        },
+      },
+      tx
+    );
+  });
+
+  return { success: true, purgedMemberNumber };
+}
+
+export type BulkImportResult = {
+  totalProcessed: number;
+  successfulCount: number;
+  failedCount: number;
+  importedMembers: Array<{ memberNumber: string; name: string; email: string }>;
+  errors: Array<{ row: number; email: string; error: string }>;
+};
+
+/**
+ * Bulk imports members from structured CSV input rows within an authorized branch.
+ */
+export async function bulkImportMembers(
+  executorUserId: string,
+  branchId: string,
+  rows: Array<{ name: string; email: string; phone: string; address: string; identityNumber?: string }>
+): Promise<BulkImportResult> {
+  const allowed = await hasPermission(executorUserId, "members.create");
+  if (!allowed) {
+    throw new PermissionDeniedError("Required permission missing: members.create");
+  }
+
+  await assertBranchAccess(executorUserId, branchId);
+
+  const errors: Array<{ row: number; email: string; error: string }> = [];
+  const validRowsToProcess: Array<{
+    rowNumber: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    identityNumber?: string;
+  }> = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const rowNum = i + 1;
+    if (!row.name || !row.name.trim()) {
+      errors.push({ row: rowNum, email: row.email || "", error: "Name is required." });
+      continue;
+    }
+    if (!row.email || !row.email.includes("@")) {
+      errors.push({ row: rowNum, email: row.email || "", error: "Valid email is required." });
+      continue;
+    }
+    if (!row.phone || !row.phone.trim()) {
+      errors.push({ row: rowNum, email: row.email, error: "Phone number is required." });
+      continue;
+    }
+    if (!row.address || !row.address.trim()) {
+      errors.push({ row: rowNum, email: row.email, error: "Address is required." });
+      continue;
+    }
+    validRowsToProcess.push({
+      rowNumber: rowNum,
+      name: row.name.trim(),
+      email: row.email.trim().toLowerCase(),
+      phone: row.phone.trim(),
+      address: row.address.trim(),
+      identityNumber: row.identityNumber?.trim() || undefined,
+    });
+  }
+
+  const emailsToCheck = validRowsToProcess.map((r) => r.email);
+  const existingUsers = await prisma.user.findMany({
+    where: { email: { in: emailsToCheck } },
+    select: { email: true },
+  });
+  const existingEmailSet = new Set(existingUsers.map((u) => u.email.toLowerCase()));
+
+  const importedMembers: Array<{ memberNumber: string; name: string; email: string }> = [];
+
+  for (const item of validRowsToProcess) {
+    if (existingEmailSet.has(item.email)) {
+      errors.push({ row: item.rowNumber, email: item.email, error: "User with this email already exists." });
+      continue;
+    }
+
+    try {
+      const created = await createMember(executorUserId, {
+        name: item.name,
+        email: item.email,
+        password: `TmpPass#${Date.now().toString().slice(-6)}`,
+        phone: item.phone,
+        address: item.address,
+        identityNumber: item.identityNumber,
+        branchId,
+      });
+
+      existingEmailSet.add(item.email);
+      importedMembers.push({
+        memberNumber: created.memberNumber,
+        name: created.name,
+        email: created.email,
+      });
+    } catch (err: unknown) {
+      errors.push({ row: item.rowNumber, email: item.email, error: (err as Error)?.message || "Import failed for row." });
+    }
+  }
+
+  if (importedMembers.length > 0) {
+    await logAuditEvent({
+      actorUserId: executorUserId,
+      action: "MEMBERS_BULK_IMPORTED",
+      entityType: "Branch",
+      entityId: branchId,
+      metadata: {
+        importedCount: importedMembers.length,
+        failedCount: errors.length,
+      },
+    });
+  }
+
+  return {
+    totalProcessed: rows.length,
+    successfulCount: importedMembers.length,
+    failedCount: errors.length,
+    importedMembers,
+    errors,
   };
 }

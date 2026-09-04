@@ -211,8 +211,9 @@ export async function bootstrapRBAC(): Promise<{
         if (roleId) {
           const hasAssignment = user.roleAssignments.some((ra) => ra.roleId === roleId);
           if (!hasAssignment) {
-            await prisma.userRoleAssignment.create({
-              data: { userId: user.id, roleId },
+            await prisma.userRoleAssignment.createMany({
+              data: [{ userId: user.id, roleId }],
+              skipDuplicates: true,
             });
             usersMigrated++;
           }
@@ -223,8 +224,9 @@ export async function bootstrapRBAC(): Promise<{
       if (!grantGlobal && user.branchId) {
         const hasBranchAccess = user.branchAccess.some((ba) => ba.branchId === user.branchId);
         if (!hasBranchAccess) {
-          await prisma.userBranchAccess.create({
-            data: { userId: user.id, branchId: user.branchId },
+          await prisma.userBranchAccess.createMany({
+            data: [{ userId: user.id, branchId: user.branchId }],
+            skipDuplicates: true,
           });
         }
       }

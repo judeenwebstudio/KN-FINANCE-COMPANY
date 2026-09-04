@@ -15,6 +15,9 @@ import {
   CreditCard,
   Banknote,
   Eye,
+  FileSpreadsheet,
+  Trash2,
+  AlertTriangle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -22,6 +25,8 @@ import { StatusBadge } from "@/components/status-badge";
 import { GetMembersResult } from "@/lib/members/member-service";
 import { CreateMemberModal } from "./create-member-modal";
 import { EditMemberModal } from "./edit-member-modal";
+import { BulkImportModal } from "./bulk-import-modal";
+import { purgeEmptyMemberAction } from "./actions";
 
 type BranchDTO = { id: string; name: string; code: string };
 
@@ -46,7 +51,12 @@ export function MembersClient({
   const [statusFilter, setStatusFilter] = useState(searchParams.get("status") || "");
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [bulkImportOpen, setBulkImportOpen] = useState(false);
   const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
+
+  const [purgingMember, setPurgingMember] = useState<{ id: string; name: string; memberNumber: string } | null>(null);
+  const [purgeError, setPurgeError] = useState<string | null>(null);
+  const [purging, setPurging] = useState(false);
 
   const updateFilters = (newParams: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -79,6 +89,23 @@ export function MembersClient({
     router.refresh();
   };
 
+  const handlePurgeConfirm = async () => {
+    if (!purgingMember) return;
+    setPurging(true);
+    setPurgeError(null);
+
+    const res = await purgeEmptyMemberAction(purgingMember.id);
+    setPurging(false);
+
+    if (!res.success) {
+      setPurgeError(res.error || "Failed to purge member.");
+      return;
+    }
+
+    setPurgingMember(null);
+    router.refresh();
+  };
+
   const { members, pagination } = initialData;
 
   return (
@@ -96,14 +123,27 @@ export function MembersClient({
             Manage registered credit union members, identity records, and branch assignments.
           </p>
         </div>
-        {canCreate && (
-          <Button
-            onClick={() => setCreateModalOpen(true)}
-            className="gap-2 bg-[#275d4f] hover:bg-[#1e483d] text-white"
-          >
-            <UserPlus className="h-4 w-4" /> Register New Member
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          {canCreate && (
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setBulkImportOpen(true)}
+                className="h-9 gap-1.5 border-slate-300 text-slate-700 hover:bg-slate-50 text-xs"
+              >
+                <FileSpreadsheet className="h-3.5 w-3.5 text-indigo-600" /> Bulk Import CSV
+              </Button>
+              <Button
+                onClick={() => setCreateModalOpen(true)}
+                size="sm"
+                className="h-9 gap-1.5 bg-[#275d4f] hover:bg-[#1e483d] text-white text-xs shadow-xs"
+              >
+                <UserPlus className="h-3.5 w-3.5" /> Register New Member
+              </Button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Filters Bar */}
@@ -270,6 +310,20 @@ export function MembersClient({
                             <Edit className="h-3.5 w-3.5" /> Edit
                           </Button>
                         )}
+                        {userBranchScopeGlobal && m.accountsCount === 0 && m.loansCount === 0 && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setPurgeError(null);
+                              setPurgingMember({ id: m.id, name: m.name, memberNumber: m.memberNumber });
+                            }}
+                            title="Purge empty member (Super Admin only)"
+                            className="h-8 w-8 p-0 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -325,12 +379,73 @@ export function MembersClient({
         />
       )}
 
+      {bulkImportOpen && (
+        <BulkImportModal
+          branches={branches}
+          onClose={() => setBulkImportOpen(false)}
+          onSuccess={() => {
+            setBulkImportOpen(false);
+            router.refresh();
+          }}
+        />
+      )}
+
       {editingMemberId && (
         <EditMemberModal
           memberId={editingMemberId}
           onClose={() => setEditingMemberId(null)}
           onSuccess={handleEditSuccess}
         />
+      )}
+
+      {purgingMember && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs animate-in fade-in duration-150">
+          <Card className="w-full max-w-md border-rose-200 bg-white p-6 shadow-2xl space-y-4">
+            <div className="flex items-center gap-2 text-rose-700">
+              <AlertTriangle className="h-5 w-5 shrink-0" />
+              <h2 className="text-base font-bold">Purge Empty Member Profile?</h2>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Are you sure you want to permanently purge member{" "}
+              <strong className="text-slate-900">{purgingMember.name}</strong> (
+              <span className="font-mono text-slate-800">{purgingMember.memberNumber}</span>)?
+            </p>
+
+            <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-[11px] text-amber-900 space-y-1">
+              <p className="font-semibold">Financial Integrity Safety Guarantee:</p>
+              <p>This action is permitted ONLY because the member has 0 accounts, 0 loans, and 0 financial history. This operation is recorded in the immutable audit log.</p>
+            </div>
+
+            {purgeError && (
+              <div className="rounded-md bg-rose-50 border border-rose-200 p-2.5 text-xs text-rose-800">
+                {purgeError}
+              </div>
+            )}
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={purging}
+                onClick={() => {
+                  setPurgingMember(null);
+                  setPurgeError(null);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                disabled={purging}
+                onClick={handlePurgeConfirm}
+                className="bg-rose-700 hover:bg-rose-800 text-white text-xs"
+              >
+                {purging ? "Purging..." : "Confirm Purge"}
+              </Button>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );

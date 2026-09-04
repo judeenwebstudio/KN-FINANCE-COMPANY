@@ -7,6 +7,8 @@ import {
   updateMember,
   getMemberForEdit,
   getMember360Profile,
+  purgeEmptyMember,
+  bulkImportMembers,
   maskIdentityNumber,
 } from "../member-service";
 import { PermissionDeniedError, BranchAccessDeniedError } from "../../auth/authorize";
@@ -168,6 +170,12 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
     const userIds = testUsers.map((u) => u.id);
 
     if (userIds.length > 0) {
+      await prisma.loanRepaymentSchedule.deleteMany({
+        where: { loan: { member: { userId: { in: userIds } } } },
+      });
+      await prisma.loan.deleteMany({
+        where: { member: { userId: { in: userIds } } },
+      });
       await prisma.account.deleteMany({
         where: { member: { userId: { in: userIds } } },
       });
@@ -206,9 +214,9 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
       branchId: testBranch1Id,
     });
 
-    const list = await getMembersList(normalAdminUserId, { search: "Privacy Member" });
-    assert.equal(list.members.length, 1);
-    const dto = list.members[0];
+    const list = await getMembersList(normalAdminUserId, { search: email });
+    const dto = list.members.find((m) => m.email === email);
+    assert.ok(dto, "Created member DTO must be found");
 
     // Assert privacy minimization
     assert.equal((dto as Record<string, unknown>).passwordHash, undefined);
@@ -413,21 +421,23 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
     // Assert Summary
     assert.equal(profile.summary.totalAccounts, 1);
     assert.equal(profile.summary.activeAccounts, 1);
-    assert.equal(profile.summary.totalAccountBalance, 2500.5);
+    assert.equal(profile.summary.totalAccountBalance, "2500.50");
     assert.equal(profile.summary.totalLoans, 1);
     assert.equal(profile.summary.activeLoans, 1);
-    assert.equal(profile.summary.totalLoanPrincipalOutstanding, 8000.0);
+    assert.equal(profile.summary.totalLoanPrincipalOutstanding, "8000.00");
 
     // Assert Accounts & Loans DTOs
     assert.equal(profile.accounts.length, 1);
     assert.equal(profile.accounts[0].accountNumber, account.accountNumber);
     assert.equal(profile.loans.length, 1);
     assert.equal(profile.loans[0].loanNumber, loan.loanNumber);
-    assert.equal(profile.loans[0].outstandingAmount, 8000.0);
+    assert.equal(profile.loans[0].outstandingAmount, "8000.00");
 
     // Teardown
     await prisma.loan.delete({ where: { id: loan.id } });
     await prisma.account.delete({ where: { id: account.id } });
+    await prisma.memberProfile.delete({ where: { id: created.id } });
+    await prisma.user.delete({ where: { email } });
   });
 
   test("10. Member 360° Profile: fails closed when unauthorized by branch scope or RBAC", async () => {
@@ -479,5 +489,116 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
       await prisma.userBranchAccess.deleteMany({ where: { userId: branch1Staff.id } });
       await prisma.user.delete({ where: { id: branch1Staff.id } });
     }
+  });
+
+  test("11. Purge Empty Member: Super Admin can purge zero-relation member, fails for non-superadmin or active records", async () => {
+    // 1. Create an empty member
+    const emptyMem = await createMember(superAdminUserId, {
+      name: "Empty Member To Purge",
+      email: `purge-empty-${Date.now()}@creditflow.test`,
+      password: "PasswordPurge1!",
+      phone: "+1-555-9988",
+      address: "Empty St",
+      branchId: testBranch1Id,
+    });
+
+    // 2. Normal admin (non-superadmin) cannot purge empty member
+    await assert.rejects(
+      async () => {
+        await purgeEmptyMember(normalAdminUserId, emptyMem.id);
+      },
+      (err: unknown) => err instanceof PermissionDeniedError,
+      "Normal admin must be denied purge authorization"
+    );
+
+    // 3. Super Admin can purge empty member cleanly
+    const purgeRes = await purgeEmptyMember(superAdminUserId, emptyMem.id);
+    assert.equal(purgeRes.success, true);
+
+    // Verify record no longer exists
+    const deletedCheck = await prisma.memberProfile.findUnique({ where: { id: emptyMem.id } });
+    assert.equal(deletedCheck, null, "Purged member record must be deleted");
+  });
+
+  test("12. Bulk Import Members: validates CSV row batch, uniqueness, and branch authorization", async () => {
+    const batchRows = [
+      {
+        name: "Bulk User One",
+        email: `bulk1-${Date.now()}@creditflow.test`,
+        phone: "+1-555-7001",
+        address: "1 Bulk Ave",
+      },
+      {
+        name: "Bulk User Two",
+        email: `bulk2-${Date.now()}@creditflow.test`,
+        phone: "+1-555-7002",
+        address: "2 Bulk Ave",
+      },
+    ];
+
+    const importRes = await bulkImportMembers(normalAdminUserId, testBranch1Id, batchRows);
+    assert.equal(importRes.totalProcessed, 2);
+    assert.equal(importRes.successfulCount, 2);
+    assert.equal(importRes.failedCount, 0);
+
+    // Teardown imported users
+    const createdEmails = batchRows.map((r) => r.email);
+    const users = await prisma.user.findMany({ where: { email: { in: createdEmails } } });
+    const userIds = users.map((u) => u.id);
+    await prisma.memberProfile.deleteMany({ where: { userId: { in: userIds } } });
+    await prisma.user.deleteMany({ where: { id: { in: userIds } } });
+  });
+
+  test("13. Money Serialization Hardening: getMember360Profile serializes amounts as decimal strings", async () => {
+    const mem = await createMember(superAdminUserId, {
+      name: "Decimal String Member",
+      email: `dec-str-${Date.now()}@creditflow.test`,
+      password: "PasswordDec1!",
+      phone: "+1-555-[#dec]",
+      address: "Decimal Way",
+      branchId: testBranch1Id,
+    });
+
+    const acc = await prisma.account.create({
+      data: {
+        memberId: mem.id,
+        branchId: testBranch1Id,
+        accountNumber: `DEC-${Date.now().toString().slice(-6)}`,
+        accountType: "SAVINGS",
+        currency: "USD",
+        balance: 1550.75,
+        status: "ACTIVE",
+      },
+    });
+
+    const profile = await getMember360Profile(superAdminUserId, mem.id);
+    assert.equal(typeof profile.summary.totalAccountBalance, "string", "totalAccountBalance must be string");
+    assert.equal(profile.summary.totalAccountBalance, "1550.75");
+    assert.equal(typeof profile.accounts[0].balance, "string", "account balance must be string");
+    assert.equal(profile.accounts[0].balance, "1550.75");
+
+    // Teardown
+    await prisma.account.delete({ where: { id: acc.id } });
+    await prisma.memberProfile.delete({ where: { id: mem.id } });
+    await prisma.user.delete({ where: { email: mem.email } });
+  });
+
+  test("14. Privacy Hardening: getMember360Profile header DTO omits SYSTEM USER ID", async () => {
+    const mem = await createMember(superAdminUserId, {
+      name: "Privacy Header Member",
+      email: `privacy-hdr-${Date.now()}@creditflow.test`,
+      password: "PasswordPriv1!",
+      phone: "+1-555-0100",
+      address: "Privacy St",
+      branchId: testBranch1Id,
+    });
+
+    const profile = await getMember360Profile(superAdminUserId, mem.id);
+    // Verify header does not contain userId
+    assert.equal((profile.header as Record<string, unknown>).userId, undefined, "userId must be omitted from header DTO");
+
+    // Teardown
+    await prisma.memberProfile.delete({ where: { id: mem.id } });
+    await prisma.user.delete({ where: { email: mem.email } });
   });
 });
