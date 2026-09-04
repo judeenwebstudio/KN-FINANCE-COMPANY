@@ -3,6 +3,7 @@ import { prisma } from "../prisma";
 import { logAuditEvent } from "../audit/audit-logger";
 import { getUserEffectivePermissions, getUserAuthorizedBranchScope } from "./authorize";
 import { Prisma } from "../../generated/prisma/client";
+import { MINIMUM_PASSWORD_LENGTH } from "../settings/password-security";
 
 export class PrivilegeEscalationError extends Error {
   constructor(message: string) {
@@ -45,6 +46,9 @@ export type UpdateUserInput = {
  * Evaluates privilege ceiling, branch ceiling, and global access ceiling BEFORE creation.
  */
 export async function createUser(input: CreateUserInput) {
+  if (!input.password || input.password.length < MINIMUM_PASSWORD_LENGTH) {
+    throw new PrivilegeEscalationError(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters.`);
+  }
   const actorPermissions = await getUserEffectivePermissions(input.actorUserId);
   const actorBranchScope = await getUserAuthorizedBranchScope(input.actorUserId);
 
@@ -165,6 +169,9 @@ export async function createUser(input: CreateUserInput) {
  * Evaluates privilege ceilings and transaction-safe last super-admin protection.
  */
 export async function updateUser(input: UpdateUserInput) {
+  if (input.password !== undefined && input.password.length > 0 && input.password.length < MINIMUM_PASSWORD_LENGTH) {
+    throw new PrivilegeEscalationError(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters.`);
+  }
   const actorPermissions = await getUserEffectivePermissions(input.actorUserId);
   const actorBranchScope = await getUserAuthorizedBranchScope(input.actorUserId);
 

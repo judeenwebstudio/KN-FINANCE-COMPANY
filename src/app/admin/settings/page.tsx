@@ -1,4 +1,4 @@
-import { requirePermission, getUserEffectivePermissions } from "@/lib/auth/authorize";
+import { requirePermission, getUserAuthorizedBranchScope, getUserEffectivePermissions } from "@/lib/auth/authorize";
 import { getCompanyProfile } from "@/lib/settings/company-profile";
 import { getAllBranchesWithCounts } from "@/lib/settings/branch-service";
 import { getEmailConfiguration, getEmailProviderStatus } from "@/lib/settings/email-service";
@@ -10,16 +10,19 @@ export const dynamic = "force-dynamic";
 async function loadSettingsData() {
   try {
     const actor = await requirePermission("settings.view");
-    const permissions = await getUserEffectivePermissions(actor.id);
+    const [permissions, branchScope] = await Promise.all([
+      getUserEffectivePermissions(actor.id),
+      getUserAuthorizedBranchScope(actor.id),
+    ]);
 
     const canManageCompany = permissions.has("settings.company.manage");
-    const canManageBranch = permissions.has("settings.branch.manage");
+    const canManageBranch = permissions.has("settings.branch.manage") && branchScope.global;
     const canManageFinancial = permissions.has("settings.financial.manage");
     const canManageNotifications = permissions.has("settings.notifications.manage");
     const canManageIntegrations = permissions.has("settings.integrations.manage");
 
     const rawProfile = await getCompanyProfile();
-    const branches = await getAllBranchesWithCounts();
+    const branches = canManageBranch ? await getAllBranchesWithCounts() : [];
     const rawEmailConfig = await getEmailConfiguration();
     const providerStatus = getEmailProviderStatus();
     const rawTemplates = await getAllNotificationTemplates();
