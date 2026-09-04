@@ -65,7 +65,7 @@ export function AdminDepositsClient({
     if (res.error) {
       setError(res.error);
     } else if (res.data) {
-      setSuccessMsg(`Successfully credited ${formatMoney(dataAmount(amountInput), selectedAccount?.currency || "USD")} to account ${selectedAccount?.accountNumber}`);
+      setSuccessMsg(`Successfully credited ${formatMoney(dataAmount(amountInput), selectedAccount?.currency || "INR")} to account ${selectedAccount?.accountNumber}`);
       setAmountInput("");
       setReference("");
       setNotes("");
@@ -174,7 +174,7 @@ export function AdminDepositsClient({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Deposit Amount ({selectedAccount?.currency || "USD"}) *
+                  Deposit Amount ({selectedAccount?.currency || "INR"}) *
                 </label>
                 <input
                   type="number"

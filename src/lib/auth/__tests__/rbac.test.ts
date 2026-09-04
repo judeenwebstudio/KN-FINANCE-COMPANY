@@ -163,8 +163,8 @@ describe("Phase 6 RBAC & Authorization Unit Tests", () => {
         address: "10 Scope Way",
         city: "Metro",
         state: "ST",
-        country: "US",
-        currency: "USD",
+        country: "India",
+        currency: "INR",
       },
     });
 

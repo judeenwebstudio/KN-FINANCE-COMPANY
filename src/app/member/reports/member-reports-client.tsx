@@ -83,9 +83,9 @@ export function MemberReportsClient({
 
   const formatCurrency = (val: string, currency: string) => {
     const num = parseFloat(val || "0");
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: currency || "USD",
+      currency: currency || "INR",
     }).format(isNaN(num) ? 0 : num);
   };
 
@@ -259,9 +259,9 @@ export function MemberReportsClient({
                     <td className="px-4 py-3 font-mono font-bold text-indigo-700">{r.repaymentNumber}</td>
                     <td className="px-4 py-3 font-mono text-slate-700">{r.loanNumber}</td>
                     <td className="px-4 py-3 font-mono text-slate-700">{r.accountNumber}</td>
-                    <td className="px-4 py-3 text-right font-bold text-emerald-700">{formatCurrency(r.amount, "USD")}</td>
-                    <td className="px-4 py-3 text-right text-slate-700">{formatCurrency(r.principalPaid, "USD")}</td>
-                    <td className="px-4 py-3 text-right text-amber-700">{formatCurrency(r.interestPaid, "USD")}</td>
+                    <td className="px-4 py-3 text-right font-bold text-emerald-700">{formatCurrency(r.amount, "INR")}</td>
+                    <td className="px-4 py-3 text-right text-slate-700">{formatCurrency(r.principalPaid, "INR")}</td>
+                    <td className="px-4 py-3 text-right text-amber-700">{formatCurrency(r.interestPaid, "INR")}</td>
                     <td className="px-4 py-3 text-right text-slate-500">{formatDate(r.paymentDate)}</td>
                   </tr>
                 ))}

@@ -155,7 +155,7 @@ export function SettingsClient({
     city: "",
     state: "",
     country: "",
-    currency: "USD",
+    currency: "INR",
   });
 
   // Email Settings Form State
@@ -255,7 +255,7 @@ export function SettingsClient({
       city: "",
       state: "",
       country: "",
-      currency: "USD",
+      currency: "INR",
     });
     setIsBranchModalOpen(true);
   };
@@ -271,7 +271,7 @@ export function SettingsClient({
       city: b.city,
       state: b.state,
       country: b.country,
-      currency: b.currency || "USD",
+      currency: b.currency || "INR",
     });
     setIsBranchModalOpen(true);
   };
@@ -911,7 +911,7 @@ export function SettingsClient({
                       <div className="text-xs text-slate-500">{b.email} • {b.phone}</div>
                     </td>
                     <td className="px-5 py-4 font-mono font-bold text-slate-900">
-                      {b.currency || "USD"}
+                      {b.currency || "INR"}
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
@@ -980,9 +980,9 @@ export function SettingsClient({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="p-5 rounded-xl bg-slate-50 border border-slate-200">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Base Currency</span>
-              <div className="text-2xl font-bold text-slate-900 mt-1">USD ($)</div>
+              <div className="text-2xl font-bold text-slate-900 mt-1">INR (₹)</div>
               <p className="text-xs text-slate-600 mt-2">
-                KN Finance Company operates on a single-currency USD accounting ledger. Multi-currency translation is disabled.
+                KN Finance Company operates on a single-currency INR accounting ledger. Multi-currency translation is disabled.
               </p>
             </div>
             <div className="p-5 rounded-xl bg-slate-50 border border-slate-200">
@@ -1344,7 +1344,7 @@ export function SettingsClient({
                   <input
                     type="text"
                     disabled
-                    value="USD"
+                    value="INR"
                     className={inputClass}
                   />
                 </div>

@@ -99,9 +99,6 @@ export function PortfolioQualityReportClient({ initialReport, branches, products
               onChange={(e) => setCurrency(e.target.value)}
               className="mt-1 rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs font-medium text-slate-800"
             >
-              <option value="all">All Currencies</option>
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
               <option value="INR">INR (₹)</option>
             </select>
           </div>
@@ -128,27 +125,27 @@ export function PortfolioQualityReportClient({ initialReport, branches, products
         <StatCard
           label="PAR 30 Exposure"
           value={firstPar ? `${firstPar.par30Rate}%` : "0%"}
-          hint={firstPar ? `$${firstPar.par30Amount.toLocaleString()}` : "$0"}
+          hint={firstPar ? `₹${firstPar.par30Amount.toLocaleString()}` : "₹0"}
           icon={AlertTriangle}
           tone="amber"
         />
         <StatCard
           label="PAR 90+ Exposure"
           value={firstPar ? `${firstPar.par90Rate}%` : "0%"}
-          hint={firstPar ? `$${firstPar.par90Amount.toLocaleString()}` : "$0"}
+          hint={firstPar ? `₹${firstPar.par90Amount.toLocaleString()}` : "₹0"}
           icon={ShieldAlert}
           tone="rose"
         />
         <StatCard
           label="Overdue Principal"
-          value={firstPar ? `$${firstPar.totalOverduePrincipal.toLocaleString()}` : "$0"}
+          value={firstPar ? `₹${firstPar.totalOverduePrincipal.toLocaleString()}` : "₹0"}
           hint="Delinquent installment arrears"
           icon={AlertTriangle}
           tone="rose"
         />
         <StatCard
           label="Outstanding Portfolio"
-          value={firstPar ? `$${firstPar.totalOutstandingPrincipal.toLocaleString()}` : "$0"}
+          value={firstPar ? `₹${firstPar.totalOutstandingPrincipal.toLocaleString()}` : "₹0"}
           hint="Total active principal exposure"
           icon={CheckCircle2}
           tone="emerald"
@@ -318,9 +315,9 @@ export function PortfolioQualityReportClient({ initialReport, branches, products
                     <tr key={v.cohortMonth} className="border-b border-slate-100">
                       <td className="py-2.5 font-bold text-indigo-700">{v.cohortMonth}</td>
                       <td className="py-2.5 text-right font-medium text-slate-700">{v.loansOriginated} loans</td>
-                      <td className="py-2.5 text-right font-bold text-slate-900">${v.originalDisbursedPrincipal.toLocaleString()}</td>
-                      <td className="py-2.5 text-right font-semibold text-slate-700">${v.currentOutstandingPrincipal.toLocaleString()}</td>
-                      <td className="py-2.5 text-right font-bold text-rose-700">${v.par30Amount.toLocaleString()}</td>
+                      <td className="py-2.5 text-right font-bold text-slate-900">₹{v.originalDisbursedPrincipal.toLocaleString()}</td>
+                      <td className="py-2.5 text-right font-semibold text-slate-700">₹{v.currentOutstandingPrincipal.toLocaleString()}</td>
+                      <td className="py-2.5 text-right font-bold text-rose-700">₹{v.par30Amount.toLocaleString()}</td>
                     </tr>
                   ))
                 ) : (

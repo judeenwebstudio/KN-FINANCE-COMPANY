@@ -38,11 +38,11 @@ export function Member360Client({
     router.push(`/admin/members/${header.id}?${params.toString()}`);
   };
 
-  const formatCurrency = (val: number | string, currency: string = header.currency) => {
+  const formatCurrency = (val: number | string, _currency: string = header.currency) => {
     const num = typeof val === "number" ? val : parseFloat(val || "0");
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: currency || "USD",
+      currency: "INR",
       minimumFractionDigits: 2,
     }).format(isNaN(num) ? 0 : num);
   };

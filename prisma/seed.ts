@@ -7,8 +7,8 @@ const password = "DemoPass123!";
 
 async function main() {
   const passwordHash = await hash(password, 12);
-  const central = await prisma.branch.upsert({ where: { code: "NYC-01" }, update: {}, create: { name: "Central Branch", code: "NYC-01", email: "central@centralcreditflow.demo", phone: "+1 212 555 0100", address: "120 Liberty Street", city: "New York", state: "NY", country: "USA", currency: "USD" } });
-  const riverside = await prisma.branch.upsert({ where: { code: "DEL-02" }, update: {}, create: { name: "Riverside Branch", code: "DEL-02", email: "riverside@creditflow.demo", phone: "+91 11 5550 2100", address: "14 Riverside Avenue", city: "New Delhi", state: "Delhi", country: "India", currency: "INR" } });
+  const central = await prisma.branch.upsert({ where: { code: "DEL-01" }, update: { currency: "INR" }, create: { name: "Central Delhi Branch", code: "DEL-01", email: "central@centralcreditflow.demo", phone: "+91 11 5550 0100", address: "120 Connaught Place", city: "New Delhi", state: "Delhi", country: "India", currency: "INR" } });
+  const riverside = await prisma.branch.upsert({ where: { code: "DEL-02" }, update: { currency: "INR" }, create: { name: "Riverside Branch", code: "DEL-02", email: "riverside@creditflow.demo", phone: "+91 11 5550 2100", address: "14 Riverside Avenue", city: "New Delhi", state: "Delhi", country: "India", currency: "INR" } });
   const superAdmin = await prisma.user.upsert({ where: { email: "superadmin@creditflow.demo" }, update: { passwordHash }, create: { name: "Avery Morgan", email: "superadmin@creditflow.demo", passwordHash, role: Role.SUPER_ADMIN } });
   await prisma.user.upsert({ where: { email: "admin@creditflow.demo" }, update: { passwordHash }, create: { name: "Jordan Lee", email: "admin@creditflow.demo", passwordHash, role: Role.ADMIN, branchId: central.id } });
 
@@ -105,13 +105,13 @@ async function main() {
     create: {
       name: "Standard Daily Overdue Penalty (0.1%/day)",
       code: "STD-DAILY-PENALTY",
-      description: "0.1% daily penalty on outstanding installment after 3 days grace period, capped at $150.",
+      description: "0.1% daily penalty on outstanding installment after 3 days grace period, capped at ₹1500.",
       penaltyType: PenaltyType.PERCENTAGE,
       penaltyFrequency: PenaltyFrequency.DAILY,
       penaltyBasis: PenaltyBasis.OUTSTANDING_INSTALLMENT,
       gracePeriodDays: 3,
       penaltyValue: 0.1,
-      maximumPenaltyAmount: 150,
+      maximumPenaltyAmount: 1500,
       status: PenaltyRuleStatus.ACTIVE,
       createdById: superAdmin.id,
     },
@@ -121,15 +121,15 @@ async function main() {
     where: { code: "FIXED-LATE-FEE-25" },
     update: {},
     create: {
-      name: "Standard Fixed Late Fee ($25)",
+      name: "Standard Fixed Late Fee (₹250)",
       code: "FIXED-LATE-FEE-25",
-      description: "One-time $25 late fee after 5 days grace period.",
+      description: "One-time ₹250 late fee after 5 days grace period.",
       penaltyType: PenaltyType.FIXED,
       penaltyFrequency: PenaltyFrequency.ONE_TIME,
       penaltyBasis: PenaltyBasis.OUTSTANDING_INSTALLMENT,
       gracePeriodDays: 5,
-      penaltyValue: 25,
-      maximumPenaltyAmount: 25,
+      penaltyValue: 250,
+      maximumPenaltyAmount: 250,
       status: PenaltyRuleStatus.ACTIVE,
       createdById: superAdmin.id,
     },
@@ -137,15 +137,15 @@ async function main() {
 
   // Seed Loan Products
   const prodPersonalFlex = await prisma.loanProduct.upsert({
-    where: { code: "PFL-USD" },
-    update: { penaltyRuleId: standardDailyPenaltyRule.id },
+    where: { code: "PFL-INR" },
+    update: { currency: "INR", penaltyRuleId: standardDailyPenaltyRule.id },
     create: {
       name: "Personal Flex Loan",
-      code: "PFL-USD",
+      code: "PFL-INR",
       description: "Flexible personal loan for general financial needs with declining balance interest.",
-      currency: "USD",
-      minimumAmount: 1000,
-      maximumAmount: 25000,
+      currency: "INR",
+      minimumAmount: 10000,
+      maximumAmount: 250000,
       minimumTermMonths: 6,
       maximumTermMonths: 36,
       interestRate: 12.0,
@@ -161,22 +161,22 @@ async function main() {
   });
 
   const prodQuickCash = await prisma.loanProduct.upsert({
-    where: { code: "QCL-USD" },
-    update: { penaltyRuleId: fixedLateFeeRule.id },
+    where: { code: "QCL-INR" },
+    update: { currency: "INR", penaltyRuleId: fixedLateFeeRule.id },
     create: {
       name: "Quick Cash Loan",
-      code: "QCL-USD",
+      code: "QCL-INR",
       description: "Fast short-term emergency loan with flat interest rate.",
-      currency: "USD",
-      minimumAmount: 500,
-      maximumAmount: 5000,
+      currency: "INR",
+      minimumAmount: 5000,
+      maximumAmount: 50000,
       minimumTermMonths: 3,
       maximumTermMonths: 12,
       interestRate: 15.0,
       interestType: InterestType.FLAT,
       repaymentFrequency: RepaymentFrequency.MONTHLY,
       processingFeeType: FeeType.FIXED,
-      processingFeeValue: 50,
+      processingFeeValue: 500,
       requiresApproval: true,
       status: LoanProductStatus.ACTIVE,
       penaltyRuleId: fixedLateFeeRule.id,
@@ -186,7 +186,7 @@ async function main() {
 
   const prodInrBusiness = await prisma.loanProduct.upsert({
     where: { code: "IBL-INR" },
-    update: {},
+    update: { currency: "INR" },
     create: {
       name: "INR Business Loan",
       code: "IBL-INR",
@@ -209,9 +209,9 @@ async function main() {
   });
 
   const people = [
-    ["Maya Patel", "member@creditflow.demo", central.id, "MBR-10001", "USD"],
-    ["Noah Williams", "noah@creditflow.demo", central.id, "MBR-10002", "USD"],
-    ["Sofia Garcia", "sofia@creditflow.demo", central.id, "MBR-10003", "EUR"],
+    ["Maya Patel", "member@creditflow.demo", central.id, "MBR-10001", "INR"],
+    ["Noah Williams", "noah@creditflow.demo", central.id, "MBR-10002", "INR"],
+    ["Sofia Garcia", "sofia@creditflow.demo", central.id, "MBR-10003", "INR"],
     ["Arjun Mehta", "arjun@creditflow.demo", riverside.id, "MBR-20001", "INR"],
     ["Isha Rao", "isha@creditflow.demo", riverside.id, "MBR-20002", "INR"],
   ] as const;

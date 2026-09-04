@@ -195,7 +195,7 @@ export function MemberWithdrawalsClient({ accounts, requests: initialList }: Pro
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Withdrawal Amount ({selectedAccount?.currency || "USD"}) *
+                  Withdrawal Amount ({selectedAccount?.currency || "INR"}) *
                 </label>
                 <input
                   type="number"

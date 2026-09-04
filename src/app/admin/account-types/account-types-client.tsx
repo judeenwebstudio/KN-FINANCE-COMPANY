@@ -279,12 +279,12 @@ export function AccountTypesClient({ accountTypes: initialList }: AccountTypesCl
                     type="text"
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
-                    placeholder="e.g. USD or blank"
+                    placeholder="e.g. INR or blank"
                     className="h-10 w-full rounded-xl border border-slate-200 px-3 text-sm uppercase font-mono focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Min Opening ($)</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Min Opening (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -295,7 +295,7 @@ export function AccountTypesClient({ accountTypes: initialList }: AccountTypesCl
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Min Balance ($)</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Min Balance (₹)</label>
                   <input
                     type="number"
                     step="0.01"

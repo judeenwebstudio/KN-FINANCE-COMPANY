@@ -154,21 +154,21 @@ export function AdminOverdueClient({
         <div className="rounded-2xl border border-rose-200 bg-rose-50/60 p-5">
           <span className="text-xs font-semibold text-rose-700 block">Total Overdue Amount</span>
           <span className="text-2xl font-extrabold text-rose-900 mt-1 block">
-            {formatMoney(summary.totalOverdueAmount, "USD")}
+            {formatMoney(summary.totalOverdueAmount, "INR")}
           </span>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
           <span className="text-xs font-semibold text-slate-500 block">Overdue Principal</span>
           <span className="text-xl font-bold text-slate-900 mt-1 block">
-            {formatMoney(summary.totalOverduePrincipal, "USD")}
+            {formatMoney(summary.totalOverduePrincipal, "INR")}
           </span>
         </div>
 
         <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-5">
           <span className="text-xs font-semibold text-amber-800 block">Penalties Outstanding</span>
           <span className="text-xl font-bold text-amber-950 mt-1 block">
-            {formatMoney(summary.totalPenaltiesOutstanding, "USD")}
+            {formatMoney(summary.totalPenaltiesOutstanding, "INR")}
           </span>
         </div>
       </div>

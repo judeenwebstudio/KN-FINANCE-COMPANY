@@ -34,7 +34,7 @@ export const NOTIFICATION_CATALOG: NotificationEventDefinition[] = [
     description: "Sent when a member loan application is formally approved.",
     channel: "EMAIL",
     defaultSubject: "Your Loan Application {{loanReference}} Has Been Approved",
-    defaultBody: "Dear {{memberName}},\n\nGreat news! Your loan application {{loanReference}} for USD {{approvedAmount}} has been approved on {{approvedDate}}.\n\nOur team will notify you when disbursement is processed.",
+    defaultBody: "Dear {{memberName}},\n\nGreat news! Your loan application {{loanReference}} for INR {{approvedAmount}} has been approved on {{approvedDate}}.\n\nOur team will notify you when disbursement is processed.",
     allowedPlaceholders: ["memberName", "loanReference", "approvedAmount", "approvedDate"],
     sampleData: {
       memberName: "Alex Mercer",
@@ -49,7 +49,7 @@ export const NOTIFICATION_CATALOG: NotificationEventDefinition[] = [
     description: "Sent when approved loan principal funds are disbursed.",
     channel: "EMAIL",
     defaultSubject: "Loan Disbursement Notice - {{loanReference}}",
-    defaultBody: "Dear {{memberName}},\n\nYour loan {{loanReference}} has been disbursed in the amount of USD {{disbursedAmount}} on {{disbursedDate}}.\n\nPlease log in to review your official repayment schedule.",
+    defaultBody: "Dear {{memberName}},\n\nYour loan {{loanReference}} has been disbursed in the amount of INR {{disbursedAmount}} on {{disbursedDate}}.\n\nPlease log in to review your official repayment schedule.",
     allowedPlaceholders: ["memberName", "loanReference", "disbursedAmount", "disbursedDate"],
     sampleData: {
       memberName: "Alex Mercer",
@@ -64,7 +64,7 @@ export const NOTIFICATION_CATALOG: NotificationEventDefinition[] = [
     description: "Sent when a loan repayment transaction is successfully posted.",
     channel: "EMAIL",
     defaultSubject: "Payment Received Confirmation - {{loanReference}}",
-    defaultBody: "Dear {{memberName}},\n\nWe have received your payment of USD {{amountPaid}} on {{paymentDate}} for loan {{loanReference}}.\n\nRemaining Loan Balance: USD {{remainingBalance}}\n\nThank you for your prompt payment.",
+    defaultBody: "Dear {{memberName}},\n\nWe have received your payment of INR {{amountPaid}} on {{paymentDate}} for loan {{loanReference}}.\n\nRemaining Loan Balance: INR {{remainingBalance}}\n\nThank you for your prompt payment.",
     allowedPlaceholders: ["memberName", "loanReference", "amountPaid", "paymentDate", "remainingBalance"],
     sampleData: {
       memberName: "Alex Mercer",
@@ -80,7 +80,7 @@ export const NOTIFICATION_CATALOG: NotificationEventDefinition[] = [
     description: "Sent when a loan installment becomes past due.",
     channel: "EMAIL",
     defaultSubject: "Overdue Payment Notice - {{loanReference}}",
-    defaultBody: "Dear {{memberName}},\n\nThis is a notice that your payment of USD {{overdueAmount}} for loan {{loanReference}} was due on {{dueDate}} and is currently {{daysOverdue}} days overdue.\n\nPlease arrange payment at your earliest convenience.",
+    defaultBody: "Dear {{memberName}},\n\nThis is a notice that your payment of INR {{overdueAmount}} for loan {{loanReference}} was due on {{dueDate}} and is currently {{daysOverdue}} days overdue.\n\nPlease arrange payment at your earliest convenience.",
     allowedPlaceholders: ["memberName", "loanReference", "overdueAmount", "dueDate", "daysOverdue"],
     sampleData: {
       memberName: "Alex Mercer",

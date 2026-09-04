@@ -36,7 +36,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
           city: "Metropolis",
           state: "NY",
           country: "USA",
-          currency: "USD",
+          currency: "INR",
         },
       });
     }
@@ -54,7 +54,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
           city: "Metropolis",
           state: "NY",
           country: "USA",
-          currency: "USD",
+          currency: "INR",
         },
       });
     }
@@ -346,7 +346,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
         memberId: created.id,
         branchId: testBranch1Id,
         accountType: "SAVINGS",
-        currency: "USD",
+        currency: "INR",
         balance: 5000.0,
         status: "ACTIVE",
       },
@@ -389,7 +389,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
         memberId: created.id,
         branchId: testBranch1Id,
         accountType: "SAVINGS",
-        currency: "USD",
+        currency: "INR",
         balance: 2500.5,
         status: "ACTIVE",
       },
@@ -406,7 +406,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
         interestRate: 0.12,
         termMonths: 12,
         status: "ACTIVE",
-        currency: "USD",
+        currency: "INR",
       },
     });
 
@@ -569,7 +569,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
         branchId: testBranch1Id,
         accountNumber: `DEC-${Date.now().toString().slice(-6)}`,
         accountType: "SAVINGS",
-        currency: "USD",
+        currency: "INR",
         balance: 1550.75,
         status: "ACTIVE",
       },

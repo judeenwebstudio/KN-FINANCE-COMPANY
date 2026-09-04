@@ -78,9 +78,9 @@ export default async function AdminMemberRequestsPage() {
 
   const formatCurrency = (val: string, currency: string) => {
     const num = parseFloat(val || "0");
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: currency || "USD",
+      currency: "INR",
     }).format(isNaN(num) ? 0 : num);
   };
 

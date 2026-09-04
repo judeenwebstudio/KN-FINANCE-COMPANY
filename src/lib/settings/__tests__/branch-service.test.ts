@@ -10,7 +10,7 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
   const testBranchCode = "TEST-BR-" + Math.floor(Math.random() * 10000);
   let createdBranchId: string;
 
-  test("should create a new USD branch and log audit event", async () => {
+  test("should create a new INR branch and log audit event", async () => {
     await bootstrapRBAC();
 
     const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
@@ -20,17 +20,17 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
       name: "Test Branch " + testBranchCode,
       code: testBranchCode,
       email: `test.${testBranchCode.toLowerCase()}@knfinance.com`,
-      phone: "+1 (800) 555-0199",
+      phone: "+91 (11) 555-0199",
       address: "100 Test St",
       city: "Testville",
       state: "TS",
-      country: "USA",
-      currency: "USD",
+      country: "India",
+      currency: "INR",
     });
 
     assert.ok(newBranch.id);
     assert.equal(newBranch.code, testBranchCode);
-    assert.equal(newBranch.currency, "USD");
+    assert.equal(newBranch.currency, "INR");
     assert.equal(newBranch.status, BranchStatus.ACTIVE);
     createdBranchId = newBranch.id;
 
@@ -46,27 +46,27 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
     assert.ok(auditLog, "Audit log entry for branch.create should exist");
   });
 
-  test("should reject non-USD branch currency creation", async () => {
+  test("should reject non-INR branch currency creation", async () => {
     const adminUser = await prisma.user.findFirst({ where: { role: "SUPER_ADMIN", status: "ACTIVE" } });
     assert.ok(adminUser);
 
     await assert.rejects(
       async () => {
         await createBranch(adminUser.id, {
-          name: "Non USD Branch",
-          code: "EUR-BR-01",
-          email: "eur@knfinance.com",
+          name: "Non INR Branch",
+          code: "USD-BR-01",
+          email: "usd@knfinance.com",
           phone: "+1 (800) 000-0000",
           address: "123 St",
           city: "City",
           state: "ST",
           country: "USA",
-          currency: "EUR",
+          currency: "USD",
         });
       },
       (err: unknown) => {
         assert.ok(err instanceof BranchValidationError);
-        assert.match(err.message, /operates exclusively on USD/);
+        assert.match(err.message, /operates exclusively on INR/);
         return true;
       }
     );
@@ -87,7 +87,7 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
           city: "City",
           state: "ST",
           country: "USA",
-          currency: "USD",
+          currency: "INR",
         });
       },
       (err: unknown) => {
@@ -113,7 +113,7 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
           city: "Testville",
           state: "TS",
           country: "USA",
-          currency: "USD",
+          currency: "INR",
         });
       },
       (err: unknown) => {
@@ -137,7 +137,7 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
       city: "UpdatedCity",
       state: "TS",
       country: "USA",
-      currency: "USD",
+      currency: "INR",
     });
 
     assert.equal(updated.name, "Updated Branch " + testBranchCode);
@@ -189,7 +189,7 @@ describe("Phase 7B Hardening Review Unit & RBAC Tests", () => {
       city: "DepCity",
       state: "DS",
       country: "USA",
-      currency: "USD",
+      currency: "INR",
     });
 
     // Create active user assigned to depBranch

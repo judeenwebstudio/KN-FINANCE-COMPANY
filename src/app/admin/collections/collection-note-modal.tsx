@@ -121,7 +121,7 @@ export function CollectionNoteModal({
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 rounded-xl border border-indigo-100 bg-indigo-50/50 p-3">
               <div>
                 <label className="block text-xs font-semibold text-indigo-900 mb-1">
-                  Promise Amount ($) *
+                  Promise Amount (₹) *
                 </label>
                 <input
                   type="number"

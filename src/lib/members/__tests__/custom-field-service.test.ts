@@ -28,8 +28,8 @@ describe("Member Custom Fields Service Tests", () => {
           address: "HQ",
           city: "Metro",
           state: "NY",
-          country: "USA",
-          currency: "USD",
+          country: "India",
+          currency: "INR",
         },
       });
     }

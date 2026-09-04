@@ -177,10 +177,7 @@ export function LoanRepaymentsReportClient({ initialData, selectors }: Props) {
               onChange={(e) => setCurrency(e.target.value)}
               className="h-10 w-full rounded-xl border border-slate-200 px-3 text-xs"
             >
-              <option value="ALL">All Currencies</option>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="INR">INR</option>
+              <option value="INR">INR (₹)</option>
             </select>
           </div>
 

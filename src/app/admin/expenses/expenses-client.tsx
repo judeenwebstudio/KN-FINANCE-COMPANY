@@ -86,7 +86,7 @@ export function ExpensesClient({
     setLoading(true);
     setError(null);
 
-    const currency = activeBranch?.currency || "USD";
+    const currency = activeBranch?.currency || "INR";
 
     const res = await createExpenseAction({
       branchId,
@@ -445,7 +445,7 @@ export function ExpensesClient({
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Expense Amount ({activeBranch?.currency || "USD"}) *
+                  Expense Amount ({activeBranch?.currency || "INR"}) *
                 </label>
                 <input
                   type="number"

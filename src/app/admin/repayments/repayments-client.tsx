@@ -146,10 +146,10 @@ export function LoanRepaymentsClient({ repayments: initialRepayments, activeLoan
                       <div className="text-xs text-slate-400">{r.memberNumber}</div>
                     </td>
                     <td className="px-5 py-4 font-bold text-slate-900 whitespace-nowrap">
-                      {formatMoney(r.amount, "USD")}
+                      {formatMoney(r.amount, "INR")}
                     </td>
                     <td className="px-5 py-4 text-xs text-slate-600 whitespace-nowrap">
-                      P: {formatMoney(r.principalAmount, "USD")} | I: {formatMoney(r.interestAmount, "USD")} | F: {formatMoney(r.feeAmount, "USD")}
+                      P: {formatMoney(r.principalAmount, "INR")} | I: {formatMoney(r.interestAmount, "INR")} | F: {formatMoney(r.feeAmount, "INR")}
                     </td>
                     <td className="px-5 py-4 whitespace-nowrap">
                       <StatusBadge tone={r.status === "POSTED" ? "success" : "danger"}>

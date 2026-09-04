@@ -191,7 +191,7 @@ describe("Phase 2B-2 Overdue & Penalty Engine Unit Tests", () => {
     sched.overdueDays = 15;
 
     const delinq = calculateLoanDelinquencySummary(
-      { id: "l1", loanNumber: "LN-100", status: "ACTIVE", currency: "USD" },
+      { id: "l1", loanNumber: "LN-100", status: "ACTIVE", currency: "INR" },
       [sched],
       new Date("2026-09-20")
     );

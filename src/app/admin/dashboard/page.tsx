@@ -139,7 +139,7 @@ export default async function AdminDashboard() {
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
         <StatCard label="Total Members" value={members.toLocaleString()} hint="Across accessible branches" icon={Users} tone="indigo" />
-        <StatCard label="Overdue Loans" value={overdueLoansCount.toString()} hint={`Total overdue: $${totalOverdueSum.toFixed(2)}`} icon={AlertTriangle} tone="rose" />
+        <StatCard label="Overdue Loans" value={overdueLoansCount.toString()} hint={`Total overdue: ₹${totalOverdueSum.toFixed(2)}`} icon={AlertTriangle} tone="rose" />
         <StatCard label="Deposit Requests" value={pendingDepositsCount.toString()} hint="Pending operational review" icon={ArrowDownToLine} tone="emerald" />
         <StatCard label="Withdraw Requests" value={pendingWithdrawalsCount.toString()} hint="Pending operational review" icon={ArrowUpFromLine} tone="amber" />
         <StatCard label="Pending Loans" value={pendingLoans.toString()} hint="Applications to review" icon={HandCoins} tone="violet" />

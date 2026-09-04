@@ -68,7 +68,7 @@ export function AdminWithdrawalsClient({
     if (res.error) {
       setError(res.error);
     } else if (res.data) {
-      setSuccessMsg(`Successfully debited ${formatMoney(dataAmount(amountInput), selectedAccount?.currency || "USD")} from account ${selectedAccount?.accountNumber}`);
+      setSuccessMsg(`Successfully debited ${formatMoney(dataAmount(amountInput), selectedAccount?.currency || "INR")} from account ${selectedAccount?.accountNumber}`);
       setAmountInput("");
       setReference("");
       setNotes("");
@@ -182,7 +182,7 @@ export function AdminWithdrawalsClient({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Withdrawal Amount ({selectedAccount?.currency || "USD"}) *
+                  Withdrawal Amount ({selectedAccount?.currency || "INR"}) *
                 </label>
                 <input
                   type="number"

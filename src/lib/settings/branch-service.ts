@@ -12,7 +12,7 @@ export const branchInputSchema = z.object({
   city: z.string().trim().min(2, "City is required"),
   state: z.string().trim().min(2, "State is required"),
   country: z.string().trim().min(2, "Country is required"),
-  currency: z.string().trim().default("USD"),
+  currency: z.string().trim().default("INR"),
 });
 
 export type BranchInput = z.infer<typeof branchInputSchema>;
@@ -45,14 +45,14 @@ export async function getAllBranchesWithCounts() {
 
 /**
  * Atomically creates a new operational branch and logs audit event.
- * Enforces single-currency USD system rule.
+ * Enforces single-currency INR system rule.
  */
 export async function createBranch(actorUserId: string, input: BranchInput) {
   const validated = branchInputSchema.parse(input);
 
-  // Enforce single-currency USD system
-  if (validated.currency !== "USD") {
-    throw new BranchValidationError(`KN Finance Company operates exclusively on USD. Branch currency '${validated.currency}' is invalid.`);
+  // Enforce single-currency INR system
+  if (validated.currency !== "INR") {
+    throw new BranchValidationError(`KN Finance Company operates exclusively on INR. Branch currency '${validated.currency}' is invalid.`);
   }
 
   // Uniqueness check for branch code & email
@@ -76,7 +76,7 @@ export async function createBranch(actorUserId: string, input: BranchInput) {
       city: validated.city,
       state: validated.state,
       country: validated.country,
-      currency: "USD",
+      currency: "INR",
       status: BranchStatus.ACTIVE,
     },
   });

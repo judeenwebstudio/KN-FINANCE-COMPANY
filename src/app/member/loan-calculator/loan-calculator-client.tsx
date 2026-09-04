@@ -46,10 +46,10 @@ export function LoanCalculatorClient({ products }: { products: ProductDTO[] }) {
   const totalRepayable = monthlyInstallment * numPayments;
   const totalInterest = totalRepayable - amount;
 
-  const currency = selectedProduct?.currency || "USD";
+  const currency = selectedProduct?.currency || "INR";
 
   const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency,
       minimumFractionDigits: 2,

@@ -36,7 +36,7 @@ export function AdminAccountsClient({
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState(membersList[0]?.id || "");
   const [selectedPolicyId, setSelectedPolicyId] = useState(accountTypePolicies[0]?.id || "");
-  const [currencyInput, setCurrencyInput] = useState("USD");
+  const [currencyInput, setCurrencyInput] = useState("INR");
   const [openingBalance, setOpeningBalance] = useState(0);
 
   const [loading, setLoading] = useState(false);
@@ -272,7 +272,7 @@ export function AdminAccountsClient({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Opening Balance ($)</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Opening Balance (₹)</label>
                   <input
                     type="number"
                     step="0.01"

@@ -54,7 +54,7 @@ export function BankAccountsClient({ initialAccounts, accessibleBranches }: Prop
     setLoading(true);
     setError(null);
 
-    const currency = activeBranch?.currency || "USD";
+    const currency = activeBranch?.currency || "INR";
 
     const res = await createBankAccountAction({
       name,
@@ -272,7 +272,7 @@ export function BankAccountsClient({ initialAccounts, accessibleBranches }: Prop
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Opening Balance ({activeBranch?.currency || "USD"})
+                    Opening Balance ({activeBranch?.currency || "INR"})
                   </label>
                   <input
                     type="number"

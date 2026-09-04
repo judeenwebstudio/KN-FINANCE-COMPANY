@@ -76,7 +76,7 @@ export function TransfersClient({
     setLoading(true);
     setError(null);
 
-    const currency = activeBranch?.currency || "USD";
+    const currency = activeBranch?.currency || "INR";
 
     const res = await createTransferAction({
       transferType,
@@ -441,7 +441,7 @@ export function TransfersClient({
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Transfer Amount ({activeBranch?.currency || "USD"}) *
+                  Transfer Amount ({activeBranch?.currency || "INR"}) *
                 </label>
                 <input
                   type="number"

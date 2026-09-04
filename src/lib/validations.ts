@@ -14,7 +14,7 @@ export const loanProductSchema = z
       .min(2, "Code must be at least 2 characters")
       .transform((val) => val.toUpperCase()),
     description: z.string().trim().optional().nullable(),
-    currency: z.string().length(3, "Currency code must be 3 letters"),
+    currency: z.string().trim().default("INR").refine((val) => val === "INR", "KN Finance Company operates exclusively in INR"),
     minimumAmount: z.coerce.number().positive("Minimum amount must be greater than 0"),
     maximumAmount: z.coerce.number().positive("Maximum amount must be greater than 0"),
     minimumTermMonths: z.coerce.number().int().positive("Minimum term must be at least 1 month"),

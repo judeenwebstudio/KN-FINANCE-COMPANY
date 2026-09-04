@@ -80,7 +80,7 @@ export function LoanProductModal({ isOpen, onClose, product, branches }: ModalPr
                 name="code"
                 required
                 defaultValue={product?.code ?? ""}
-                placeholder="e.g. PFL-USD"
+                placeholder="e.g. PFL-INR"
                 className={inputClass}
               />
             </div>
@@ -99,12 +99,11 @@ export function LoanProductModal({ isOpen, onClose, product, branches }: ModalPr
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700">Currency *</label>
-              <select name="currency" defaultValue={product?.currency ?? "USD"} className={inputClass}>
-                <option value="USD">USD ($)</option>
-                <option value="EUR">EUR (€)</option>
+              <label className="block text-xs font-semibold text-slate-700">Currency (Locked)</label>
+              <select name="currency" defaultValue="INR" className={inputClass} disabled>
                 <option value="INR">INR (₹)</option>
               </select>
+              <input type="hidden" name="currency" value="INR" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700">Min Amount *</label>

@@ -1184,7 +1184,7 @@ model CompanyProfile {
   timezone           String?  @default("UTC")
   dateFormat         String   @default("YYYY-MM-DD")
   timeFormat         String   @default("12h")
-  locale             String   @default("en-US")
+  locale             String   @default("en-IN")
   logoUrl            String?  @default("/branding/kn-finance-logo.png")
   faviconUrl         String?  @default("/favicon.ico")
   metaDescription    String?  @default("KN Finance Company — Empowering your future. Multi-branch credit and loan management platform.")

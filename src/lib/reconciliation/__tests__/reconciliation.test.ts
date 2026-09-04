@@ -19,7 +19,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
 2026-09-01,"Direct Deposit, Salary",REF-101,,500.00,1500.00
 2026-09-02,"Vendor ""Supply"" Payment",REF-102,150.00,,1350.00`;
 
-    const result = parseBankStatementCsv(csvContent, "USD");
+    const result = parseBankStatementCsv(csvContent, "INR");
 
     assert.equal(result.rowCount, 2);
     assert.equal(result.validRows.length, 2);
@@ -43,7 +43,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
 2026-99-99,Invalid Date,100.00
 2026-09-01,Invalid Amount,ABC`;
 
-    const result = parseBankStatementCsv(csvContent, "USD");
+    const result = parseBankStatementCsv(csvContent, "INR");
 
     assert.equal(result.validRows.length, 0);
     assert.equal(result.errors.length, 2);
@@ -65,7 +65,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
       transactionDate: new Date("2026-09-01T00:00:00Z"),
       amount: new Prisma.Decimal(250),
       direction: "CREDIT" as const,
-      currency: "USD",
+      currency: "INR",
       reference: "DEP-7788",
     };
 
@@ -75,7 +75,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
       transactionDate: new Date("2026-09-01T10:00:00Z"),
       amount: new Prisma.Decimal(250),
       direction: "CREDIT",
-      currency: "USD",
+      currency: "INR",
       reference: "DEP-7788",
       description: "Deposit",
       reconciliationStatus: "UNRECONCILED",
@@ -91,7 +91,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
       transactionDate: new Date("2026-09-01T00:00:00Z"),
       amount: new Prisma.Decimal(100),
       direction: "DEBIT" as const,
-      currency: "USD",
+      currency: "INR",
       reference: "EXP-101",
     };
 
@@ -101,7 +101,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
       transactionDate: new Date("2026-09-02T12:00:00Z"), // +1 calendar day
       amount: new Prisma.Decimal(100),
       direction: "DEBIT",
-      currency: "USD",
+      currency: "INR",
       reference: "EXP-101",
       description: "Expense",
       reconciliationStatus: "UNRECONCILED",
@@ -119,7 +119,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
         transactionDate: new Date("2026-09-01T00:00:00Z"),
         amount: new Prisma.Decimal(500),
         direction: "CREDIT" as const,
-        currency: "USD",
+        currency: "INR",
         reference: null,
         status: "UNMATCHED",
       },
@@ -133,7 +133,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
         transactionDate: new Date("2026-09-01T08:00:00Z"),
         amount: new Prisma.Decimal(500),
         direction: "CREDIT",
-        currency: "USD",
+        currency: "INR",
         reference: null,
         description: "Deposit A",
         reconciliationStatus: "UNRECONCILED",
@@ -144,7 +144,7 @@ describe("Phase 5B-1 Bank Reconciliation Unit Tests", () => {
         transactionDate: new Date("2026-09-01T09:00:00Z"),
         amount: new Prisma.Decimal(500),
         direction: "CREDIT",
-        currency: "USD",
+        currency: "INR",
         reference: null,
         description: "Deposit B",
         reconciliationStatus: "UNRECONCILED",

@@ -195,7 +195,7 @@ describe("Phase 7C Fail-Closed Schema Hardening Review — Email & Notification 
       validateNotificationTemplateContent(
         "LOAN_APPROVED",
         "Your loan {{loanReference}} is approved",
-        "Hello {{memberName}}, approved amount: USD {{approvedAmount}} on {{approvedDate}}."
+        "Hello {{memberName}}, approved amount: INR {{approvedAmount}} on {{approvedDate}}."
       );
     });
 
