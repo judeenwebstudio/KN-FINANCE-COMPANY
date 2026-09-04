@@ -23,6 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     email: String(userRecord.email),
     role: String(userRecord.role),
     permissions: Array.from(permissionsSet),
+    hasGlobalBranchAccess: branchScope.global,
   };
   const branches: BranchDTO[] = branchRecords.map((branch) => ({
     id: String(branch.id),

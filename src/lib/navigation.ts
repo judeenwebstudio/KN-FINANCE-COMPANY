@@ -3,10 +3,12 @@ export type NavItem = {
   href: string;
   icon: string;
   permission?: string;
+  requiresGlobalBranchAccess?: boolean;
 };
 
 export const adminNavItems: NavItem[] = [
   { name: "Dashboard", href: "/admin/dashboard", icon: "layout-dashboard", permission: "dashboard.view" },
+  { name: "Branches", href: "/admin/branches", icon: "building", permission: "settings.branch.manage", requiresGlobalBranchAccess: true },
   { name: "Members", href: "/admin/members", icon: "users", permission: "members.view" },
   { name: "Member Custom Fields", href: "/admin/custom-fields", icon: "user-settings", permission: "members.custom_fields.manage" },
   { name: "Loans", href: "/admin/loans", icon: "loans", permission: "loans.view" },

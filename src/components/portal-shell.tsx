@@ -134,7 +134,10 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
       <nav className="flex-1 space-y-1 overflow-y-auto overscroll-contain px-3 py-4 dark-sidebar-scroll">
         {portal === "Admin"
           ? adminNavItems
-              .filter((item) => !item.permission || (user.permissions && user.permissions.includes(item.permission)))
+              .filter((item) =>
+                (!item.permission || (user.permissions && user.permissions.includes(item.permission))) &&
+                (!item.requiresGlobalBranchAccess || user.hasGlobalBranchAccess)
+              )
               .map((item) => {
                 const Icon = iconMap[item.icon] ?? LayoutDashboard;
                 const active = path === item.href || path.startsWith(`${item.href}/`);

@@ -4,6 +4,7 @@ export type PortalUserDTO = {
   email: string;
   role: string;
   permissions?: string[];
+  hasGlobalBranchAccess?: boolean;
 };
 
 export type BranchDTO = {
