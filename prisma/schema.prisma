@@ -189,6 +189,9 @@ model User {
   updatedCompanyProfiles     CompanyProfile[]          @relation("CompanyProfileUpdatedBy")
   updatedEmailConfigs        EmailConfiguration[]      @relation("EmailConfigUpdatedBy")
   updatedNotificationTemplates NotificationTemplate[]  @relation("NotificationTemplateUpdatedBy")
+  uploadedMemberDocuments     MemberDocument[]          @relation("DocumentUploadedBy")
+  createdCustomFieldDefs     MemberCustomFieldDefinition[] @relation("CustomFieldDefCreatedBy")
+  notifications              Notification[]            @relation("UserNotifications")
 
   @@index([branchId])
   @@index([role, status])
@@ -247,6 +250,9 @@ model MemberProfile {
   collectionNotes    CollectionNote[]
   depositRequests    DepositRequest[]
   withdrawalRequests WithdrawalRequest[]
+  photoStorageKey    String?
+  documents          MemberDocument[]
+  customFieldValues  MemberCustomFieldValue[]
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
 
@@ -1218,6 +1224,86 @@ model NotificationTemplate {
 
   @@index([code])
   @@index([channel])
+}
+
+enum DocumentCategory {
+  IDENTITY
+  ADDRESS_PROOF
+  OTHER
+}
+
+enum CustomFieldType {
+  TEXT
+  NUMBER
+  DATE
+  BOOLEAN
+  SELECT
+}
+
+model MemberDocument {
+  id           String           @id @default(cuid())
+  memberId     String
+  member       MemberProfile    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  category     DocumentCategory
+  fileName     String
+  mimeType     String
+  sizeBytes    Int
+  storageKey   String
+  uploadedById String
+  uploadedBy   User             @relation("DocumentUploadedBy", fields: [uploadedById], references: [id], onDelete: Restrict)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([memberId])
+  @@index([category])
+}
+
+model MemberCustomFieldDefinition {
+  id           String                 @id @default(cuid())
+  key          String                 @unique
+  label        String
+  type         CustomFieldType
+  optionsJson  String?
+  required     Boolean                @default(false)
+  active       Boolean                @default(true)
+  displayOrder Int                    @default(0)
+  createdById  String?
+  createdBy    User?                  @relation("CustomFieldDefCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  values       MemberCustomFieldValue[]
+
+  @@index([active, displayOrder])
+}
+
+model MemberCustomFieldValue {
+  id                String                      @id @default(cuid())
+  memberId          String
+  member            MemberProfile               @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  fieldDefinitionId String
+  fieldDefinition   MemberCustomFieldDefinition @relation(fields: [fieldDefinitionId], references: [id], onDelete: Restrict)
+  value             String
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @updatedAt
+
+  @@unique([memberId, fieldDefinitionId])
+  @@index([memberId])
+  @@index([fieldDefinitionId])
+}
+
+model Notification {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  eventKey     String
+  title        String
+  message      String
+  referenceUrl String?
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([userId, readAt])
+  @@index([userId, createdAt])
 }
 
 

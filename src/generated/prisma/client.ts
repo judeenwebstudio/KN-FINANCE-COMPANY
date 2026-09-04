@@ -226,3 +226,23 @@ export type EmailConfiguration = Prisma.EmailConfigurationModel
  * 
  */
 export type NotificationTemplate = Prisma.NotificationTemplateModel
+/**
+ * Model MemberDocument
+ * 
+ */
+export type MemberDocument = Prisma.MemberDocumentModel
+/**
+ * Model MemberCustomFieldDefinition
+ * 
+ */
+export type MemberCustomFieldDefinition = Prisma.MemberCustomFieldDefinitionModel
+/**
+ * Model MemberCustomFieldValue
+ * 
+ */
+export type MemberCustomFieldValue = Prisma.MemberCustomFieldValueModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

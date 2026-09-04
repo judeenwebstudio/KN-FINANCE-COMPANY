@@ -87,7 +87,11 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   CompanyProfile: 'CompanyProfile',
   EmailConfiguration: 'EmailConfiguration',
-  NotificationTemplate: 'NotificationTemplate'
+  NotificationTemplate: 'NotificationTemplate',
+  MemberDocument: 'MemberDocument',
+  MemberCustomFieldDefinition: 'MemberCustomFieldDefinition',
+  MemberCustomFieldValue: 'MemberCustomFieldValue',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -150,6 +154,7 @@ export const MemberProfileScalarFieldEnum = {
   address: 'address',
   dateOfBirth: 'dateOfBirth',
   identityNumber: 'identityNumber',
+  photoStorageKey: 'photoStorageKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -849,6 +854,65 @@ export const NotificationTemplateScalarFieldEnum = {
 } as const
 
 export type NotificationTemplateScalarFieldEnum = (typeof NotificationTemplateScalarFieldEnum)[keyof typeof NotificationTemplateScalarFieldEnum]
+
+
+export const MemberDocumentScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  category: 'category',
+  fileName: 'fileName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  storageKey: 'storageKey',
+  uploadedById: 'uploadedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberDocumentScalarFieldEnum = (typeof MemberDocumentScalarFieldEnum)[keyof typeof MemberDocumentScalarFieldEnum]
+
+
+export const MemberCustomFieldDefinitionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  label: 'label',
+  type: 'type',
+  optionsJson: 'optionsJson',
+  required: 'required',
+  active: 'active',
+  displayOrder: 'displayOrder',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberCustomFieldDefinitionScalarFieldEnum = (typeof MemberCustomFieldDefinitionScalarFieldEnum)[keyof typeof MemberCustomFieldDefinitionScalarFieldEnum]
+
+
+export const MemberCustomFieldValueScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  fieldDefinitionId: 'fieldDefinitionId',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberCustomFieldValueScalarFieldEnum = (typeof MemberCustomFieldValueScalarFieldEnum)[keyof typeof MemberCustomFieldValueScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  eventKey: 'eventKey',
+  title: 'title',
+  message: 'message',
+  referenceUrl: 'referenceUrl',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

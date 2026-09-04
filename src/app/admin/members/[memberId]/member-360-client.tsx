@@ -12,10 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import type { Member360ProfileDTO } from "@/lib/members/member-service";
+import { MemberDocumentsSection } from "@/components/member-documents-section";
 import { EditMemberModal } from "../edit-member-modal";
+import type { Member360ProfileDTO } from "@/lib/members/member-service";
 
-type TabKey = "overview" | "accounts" | "loans" | "repayments" | "schedules" | "transactions" | "requests" | "collections";
+type TabKey = "overview" | "accounts" | "loans" | "repayments" | "schedules" | "transactions" | "requests" | "collections" | "documents";
 
 export function Member360Client({
   profile,
@@ -195,6 +196,7 @@ export function Member360Client({
             { key: "transactions", label: "Transactions", count: transactions.pagination.total },
             { key: "requests", label: "Requests", count: depositRequests.length + withdrawalRequests.length },
             { key: "collections", label: "Collections", count: collectionNotes.length },
+            { key: "documents", label: "Documents & KYC", count: null },
           ].map((t) => (
             <button
               key={t.key}
@@ -757,6 +759,11 @@ export function Member360Client({
             </div>
           )}
         </Card>
+      )}
+
+      {/* 9. DOCUMENTS & KYC TAB */}
+      {activeTab === "documents" && (
+        <MemberDocumentsSection memberId={header.id} canManage={canEdit} />
       )}
 
       {/* Modals */}

@@ -8,6 +8,7 @@ export type NavItem = {
 export const adminNavItems: NavItem[] = [
   { name: "Dashboard", href: "/admin/dashboard", icon: "layout-dashboard", permission: "dashboard.view" },
   { name: "Members", href: "/admin/members", icon: "users", permission: "members.view" },
+  { name: "Member Custom Fields", href: "/admin/custom-fields", icon: "user-settings", permission: "members.custom_fields.manage" },
   { name: "Loans", href: "/admin/loans", icon: "loans", permission: "loans.view" },
   { name: "Loan Products", href: "/admin/loan-products", icon: "deposit-method", permission: "loans.manage_products" },
   { name: "Upcoming Payments", href: "/admin/payments", icon: "calendar", permission: "loans.view" },

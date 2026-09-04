@@ -333,3 +333,23 @@ export const RoleProfileStatus = {
 } as const
 
 export type RoleProfileStatus = (typeof RoleProfileStatus)[keyof typeof RoleProfileStatus]
+
+
+export const DocumentCategory = {
+  IDENTITY: 'IDENTITY',
+  ADDRESS_PROOF: 'ADDRESS_PROOF',
+  OTHER: 'OTHER'
+} as const
+
+export type DocumentCategory = (typeof DocumentCategory)[keyof typeof DocumentCategory]
+
+
+export const CustomFieldType = {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  DATE: 'DATE',
+  BOOLEAN: 'BOOLEAN',
+  SELECT: 'SELECT'
+} as const
+
+export type CustomFieldType = (typeof CustomFieldType)[keyof typeof CustomFieldType]

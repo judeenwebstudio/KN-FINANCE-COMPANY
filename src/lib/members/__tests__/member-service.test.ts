@@ -502,6 +502,9 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
       branchId: testBranch1Id,
     });
 
+    // Clear auto-welcome notification so member has 0 linked records for purge test
+    await prisma.notification.deleteMany({ where: { userId: emptyMem.userId } });
+
     // 2. Normal admin (non-superadmin) cannot purge empty member
     await assert.rejects(
       async () => {
@@ -511,7 +514,8 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
       "Normal admin must be denied purge authorization"
     );
 
-    // 3. Super Admin can purge empty member cleanly
+    // 3. Super Admin can purge empty member cleanly (ensure notification count is 0)
+    await prisma.notification.deleteMany({ where: { userId: emptyMem.userId } });
     const purgeRes = await purgeEmptyMember(superAdminUserId, emptyMem.id);
     assert.equal(purgeRes.success, true);
 

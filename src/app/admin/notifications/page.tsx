@@ -1,13 +1,16 @@
-import { requireMember } from "@/lib/authz";
+import { getCurrentUser } from "@/lib/authz";
 import { getUserNotifications } from "@/lib/notifications/notification-service";
 import { NotificationsInboxClient } from "@/components/notifications-inbox-client";
+import { redirect } from "next/navigation";
 
-export default async function MemberNotificationsPage({
+export default async function AdminNotificationsPage({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string }>;
 }) {
-  const user = await requireMember();
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
   const params = await searchParams;
   const page = parseInt(params.page || "1", 10) || 1;
 

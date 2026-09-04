@@ -16,6 +16,9 @@ export const PERMISSION_CATALOG: PermissionDefinition[] = [
   { code: "members.delete", name: "Delete Member", category: "Members", description: "Remove or deactivate member profile." },
   { code: "members.import", name: "Import Members", category: "Members", description: "Bulk import member data." },
   { code: "members.requests.review", name: "Review Member Requests", category: "Members", description: "Review member portal requests." },
+  { code: "members.documents.view", name: "View Member Documents", category: "Members", description: "View member identity & KYC documents." },
+  { code: "members.documents.manage", name: "Manage Member Documents", category: "Members", description: "Upload and manage member KYC documents." },
+  { code: "members.custom_fields.manage", name: "Manage Custom Fields", category: "Members", description: "Configure custom field definitions for member profiles." },
 
   // Loans
   { code: "loans.view", name: "View Loans", category: "Loans", description: "View loan facilities and schedules." },

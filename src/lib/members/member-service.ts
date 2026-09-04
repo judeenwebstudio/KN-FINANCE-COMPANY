@@ -7,6 +7,7 @@ import {
   PermissionDeniedError,
 } from "../auth/authorize";
 import { logAuditEvent } from "../audit/audit-logger";
+import { createNotification } from "../notifications/notification-service";
 import { Role, UserStatus, AccountStatus, LoanStatus, RepaymentScheduleStatus, Prisma } from "../../generated/prisma/client";
 
 export type GetMembersParams = {
@@ -906,6 +907,14 @@ export async function createMember(
         return profile;
       });
 
+      createNotification({
+        userId: result.userId,
+        eventKey: "MEMBER_WELCOME",
+        title: "Welcome to KN Finance",
+        message: `Your member profile (${result.memberNumber}) has been registered successfully.`,
+        targetUrl: "/member/profile",
+      }).catch(() => {});
+
       return {
         id: result.id,
         userId: result.userId,
@@ -1094,6 +1103,8 @@ export async function purgeEmptyMember(
           depositRequests: true,
           withdrawalRequests: true,
           collectionNotes: true,
+          documents: true,
+          customFieldValues: true,
         },
       },
     },
@@ -1103,6 +1114,10 @@ export async function purgeEmptyMember(
     throw new Error(`Member with ID '${memberId}' not found.`);
   }
 
+  const notificationCount = await prisma.notification.count({
+    where: { userId: member.userId },
+  });
+
   const counts = member._count;
   const totalLinkedRecords =
     counts.accounts +
@@ -1111,7 +1126,10 @@ export async function purgeEmptyMember(
     counts.transactions +
     counts.depositRequests +
     counts.withdrawalRequests +
-    counts.collectionNotes;
+    counts.collectionNotes +
+    counts.documents +
+    counts.customFieldValues +
+    notificationCount;
 
   if (totalLinkedRecords > 0) {
     throw new Error(

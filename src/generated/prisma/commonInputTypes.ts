@@ -953,6 +953,40 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
 }
 
+export type EnumDocumentCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentCategory | Prisma.EnumDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentCategoryFilter<$PrismaModel> | $Enums.DocumentCategory
+}
+
+export type EnumDocumentCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentCategory | Prisma.EnumDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentCategoryWithAggregatesFilter<$PrismaModel> | $Enums.DocumentCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDocumentCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDocumentCategoryFilter<$PrismaModel>
+}
+
+export type EnumCustomFieldTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomFieldType | Prisma.EnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomFieldTypeFilter<$PrismaModel> | $Enums.CustomFieldType
+}
+
+export type EnumCustomFieldTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomFieldType | Prisma.EnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomFieldTypeWithAggregatesFilter<$PrismaModel> | $Enums.CustomFieldType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCustomFieldTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCustomFieldTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1876,6 +1910,40 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumDocumentCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentCategory | Prisma.EnumDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentCategoryFilter<$PrismaModel> | $Enums.DocumentCategory
+}
+
+export type NestedEnumDocumentCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentCategory | Prisma.EnumDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentCategory[] | Prisma.ListEnumDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentCategoryWithAggregatesFilter<$PrismaModel> | $Enums.DocumentCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDocumentCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDocumentCategoryFilter<$PrismaModel>
+}
+
+export type NestedEnumCustomFieldTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomFieldType | Prisma.EnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomFieldTypeFilter<$PrismaModel> | $Enums.CustomFieldType
+}
+
+export type NestedEnumCustomFieldTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomFieldType | Prisma.EnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomFieldType[] | Prisma.ListEnumCustomFieldTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomFieldTypeWithAggregatesFilter<$PrismaModel> | $Enums.CustomFieldType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCustomFieldTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCustomFieldTypeFilter<$PrismaModel>
 }
 
 

@@ -48,9 +48,24 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notifMenuOpen, setNotifMenuOpen] = useState(false);
   const [selectedBranchId, setSelectedBranchId] = useState("all");
+  const [notifSummary, setNotifSummary] = useState<{ unreadCount: number; recentNotifications: Array<{ id: string; eventKey: string; title: string; message: string; readAt: string | null; createdAt: string; targetUrl?: string | null }> } | null>(null);
 
   const userMenuRef = useRef<HTMLDivElement>(null);
   const notifMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    import("@/app/notifications/actions").then(({ getNavbarNotificationSummaryAction }) => {
+      getNavbarNotificationSummaryAction().then((res) => {
+        if (mounted && res.success && res.data) {
+          setNotifSummary(res.data);
+        }
+      });
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [path]);
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -267,24 +282,58 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                 className="relative rounded-xl text-slate-300 hover:bg-shell-navy-elevated hover:text-white"
               >
                 <Bell className="size-5" />
+                {notifSummary && notifSummary.unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white shadow-xs">
+                    {notifSummary.unreadCount > 9 ? "9+" : notifSummary.unreadCount}
+                  </span>
+                )}
               </Button>
 
               {notifMenuOpen && (
                 <div
                   role="dialog"
                   aria-label="Notifications popover"
-                  className="absolute right-0 mt-2 w-72 origin-top-right rounded-xl border border-slate-200 bg-white p-4 shadow-2xl animate-in fade-in zoom-in-95 duration-150 z-50"
+                  className="absolute right-0 mt-2 w-80 origin-top-right rounded-xl border border-slate-200 bg-white p-4 shadow-2xl animate-in fade-in zoom-in-95 duration-150 z-50"
                 >
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                     <h3 className="text-xs font-bold text-slate-900">Notifications</h3>
-                    <span className="text-[10px] font-medium text-slate-400">0 unread</span>
+                    <span className="text-[10px] font-semibold text-rose-600">
+                      {notifSummary?.unreadCount || 0} unread
+                    </span>
                   </div>
-                  <div className="py-6 text-center text-slate-500">
-                    <Bell className="mx-auto size-7 text-slate-300 mb-2" />
-                    <p className="text-xs font-semibold text-slate-700">No new notifications</p>
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      System alerts and activity updates will appear here.
-                    </p>
+
+                  {!notifSummary || notifSummary.recentNotifications.length === 0 ? (
+                    <div className="py-6 text-center text-slate-500">
+                      <Bell className="mx-auto size-7 text-slate-300 mb-2" />
+                      <p className="text-xs font-semibold text-slate-700">No new notifications</p>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        System alerts and activity updates will appear here.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="divide-y divide-slate-100 max-h-64 overflow-y-auto py-2">
+                      {notifSummary.recentNotifications.map((n) => (
+                        <div key={n.id} className="py-2 px-1 text-xs">
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-slate-900 truncate max-w-44">{n.title}</span>
+                            <span className="text-[9px] text-slate-400 font-mono">
+                              {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-600 line-clamp-2 mt-0.5">{n.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="pt-2 border-t border-slate-100 text-center">
+                    <Link
+                      href={portal === "Admin" ? "/admin/notifications" : "/member/notifications"}
+                      onClick={() => setNotifMenuOpen(false)}
+                      className="text-[11px] font-bold text-[#275d4f] hover:underline"
+                    >
+                      View All Notifications &rarr;
+                    </Link>
                   </div>
                 </div>
               )}

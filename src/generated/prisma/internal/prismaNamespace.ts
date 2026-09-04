@@ -433,7 +433,11 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   CompanyProfile: 'CompanyProfile',
   EmailConfiguration: 'EmailConfiguration',
-  NotificationTemplate: 'NotificationTemplate'
+  NotificationTemplate: 'NotificationTemplate',
+  MemberDocument: 'MemberDocument',
+  MemberCustomFieldDefinition: 'MemberCustomFieldDefinition',
+  MemberCustomFieldValue: 'MemberCustomFieldValue',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -449,7 +453,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "branch" | "memberProfile" | "accountTypePolicy" | "account" | "loanPenaltyRule" | "loanProduct" | "loan" | "loanRepaymentSchedule" | "loanPenaltyAssessment" | "loanRepayment" | "loanRepaymentAllocation" | "collectionNote" | "transactionCategory" | "transaction" | "depositRequest" | "withdrawalRequest" | "expenseCategory" | "treasuryAccount" | "treasuryTransaction" | "bankAccount" | "bankTransaction" | "expense" | "transfer" | "bankStatementImport" | "bankStatementLine" | "bankStatementImportError" | "bankReconciliationMatch" | "permission" | "roleProfile" | "rolePermission" | "userRoleAssignment" | "userBranchAccess" | "auditLog" | "companyProfile" | "emailConfiguration" | "notificationTemplate"
+    modelProps: "user" | "branch" | "memberProfile" | "accountTypePolicy" | "account" | "loanPenaltyRule" | "loanProduct" | "loan" | "loanRepaymentSchedule" | "loanPenaltyAssessment" | "loanRepayment" | "loanRepaymentAllocation" | "collectionNote" | "transactionCategory" | "transaction" | "depositRequest" | "withdrawalRequest" | "expenseCategory" | "treasuryAccount" | "treasuryTransaction" | "bankAccount" | "bankTransaction" | "expense" | "transfer" | "bankStatementImport" | "bankStatementLine" | "bankStatementImportError" | "bankReconciliationMatch" | "permission" | "roleProfile" | "rolePermission" | "userRoleAssignment" | "userBranchAccess" | "auditLog" | "companyProfile" | "emailConfiguration" | "notificationTemplate" | "memberDocument" | "memberCustomFieldDefinition" | "memberCustomFieldValue" | "notification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3191,6 +3195,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MemberDocument: {
+      payload: Prisma.$MemberDocumentPayload<ExtArgs>
+      fields: Prisma.MemberDocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MemberDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MemberDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.MemberDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MemberDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>
+        }
+        findMany: {
+          args: Prisma.MemberDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>[]
+        }
+        create: {
+          args: Prisma.MemberDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>
+        }
+        createMany: {
+          args: Prisma.MemberDocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MemberDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.MemberDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>
+        }
+        update: {
+          args: Prisma.MemberDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.MemberDocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MemberDocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MemberDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.MemberDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberDocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.MemberDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMemberDocument>
+        }
+        groupBy: {
+          args: Prisma.MemberDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberDocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MemberDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberDocumentCountAggregateOutputType> | number
+        }
+      }
+    }
+    MemberCustomFieldDefinition: {
+      payload: Prisma.$MemberCustomFieldDefinitionPayload<ExtArgs>
+      fields: Prisma.MemberCustomFieldDefinitionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MemberCustomFieldDefinitionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MemberCustomFieldDefinitionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>
+        }
+        findFirst: {
+          args: Prisma.MemberCustomFieldDefinitionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MemberCustomFieldDefinitionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>
+        }
+        findMany: {
+          args: Prisma.MemberCustomFieldDefinitionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>[]
+        }
+        create: {
+          args: Prisma.MemberCustomFieldDefinitionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>
+        }
+        createMany: {
+          args: Prisma.MemberCustomFieldDefinitionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MemberCustomFieldDefinitionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>[]
+        }
+        delete: {
+          args: Prisma.MemberCustomFieldDefinitionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>
+        }
+        update: {
+          args: Prisma.MemberCustomFieldDefinitionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>
+        }
+        deleteMany: {
+          args: Prisma.MemberCustomFieldDefinitionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MemberCustomFieldDefinitionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MemberCustomFieldDefinitionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>[]
+        }
+        upsert: {
+          args: Prisma.MemberCustomFieldDefinitionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldDefinitionPayload>
+        }
+        aggregate: {
+          args: Prisma.MemberCustomFieldDefinitionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMemberCustomFieldDefinition>
+        }
+        groupBy: {
+          args: Prisma.MemberCustomFieldDefinitionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberCustomFieldDefinitionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MemberCustomFieldDefinitionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberCustomFieldDefinitionCountAggregateOutputType> | number
+        }
+      }
+    }
+    MemberCustomFieldValue: {
+      payload: Prisma.$MemberCustomFieldValuePayload<ExtArgs>
+      fields: Prisma.MemberCustomFieldValueFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MemberCustomFieldValueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MemberCustomFieldValueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>
+        }
+        findFirst: {
+          args: Prisma.MemberCustomFieldValueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MemberCustomFieldValueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>
+        }
+        findMany: {
+          args: Prisma.MemberCustomFieldValueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>[]
+        }
+        create: {
+          args: Prisma.MemberCustomFieldValueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>
+        }
+        createMany: {
+          args: Prisma.MemberCustomFieldValueCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MemberCustomFieldValueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>[]
+        }
+        delete: {
+          args: Prisma.MemberCustomFieldValueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>
+        }
+        update: {
+          args: Prisma.MemberCustomFieldValueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>
+        }
+        deleteMany: {
+          args: Prisma.MemberCustomFieldValueDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MemberCustomFieldValueUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MemberCustomFieldValueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>[]
+        }
+        upsert: {
+          args: Prisma.MemberCustomFieldValueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberCustomFieldValuePayload>
+        }
+        aggregate: {
+          args: Prisma.MemberCustomFieldValueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMemberCustomFieldValue>
+        }
+        groupBy: {
+          args: Prisma.MemberCustomFieldValueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberCustomFieldValueGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MemberCustomFieldValueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberCustomFieldValueCountAggregateOutputType> | number
+        }
+      }
+    }
+    Notification: {
+      payload: Prisma.$NotificationPayload<ExtArgs>
+      fields: Prisma.NotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        update: {
+          args: Prisma.NotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
+        }
+        groupBy: {
+          args: Prisma.NotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3274,6 +3574,7 @@ export const MemberProfileScalarFieldEnum = {
   address: 'address',
   dateOfBirth: 'dateOfBirth',
   identityNumber: 'identityNumber',
+  photoStorageKey: 'photoStorageKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3975,6 +4276,65 @@ export const NotificationTemplateScalarFieldEnum = {
 export type NotificationTemplateScalarFieldEnum = (typeof NotificationTemplateScalarFieldEnum)[keyof typeof NotificationTemplateScalarFieldEnum]
 
 
+export const MemberDocumentScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  category: 'category',
+  fileName: 'fileName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  storageKey: 'storageKey',
+  uploadedById: 'uploadedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberDocumentScalarFieldEnum = (typeof MemberDocumentScalarFieldEnum)[keyof typeof MemberDocumentScalarFieldEnum]
+
+
+export const MemberCustomFieldDefinitionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  label: 'label',
+  type: 'type',
+  optionsJson: 'optionsJson',
+  required: 'required',
+  active: 'active',
+  displayOrder: 'displayOrder',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberCustomFieldDefinitionScalarFieldEnum = (typeof MemberCustomFieldDefinitionScalarFieldEnum)[keyof typeof MemberCustomFieldDefinitionScalarFieldEnum]
+
+
+export const MemberCustomFieldValueScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  fieldDefinitionId: 'fieldDefinitionId',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberCustomFieldValueScalarFieldEnum = (typeof MemberCustomFieldValueScalarFieldEnum)[keyof typeof MemberCustomFieldValueScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  eventKey: 'eventKey',
+  title: 'title',
+  message: 'message',
+  referenceUrl: 'referenceUrl',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4589,6 +4949,34 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'DocumentCategory'
+ */
+export type EnumDocumentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'DocumentCategory[]'
+ */
+export type ListEnumDocumentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomFieldType'
+ */
+export type EnumCustomFieldTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomFieldType'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomFieldType[]'
+ */
+export type ListEnumCustomFieldTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomFieldType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4789,6 +5177,10 @@ export type GlobalOmitConfig = {
   companyProfile?: Prisma.CompanyProfileOmit
   emailConfiguration?: Prisma.EmailConfigurationOmit
   notificationTemplate?: Prisma.NotificationTemplateOmit
+  memberDocument?: Prisma.MemberDocumentOmit
+  memberCustomFieldDefinition?: Prisma.MemberCustomFieldDefinitionOmit
+  memberCustomFieldValue?: Prisma.MemberCustomFieldValueOmit
+  notification?: Prisma.NotificationOmit
 }
 
 /* Types for Logging */

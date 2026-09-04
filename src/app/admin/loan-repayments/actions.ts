@@ -196,6 +196,17 @@ export async function recordLoanRepaymentAction(
       });
     });
 
+    if (repayment?.member?.userId) {
+      const { createNotification } = await import("@/lib/notifications/notification-service");
+      createNotification({
+        userId: repayment.member.userId,
+        eventKey: "REPAYMENT_RECEIVED",
+        title: "Loan Repayment Received",
+        message: `Repayment of $${repayment.amount.toString()} received for loan ${repayment.loan?.loanNumber}.`,
+        targetUrl: `/member/loans/${loanId}`,
+      }).catch(() => {});
+    }
+
     revalidatePath("/admin/loan-repayments");
     revalidatePath("/admin/repayments");
     revalidatePath("/admin/payments");

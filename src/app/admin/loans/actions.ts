@@ -43,6 +43,17 @@ export async function approveLoanAction(loanId: string): Promise<AdminLoanAction
       include: { product: true, member: { include: { user: true } }, branch: true },
     });
 
+    if (updated.member?.user?.id) {
+      const { createNotification } = await import("@/lib/notifications/notification-service");
+      createNotification({
+        userId: updated.member.user.id,
+        eventKey: "LOAN_APPROVED",
+        title: "Loan Application Approved",
+        message: `Your loan application ${updated.loanNumber} for $${updated.approvedAmount?.toString()} has been approved.`,
+        targetUrl: `/member/loans/${updated.id}`,
+      }).catch(() => {});
+    }
+
     revalidatePath("/admin/loans");
     revalidatePath(`/admin/loans/${loanId}`);
     return { success: true, data: serializeLoan(updated) };
@@ -202,6 +213,17 @@ export async function disburseLoanAction(
 
       return res;
     });
+
+    if (updatedLoan.member?.user?.id) {
+      const { createNotification } = await import("@/lib/notifications/notification-service");
+      createNotification({
+        userId: updatedLoan.member.user.id,
+        eventKey: "LOAN_DISBURSED",
+        title: "Loan Disbursed",
+        message: `Your loan ${updatedLoan.loanNumber} has been successfully disbursed to your account.`,
+        targetUrl: `/member/loans/${updatedLoan.id}`,
+      }).catch(() => {});
+    }
 
     revalidatePath("/admin/loans");
     revalidatePath(`/admin/loans/${loanId}`);

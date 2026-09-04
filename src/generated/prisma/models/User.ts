@@ -269,6 +269,9 @@ export type UserWhereInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileListRelationFilter
   updatedEmailConfigs?: Prisma.EmailConfigurationListRelationFilter
   updatedNotificationTemplates?: Prisma.NotificationTemplateListRelationFilter
+  uploadedMemberDocuments?: Prisma.MemberDocumentListRelationFilter
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -329,6 +332,9 @@ export type UserOrderByWithRelationInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileOrderByRelationAggregateInput
   updatedEmailConfigs?: Prisma.EmailConfigurationOrderByRelationAggregateInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateOrderByRelationAggregateInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentOrderByRelationAggregateInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -392,6 +398,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedCompanyProfiles?: Prisma.CompanyProfileListRelationFilter
   updatedEmailConfigs?: Prisma.EmailConfigurationListRelationFilter
   updatedNotificationTemplates?: Prisma.NotificationTemplateListRelationFilter
+  uploadedMemberDocuments?: Prisma.MemberDocumentListRelationFilter
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -483,6 +492,9 @@ export type UserCreateInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -542,6 +554,9 @@ export type UserUncheckedCreateInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -601,6 +616,9 @@ export type UserUpdateInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -660,6 +678,9 @@ export type UserUncheckedUpdateInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1553,6 +1574,50 @@ export type UserUpdateOneWithoutUpdatedNotificationTemplatesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedNotificationTemplatesInput, Prisma.UserUpdateWithoutUpdatedNotificationTemplatesInput>, Prisma.UserUncheckedUpdateWithoutUpdatedNotificationTemplatesInput>
 }
 
+export type UserCreateNestedOneWithoutUploadedMemberDocumentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUploadedMemberDocumentsInput, Prisma.UserUncheckedCreateWithoutUploadedMemberDocumentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUploadedMemberDocumentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUploadedMemberDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUploadedMemberDocumentsInput, Prisma.UserUncheckedCreateWithoutUploadedMemberDocumentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUploadedMemberDocumentsInput
+  upsert?: Prisma.UserUpsertWithoutUploadedMemberDocumentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUploadedMemberDocumentsInput, Prisma.UserUpdateWithoutUploadedMemberDocumentsInput>, Prisma.UserUncheckedUpdateWithoutUploadedMemberDocumentsInput>
+}
+
+export type UserCreateNestedOneWithoutCreatedCustomFieldDefsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedCustomFieldDefsInput, Prisma.UserUncheckedCreateWithoutCreatedCustomFieldDefsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCustomFieldDefsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedCustomFieldDefsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedCustomFieldDefsInput, Prisma.UserUncheckedCreateWithoutCreatedCustomFieldDefsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCustomFieldDefsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedCustomFieldDefsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedCustomFieldDefsInput, Prisma.UserUpdateWithoutCreatedCustomFieldDefsInput>, Prisma.UserUncheckedUpdateWithoutCreatedCustomFieldDefsInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type UserCreateWithoutBranchInput = {
   id?: string
   name: string
@@ -1609,6 +1674,9 @@ export type UserCreateWithoutBranchInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBranchInput = {
@@ -1667,6 +1735,9 @@ export type UserUncheckedCreateWithoutBranchInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBranchInput = {
@@ -1767,6 +1838,9 @@ export type UserCreateWithoutMemberProfileInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMemberProfileInput = {
@@ -1825,6 +1899,9 @@ export type UserUncheckedCreateWithoutMemberProfileInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMemberProfileInput = {
@@ -1899,6 +1976,9 @@ export type UserUpdateWithoutMemberProfileInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMemberProfileInput = {
@@ -1957,6 +2037,9 @@ export type UserUncheckedUpdateWithoutMemberProfileInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountTypesInput = {
@@ -2015,6 +2098,9 @@ export type UserCreateWithoutCreatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountTypesInput = {
@@ -2073,6 +2159,9 @@ export type UserUncheckedCreateWithoutCreatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountTypesInput = {
@@ -2136,6 +2225,9 @@ export type UserCreateWithoutUpdatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountTypesInput = {
@@ -2194,6 +2286,9 @@ export type UserUncheckedCreateWithoutUpdatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountTypesInput = {
@@ -2268,6 +2363,9 @@ export type UserUpdateWithoutCreatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountTypesInput = {
@@ -2326,6 +2424,9 @@ export type UserUncheckedUpdateWithoutCreatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountTypesInput = {
@@ -2395,6 +2496,9 @@ export type UserUpdateWithoutUpdatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountTypesInput = {
@@ -2453,6 +2557,9 @@ export type UserUncheckedUpdateWithoutUpdatedAccountTypesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedPenaltyRulesInput = {
@@ -2511,6 +2618,9 @@ export type UserCreateWithoutCreatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPenaltyRulesInput = {
@@ -2569,6 +2679,9 @@ export type UserUncheckedCreateWithoutCreatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPenaltyRulesInput = {
@@ -2632,6 +2745,9 @@ export type UserCreateWithoutUpdatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPenaltyRulesInput = {
@@ -2690,6 +2806,9 @@ export type UserUncheckedCreateWithoutUpdatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPenaltyRulesInput = {
@@ -2764,6 +2883,9 @@ export type UserUpdateWithoutCreatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPenaltyRulesInput = {
@@ -2822,6 +2944,9 @@ export type UserUncheckedUpdateWithoutCreatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPenaltyRulesInput = {
@@ -2891,6 +3016,9 @@ export type UserUpdateWithoutUpdatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPenaltyRulesInput = {
@@ -2949,6 +3077,9 @@ export type UserUncheckedUpdateWithoutUpdatedPenaltyRulesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedLoanProductsInput = {
@@ -3007,6 +3138,9 @@ export type UserCreateWithoutCreatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLoanProductsInput = {
@@ -3065,6 +3199,9 @@ export type UserUncheckedCreateWithoutCreatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLoanProductsInput = {
@@ -3128,6 +3265,9 @@ export type UserCreateWithoutUpdatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLoanProductsInput = {
@@ -3186,6 +3326,9 @@ export type UserUncheckedCreateWithoutUpdatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLoanProductsInput = {
@@ -3260,6 +3403,9 @@ export type UserUpdateWithoutCreatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLoanProductsInput = {
@@ -3318,6 +3464,9 @@ export type UserUncheckedUpdateWithoutCreatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLoanProductsInput = {
@@ -3387,6 +3536,9 @@ export type UserUpdateWithoutUpdatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLoanProductsInput = {
@@ -3445,6 +3597,9 @@ export type UserUncheckedUpdateWithoutUpdatedLoanProductsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApprovedLoansInput = {
@@ -3503,6 +3658,9 @@ export type UserCreateWithoutApprovedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedLoansInput = {
@@ -3561,6 +3719,9 @@ export type UserUncheckedCreateWithoutApprovedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedLoansInput = {
@@ -3624,6 +3785,9 @@ export type UserCreateWithoutDisbursedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDisbursedLoansInput = {
@@ -3682,6 +3846,9 @@ export type UserUncheckedCreateWithoutDisbursedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDisbursedLoansInput = {
@@ -3745,6 +3912,9 @@ export type UserCreateWithoutCreatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLoansInput = {
@@ -3803,6 +3973,9 @@ export type UserUncheckedCreateWithoutCreatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLoansInput = {
@@ -3866,6 +4039,9 @@ export type UserCreateWithoutUpdatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLoansInput = {
@@ -3924,6 +4100,9 @@ export type UserUncheckedCreateWithoutUpdatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLoansInput = {
@@ -3998,6 +4177,9 @@ export type UserUpdateWithoutApprovedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedLoansInput = {
@@ -4056,6 +4238,9 @@ export type UserUncheckedUpdateWithoutApprovedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutDisbursedLoansInput = {
@@ -4125,6 +4310,9 @@ export type UserUpdateWithoutDisbursedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDisbursedLoansInput = {
@@ -4183,6 +4371,9 @@ export type UserUncheckedUpdateWithoutDisbursedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedLoansInput = {
@@ -4252,6 +4443,9 @@ export type UserUpdateWithoutCreatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLoansInput = {
@@ -4310,6 +4504,9 @@ export type UserUncheckedUpdateWithoutCreatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLoansInput = {
@@ -4379,6 +4576,9 @@ export type UserUpdateWithoutUpdatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLoansInput = {
@@ -4437,6 +4637,9 @@ export type UserUncheckedUpdateWithoutUpdatedLoansInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedRepaymentsInput = {
@@ -4495,6 +4698,9 @@ export type UserCreateWithoutCreatedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedRepaymentsInput = {
@@ -4553,6 +4759,9 @@ export type UserUncheckedCreateWithoutCreatedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedRepaymentsInput = {
@@ -4616,6 +4825,9 @@ export type UserCreateWithoutReversedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedRepaymentsInput = {
@@ -4674,6 +4886,9 @@ export type UserUncheckedCreateWithoutReversedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedRepaymentsInput = {
@@ -4748,6 +4963,9 @@ export type UserUpdateWithoutCreatedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedRepaymentsInput = {
@@ -4806,6 +5024,9 @@ export type UserUncheckedUpdateWithoutCreatedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedRepaymentsInput = {
@@ -4875,6 +5096,9 @@ export type UserUpdateWithoutReversedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedRepaymentsInput = {
@@ -4933,6 +5157,9 @@ export type UserUncheckedUpdateWithoutReversedRepaymentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCollectionNotesInput = {
@@ -4991,6 +5218,9 @@ export type UserCreateWithoutCollectionNotesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCollectionNotesInput = {
@@ -5049,6 +5279,9 @@ export type UserUncheckedCreateWithoutCollectionNotesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCollectionNotesInput = {
@@ -5123,6 +5356,9 @@ export type UserUpdateWithoutCollectionNotesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCollectionNotesInput = {
@@ -5181,6 +5417,9 @@ export type UserUncheckedUpdateWithoutCollectionNotesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionCategoriesInput = {
@@ -5239,6 +5478,9 @@ export type UserCreateWithoutCreatedTransactionCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionCategoriesInput = {
@@ -5297,6 +5539,9 @@ export type UserUncheckedCreateWithoutCreatedTransactionCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionCategoriesInput = {
@@ -5371,6 +5616,9 @@ export type UserUpdateWithoutCreatedTransactionCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionCategoriesInput = {
@@ -5429,6 +5677,9 @@ export type UserUncheckedUpdateWithoutCreatedTransactionCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionsInput = {
@@ -5487,6 +5738,9 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
@@ -5545,6 +5799,9 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
@@ -5608,6 +5865,9 @@ export type UserCreateWithoutReversedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedTransactionsInput = {
@@ -5666,6 +5926,9 @@ export type UserUncheckedCreateWithoutReversedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedTransactionsInput = {
@@ -5740,6 +6003,9 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
@@ -5798,6 +6064,9 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedTransactionsInput = {
@@ -5867,6 +6136,9 @@ export type UserUpdateWithoutReversedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedTransactionsInput = {
@@ -5925,6 +6197,9 @@ export type UserUncheckedUpdateWithoutReversedTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApprovedDepositRequestsInput = {
@@ -5983,6 +6258,9 @@ export type UserCreateWithoutApprovedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedDepositRequestsInput = {
@@ -6041,6 +6319,9 @@ export type UserUncheckedCreateWithoutApprovedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedDepositRequestsInput = {
@@ -6104,6 +6385,9 @@ export type UserCreateWithoutRejectedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRejectedDepositRequestsInput = {
@@ -6162,6 +6446,9 @@ export type UserUncheckedCreateWithoutRejectedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRejectedDepositRequestsInput = {
@@ -6225,6 +6512,9 @@ export type UserCreateWithoutCreatedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedDepositRequestsInput = {
@@ -6283,6 +6573,9 @@ export type UserUncheckedCreateWithoutCreatedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedDepositRequestsInput = {
@@ -6357,6 +6650,9 @@ export type UserUpdateWithoutApprovedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedDepositRequestsInput = {
@@ -6415,6 +6711,9 @@ export type UserUncheckedUpdateWithoutApprovedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutRejectedDepositRequestsInput = {
@@ -6484,6 +6783,9 @@ export type UserUpdateWithoutRejectedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedDepositRequestsInput = {
@@ -6542,6 +6844,9 @@ export type UserUncheckedUpdateWithoutRejectedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedDepositRequestsInput = {
@@ -6611,6 +6916,9 @@ export type UserUpdateWithoutCreatedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedDepositRequestsInput = {
@@ -6669,6 +6977,9 @@ export type UserUncheckedUpdateWithoutCreatedDepositRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApprovedWithdrawalRequestsInput = {
@@ -6727,6 +7038,9 @@ export type UserCreateWithoutApprovedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedWithdrawalRequestsInput = {
@@ -6785,6 +7099,9 @@ export type UserUncheckedCreateWithoutApprovedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedWithdrawalRequestsInput = {
@@ -6848,6 +7165,9 @@ export type UserCreateWithoutRejectedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRejectedWithdrawalRequestsInput = {
@@ -6906,6 +7226,9 @@ export type UserUncheckedCreateWithoutRejectedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRejectedWithdrawalRequestsInput = {
@@ -6969,6 +7292,9 @@ export type UserCreateWithoutCreatedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedWithdrawalRequestsInput = {
@@ -7027,6 +7353,9 @@ export type UserUncheckedCreateWithoutCreatedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedWithdrawalRequestsInput = {
@@ -7101,6 +7430,9 @@ export type UserUpdateWithoutApprovedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedWithdrawalRequestsInput = {
@@ -7159,6 +7491,9 @@ export type UserUncheckedUpdateWithoutApprovedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutRejectedWithdrawalRequestsInput = {
@@ -7228,6 +7563,9 @@ export type UserUpdateWithoutRejectedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedWithdrawalRequestsInput = {
@@ -7286,6 +7624,9 @@ export type UserUncheckedUpdateWithoutRejectedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedWithdrawalRequestsInput = {
@@ -7355,6 +7696,9 @@ export type UserUpdateWithoutCreatedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedWithdrawalRequestsInput = {
@@ -7413,6 +7757,9 @@ export type UserUncheckedUpdateWithoutCreatedWithdrawalRequestsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedExpenseCategoriesInput = {
@@ -7471,6 +7818,9 @@ export type UserCreateWithoutCreatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExpenseCategoriesInput = {
@@ -7529,6 +7879,9 @@ export type UserUncheckedCreateWithoutCreatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExpenseCategoriesInput = {
@@ -7592,6 +7945,9 @@ export type UserCreateWithoutUpdatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedExpenseCategoriesInput = {
@@ -7650,6 +8006,9 @@ export type UserUncheckedCreateWithoutUpdatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedExpenseCategoriesInput = {
@@ -7724,6 +8083,9 @@ export type UserUpdateWithoutCreatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExpenseCategoriesInput = {
@@ -7782,6 +8144,9 @@ export type UserUncheckedUpdateWithoutCreatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedExpenseCategoriesInput = {
@@ -7851,6 +8216,9 @@ export type UserUpdateWithoutUpdatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedExpenseCategoriesInput = {
@@ -7909,6 +8277,9 @@ export type UserUncheckedUpdateWithoutUpdatedExpenseCategoriesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTreasuryAccountsInput = {
@@ -7967,6 +8338,9 @@ export type UserCreateWithoutCreatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTreasuryAccountsInput = {
@@ -8025,6 +8399,9 @@ export type UserUncheckedCreateWithoutCreatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTreasuryAccountsInput = {
@@ -8088,6 +8465,9 @@ export type UserCreateWithoutUpdatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTreasuryAccountsInput = {
@@ -8146,6 +8526,9 @@ export type UserUncheckedCreateWithoutUpdatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTreasuryAccountsInput = {
@@ -8220,6 +8603,9 @@ export type UserUpdateWithoutCreatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTreasuryAccountsInput = {
@@ -8278,6 +8664,9 @@ export type UserUncheckedUpdateWithoutCreatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTreasuryAccountsInput = {
@@ -8347,6 +8736,9 @@ export type UserUpdateWithoutUpdatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTreasuryAccountsInput = {
@@ -8405,6 +8797,9 @@ export type UserUncheckedUpdateWithoutUpdatedTreasuryAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTreasuryTransactionsInput = {
@@ -8463,6 +8858,9 @@ export type UserCreateWithoutCreatedTreasuryTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTreasuryTransactionsInput = {
@@ -8521,6 +8919,9 @@ export type UserUncheckedCreateWithoutCreatedTreasuryTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTreasuryTransactionsInput = {
@@ -8595,6 +8996,9 @@ export type UserUpdateWithoutCreatedTreasuryTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTreasuryTransactionsInput = {
@@ -8653,6 +9057,9 @@ export type UserUncheckedUpdateWithoutCreatedTreasuryTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedBankAccountsInput = {
@@ -8711,6 +9118,9 @@ export type UserCreateWithoutCreatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankAccountsInput = {
@@ -8769,6 +9179,9 @@ export type UserUncheckedCreateWithoutCreatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankAccountsInput = {
@@ -8832,6 +9245,9 @@ export type UserCreateWithoutUpdatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedBankAccountsInput = {
@@ -8890,6 +9306,9 @@ export type UserUncheckedCreateWithoutUpdatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedBankAccountsInput = {
@@ -8964,6 +9383,9 @@ export type UserUpdateWithoutCreatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankAccountsInput = {
@@ -9022,6 +9444,9 @@ export type UserUncheckedUpdateWithoutCreatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedBankAccountsInput = {
@@ -9091,6 +9516,9 @@ export type UserUpdateWithoutUpdatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedBankAccountsInput = {
@@ -9149,6 +9577,9 @@ export type UserUncheckedUpdateWithoutUpdatedBankAccountsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReconciledBankTransactionsInput = {
@@ -9207,6 +9638,9 @@ export type UserCreateWithoutReconciledBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReconciledBankTransactionsInput = {
@@ -9265,6 +9699,9 @@ export type UserUncheckedCreateWithoutReconciledBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReconciledBankTransactionsInput = {
@@ -9328,6 +9765,9 @@ export type UserCreateWithoutCreatedBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankTransactionsInput = {
@@ -9386,6 +9826,9 @@ export type UserUncheckedCreateWithoutCreatedBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankTransactionsInput = {
@@ -9460,6 +9903,9 @@ export type UserUpdateWithoutReconciledBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReconciledBankTransactionsInput = {
@@ -9518,6 +9964,9 @@ export type UserUncheckedUpdateWithoutReconciledBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedBankTransactionsInput = {
@@ -9587,6 +10036,9 @@ export type UserUpdateWithoutCreatedBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankTransactionsInput = {
@@ -9645,6 +10097,9 @@ export type UserUncheckedUpdateWithoutCreatedBankTransactionsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedExpensesInput = {
@@ -9703,6 +10158,9 @@ export type UserCreateWithoutCreatedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExpensesInput = {
@@ -9761,6 +10219,9 @@ export type UserUncheckedCreateWithoutCreatedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExpensesInput = {
@@ -9824,6 +10285,9 @@ export type UserCreateWithoutReversedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedExpensesInput = {
@@ -9882,6 +10346,9 @@ export type UserUncheckedCreateWithoutReversedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedExpensesInput = {
@@ -9956,6 +10423,9 @@ export type UserUpdateWithoutCreatedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExpensesInput = {
@@ -10014,6 +10484,9 @@ export type UserUncheckedUpdateWithoutCreatedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedExpensesInput = {
@@ -10083,6 +10556,9 @@ export type UserUpdateWithoutReversedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedExpensesInput = {
@@ -10141,6 +10617,9 @@ export type UserUncheckedUpdateWithoutReversedExpensesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTransfersInput = {
@@ -10199,6 +10678,9 @@ export type UserCreateWithoutCreatedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransfersInput = {
@@ -10257,6 +10739,9 @@ export type UserUncheckedCreateWithoutCreatedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransfersInput = {
@@ -10320,6 +10805,9 @@ export type UserCreateWithoutReversedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedTransfersInput = {
@@ -10378,6 +10866,9 @@ export type UserUncheckedCreateWithoutReversedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedTransfersInput = {
@@ -10452,6 +10943,9 @@ export type UserUpdateWithoutCreatedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransfersInput = {
@@ -10510,6 +11004,9 @@ export type UserUncheckedUpdateWithoutCreatedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedTransfersInput = {
@@ -10579,6 +11076,9 @@ export type UserUpdateWithoutReversedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedTransfersInput = {
@@ -10637,6 +11137,9 @@ export type UserUncheckedUpdateWithoutReversedTransfersInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedBankStatementImportsInput = {
@@ -10695,6 +11198,9 @@ export type UserCreateWithoutCreatedBankStatementImportsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankStatementImportsInput = {
@@ -10753,6 +11259,9 @@ export type UserUncheckedCreateWithoutCreatedBankStatementImportsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankStatementImportsInput = {
@@ -10827,6 +11336,9 @@ export type UserUpdateWithoutCreatedBankStatementImportsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankStatementImportsInput = {
@@ -10885,6 +11397,9 @@ export type UserUncheckedUpdateWithoutCreatedBankStatementImportsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutIgnoredBankStatementLinesInput = {
@@ -10943,6 +11458,9 @@ export type UserCreateWithoutIgnoredBankStatementLinesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutIgnoredBankStatementLinesInput = {
@@ -11001,6 +11519,9 @@ export type UserUncheckedCreateWithoutIgnoredBankStatementLinesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutIgnoredBankStatementLinesInput = {
@@ -11075,6 +11596,9 @@ export type UserUpdateWithoutIgnoredBankStatementLinesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIgnoredBankStatementLinesInput = {
@@ -11133,6 +11657,9 @@ export type UserUncheckedUpdateWithoutIgnoredBankStatementLinesInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMatchedBankReconciliationsInput = {
@@ -11191,6 +11718,9 @@ export type UserCreateWithoutMatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMatchedBankReconciliationsInput = {
@@ -11249,6 +11779,9 @@ export type UserUncheckedCreateWithoutMatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMatchedBankReconciliationsInput = {
@@ -11312,6 +11845,9 @@ export type UserCreateWithoutUnmatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUnmatchedBankReconciliationsInput = {
@@ -11370,6 +11906,9 @@ export type UserUncheckedCreateWithoutUnmatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUnmatchedBankReconciliationsInput = {
@@ -11444,6 +11983,9 @@ export type UserUpdateWithoutMatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMatchedBankReconciliationsInput = {
@@ -11502,6 +12044,9 @@ export type UserUncheckedUpdateWithoutMatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUnmatchedBankReconciliationsInput = {
@@ -11571,6 +12116,9 @@ export type UserUpdateWithoutUnmatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUnmatchedBankReconciliationsInput = {
@@ -11629,6 +12177,9 @@ export type UserUncheckedUpdateWithoutUnmatchedBankReconciliationsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRoleAssignmentsInput = {
@@ -11687,6 +12238,9 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -11745,6 +12299,9 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -11819,6 +12376,9 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -11877,6 +12437,9 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBranchAccessInput = {
@@ -11935,6 +12498,9 @@ export type UserCreateWithoutBranchAccessInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBranchAccessInput = {
@@ -11993,6 +12559,9 @@ export type UserUncheckedCreateWithoutBranchAccessInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBranchAccessInput = {
@@ -12067,6 +12636,9 @@ export type UserUpdateWithoutBranchAccessInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchAccessInput = {
@@ -12125,6 +12697,9 @@ export type UserUncheckedUpdateWithoutBranchAccessInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActorAuditLogsInput = {
@@ -12183,6 +12758,9 @@ export type UserCreateWithoutActorAuditLogsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActorAuditLogsInput = {
@@ -12241,6 +12819,9 @@ export type UserUncheckedCreateWithoutActorAuditLogsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActorAuditLogsInput = {
@@ -12315,6 +12896,9 @@ export type UserUpdateWithoutActorAuditLogsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActorAuditLogsInput = {
@@ -12373,6 +12957,9 @@ export type UserUncheckedUpdateWithoutActorAuditLogsInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUpdatedCompanyProfilesInput = {
@@ -12431,6 +13018,9 @@ export type UserCreateWithoutUpdatedCompanyProfilesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCompanyProfilesInput = {
@@ -12489,6 +13079,9 @@ export type UserUncheckedCreateWithoutUpdatedCompanyProfilesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCompanyProfilesInput = {
@@ -12563,6 +13156,9 @@ export type UserUpdateWithoutUpdatedCompanyProfilesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput = {
@@ -12621,6 +13217,9 @@ export type UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUpdatedEmailConfigsInput = {
@@ -12679,6 +13278,9 @@ export type UserCreateWithoutUpdatedEmailConfigsInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedEmailConfigsInput = {
@@ -12737,6 +13339,9 @@ export type UserUncheckedCreateWithoutUpdatedEmailConfigsInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedEmailConfigsInput = {
@@ -12811,6 +13416,9 @@ export type UserUpdateWithoutUpdatedEmailConfigsInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedEmailConfigsInput = {
@@ -12869,6 +13477,9 @@ export type UserUncheckedUpdateWithoutUpdatedEmailConfigsInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUpdatedNotificationTemplatesInput = {
@@ -12927,6 +13538,9 @@ export type UserCreateWithoutUpdatedNotificationTemplatesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
   updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedNotificationTemplatesInput = {
@@ -12985,6 +13599,9 @@ export type UserUncheckedCreateWithoutUpdatedNotificationTemplatesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedNotificationTemplatesInput = {
@@ -13059,6 +13676,9 @@ export type UserUpdateWithoutUpdatedNotificationTemplatesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedNotificationTemplatesInput = {
@@ -13117,6 +13737,789 @@ export type UserUncheckedUpdateWithoutUpdatedNotificationTemplatesInput = {
   unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUploadedMemberDocumentsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUploadedMemberDocumentsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  branchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUploadedMemberDocumentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUploadedMemberDocumentsInput, Prisma.UserUncheckedCreateWithoutUploadedMemberDocumentsInput>
+}
+
+export type UserUpsertWithoutUploadedMemberDocumentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUploadedMemberDocumentsInput, Prisma.UserUncheckedUpdateWithoutUploadedMemberDocumentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUploadedMemberDocumentsInput, Prisma.UserUncheckedCreateWithoutUploadedMemberDocumentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUploadedMemberDocumentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUploadedMemberDocumentsInput, Prisma.UserUncheckedUpdateWithoutUploadedMemberDocumentsInput>
+}
+
+export type UserUpdateWithoutUploadedMemberDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUploadedMemberDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUncheckedUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUncheckedUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUncheckedUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCreatedCustomFieldDefsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCreatedCustomFieldDefsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  branchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCreatedCustomFieldDefsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedCustomFieldDefsInput, Prisma.UserUncheckedCreateWithoutCreatedCustomFieldDefsInput>
+}
+
+export type UserUpsertWithoutCreatedCustomFieldDefsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedCustomFieldDefsInput, Prisma.UserUncheckedUpdateWithoutCreatedCustomFieldDefsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedCustomFieldDefsInput, Prisma.UserUncheckedCreateWithoutCreatedCustomFieldDefsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedCustomFieldDefsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedCustomFieldDefsInput, Prisma.UserUncheckedUpdateWithoutCreatedCustomFieldDefsInput>
+}
+
+export type UserUpdateWithoutCreatedCustomFieldDefsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedCustomFieldDefsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUncheckedUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUncheckedUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUncheckedUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  branchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUncheckedUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUncheckedUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUncheckedUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateManyBranchInput = {
@@ -13187,6 +14590,9 @@ export type UserUpdateWithoutBranchInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchInput = {
@@ -13245,6 +14651,9 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -13310,6 +14719,9 @@ export type UserCountOutputType = {
   updatedCompanyProfiles: number
   updatedEmailConfigs: number
   updatedNotificationTemplates: number
+  uploadedMemberDocuments: number
+  createdCustomFieldDefs: number
+  notifications: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -13358,6 +14770,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedCompanyProfiles?: boolean | UserCountOutputTypeCountUpdatedCompanyProfilesArgs
   updatedEmailConfigs?: boolean | UserCountOutputTypeCountUpdatedEmailConfigsArgs
   updatedNotificationTemplates?: boolean | UserCountOutputTypeCountUpdatedNotificationTemplatesArgs
+  uploadedMemberDocuments?: boolean | UserCountOutputTypeCountUploadedMemberDocumentsArgs
+  createdCustomFieldDefs?: boolean | UserCountOutputTypeCountCreatedCustomFieldDefsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -13685,6 +15100,27 @@ export type UserCountOutputTypeCountUpdatedNotificationTemplatesArgs<ExtArgs ext
   where?: Prisma.NotificationTemplateWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUploadedMemberDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MemberDocumentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedCustomFieldDefsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MemberCustomFieldDefinitionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -13744,6 +15180,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedCompanyProfiles?: boolean | Prisma.User$updatedCompanyProfilesArgs<ExtArgs>
   updatedEmailConfigs?: boolean | Prisma.User$updatedEmailConfigsArgs<ExtArgs>
   updatedNotificationTemplates?: boolean | Prisma.User$updatedNotificationTemplatesArgs<ExtArgs>
+  uploadedMemberDocuments?: boolean | Prisma.User$uploadedMemberDocumentsArgs<ExtArgs>
+  createdCustomFieldDefs?: boolean | Prisma.User$createdCustomFieldDefsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -13837,6 +15276,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedCompanyProfiles?: boolean | Prisma.User$updatedCompanyProfilesArgs<ExtArgs>
   updatedEmailConfigs?: boolean | Prisma.User$updatedEmailConfigsArgs<ExtArgs>
   updatedNotificationTemplates?: boolean | Prisma.User$updatedNotificationTemplatesArgs<ExtArgs>
+  uploadedMemberDocuments?: boolean | Prisma.User$uploadedMemberDocumentsArgs<ExtArgs>
+  createdCustomFieldDefs?: boolean | Prisma.User$createdCustomFieldDefsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -13896,6 +15338,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedCompanyProfiles: Prisma.$CompanyProfilePayload<ExtArgs>[]
     updatedEmailConfigs: Prisma.$EmailConfigurationPayload<ExtArgs>[]
     updatedNotificationTemplates: Prisma.$NotificationTemplatePayload<ExtArgs>[]
+    uploadedMemberDocuments: Prisma.$MemberDocumentPayload<ExtArgs>[]
+    createdCustomFieldDefs: Prisma.$MemberCustomFieldDefinitionPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -14349,6 +15794,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedCompanyProfiles<T extends Prisma.User$updatedCompanyProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedCompanyProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedEmailConfigs<T extends Prisma.User$updatedEmailConfigsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedEmailConfigsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailConfigurationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedNotificationTemplates<T extends Prisma.User$updatedNotificationTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedNotificationTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  uploadedMemberDocuments<T extends Prisma.User$uploadedMemberDocumentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedMemberDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdCustomFieldDefs<T extends Prisma.User$createdCustomFieldDefsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdCustomFieldDefsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberCustomFieldDefinitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15904,6 +17352,78 @@ export type User$updatedNotificationTemplatesArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.NotificationTemplateScalarFieldEnum | Prisma.NotificationTemplateScalarFieldEnum[]
+}
+
+/**
+ * User.uploadedMemberDocuments
+ */
+export type User$uploadedMemberDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberDocument
+   */
+  select?: Prisma.MemberDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberDocument
+   */
+  omit?: Prisma.MemberDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberDocumentInclude<ExtArgs> | null
+  where?: Prisma.MemberDocumentWhereInput
+  orderBy?: Prisma.MemberDocumentOrderByWithRelationInput | Prisma.MemberDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.MemberDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MemberDocumentScalarFieldEnum | Prisma.MemberDocumentScalarFieldEnum[]
+}
+
+/**
+ * User.createdCustomFieldDefs
+ */
+export type User$createdCustomFieldDefsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberCustomFieldDefinition
+   */
+  select?: Prisma.MemberCustomFieldDefinitionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberCustomFieldDefinition
+   */
+  omit?: Prisma.MemberCustomFieldDefinitionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberCustomFieldDefinitionInclude<ExtArgs> | null
+  where?: Prisma.MemberCustomFieldDefinitionWhereInput
+  orderBy?: Prisma.MemberCustomFieldDefinitionOrderByWithRelationInput | Prisma.MemberCustomFieldDefinitionOrderByWithRelationInput[]
+  cursor?: Prisma.MemberCustomFieldDefinitionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MemberCustomFieldDefinitionScalarFieldEnum | Prisma.MemberCustomFieldDefinitionScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

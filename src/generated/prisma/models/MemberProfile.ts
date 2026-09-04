@@ -33,6 +33,7 @@ export type MemberProfileMinAggregateOutputType = {
   address: string | null
   dateOfBirth: Date | null
   identityNumber: string | null
+  photoStorageKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +47,7 @@ export type MemberProfileMaxAggregateOutputType = {
   address: string | null
   dateOfBirth: Date | null
   identityNumber: string | null
+  photoStorageKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +61,7 @@ export type MemberProfileCountAggregateOutputType = {
   address: number
   dateOfBirth: number
   identityNumber: number
+  photoStorageKey: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,6 +77,7 @@ export type MemberProfileMinAggregateInputType = {
   address?: true
   dateOfBirth?: true
   identityNumber?: true
+  photoStorageKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,6 +91,7 @@ export type MemberProfileMaxAggregateInputType = {
   address?: true
   dateOfBirth?: true
   identityNumber?: true
+  photoStorageKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +105,7 @@ export type MemberProfileCountAggregateInputType = {
   address?: true
   dateOfBirth?: true
   identityNumber?: true
+  photoStorageKey?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -186,6 +192,7 @@ export type MemberProfileGroupByOutputType = {
   address: string
   dateOfBirth: Date | null
   identityNumber: string | null
+  photoStorageKey: string | null
   createdAt: Date
   updatedAt: Date
   _count: MemberProfileCountAggregateOutputType | null
@@ -220,6 +227,7 @@ export type MemberProfileWhereInput = {
   address?: Prisma.StringFilter<"MemberProfile"> | string
   dateOfBirth?: Prisma.DateTimeNullableFilter<"MemberProfile"> | Date | string | null
   identityNumber?: Prisma.StringNullableFilter<"MemberProfile"> | string | null
+  photoStorageKey?: Prisma.StringNullableFilter<"MemberProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MemberProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MemberProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -231,6 +239,8 @@ export type MemberProfileWhereInput = {
   collectionNotes?: Prisma.CollectionNoteListRelationFilter
   depositRequests?: Prisma.DepositRequestListRelationFilter
   withdrawalRequests?: Prisma.WithdrawalRequestListRelationFilter
+  documents?: Prisma.MemberDocumentListRelationFilter
+  customFieldValues?: Prisma.MemberCustomFieldValueListRelationFilter
 }
 
 export type MemberProfileOrderByWithRelationInput = {
@@ -242,6 +252,7 @@ export type MemberProfileOrderByWithRelationInput = {
   address?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   identityNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  photoStorageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -253,6 +264,8 @@ export type MemberProfileOrderByWithRelationInput = {
   collectionNotes?: Prisma.CollectionNoteOrderByRelationAggregateInput
   depositRequests?: Prisma.DepositRequestOrderByRelationAggregateInput
   withdrawalRequests?: Prisma.WithdrawalRequestOrderByRelationAggregateInput
+  documents?: Prisma.MemberDocumentOrderByRelationAggregateInput
+  customFieldValues?: Prisma.MemberCustomFieldValueOrderByRelationAggregateInput
 }
 
 export type MemberProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -267,6 +280,7 @@ export type MemberProfileWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringFilter<"MemberProfile"> | string
   address?: Prisma.StringFilter<"MemberProfile"> | string
   dateOfBirth?: Prisma.DateTimeNullableFilter<"MemberProfile"> | Date | string | null
+  photoStorageKey?: Prisma.StringNullableFilter<"MemberProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MemberProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MemberProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -278,6 +292,8 @@ export type MemberProfileWhereUniqueInput = Prisma.AtLeast<{
   collectionNotes?: Prisma.CollectionNoteListRelationFilter
   depositRequests?: Prisma.DepositRequestListRelationFilter
   withdrawalRequests?: Prisma.WithdrawalRequestListRelationFilter
+  documents?: Prisma.MemberDocumentListRelationFilter
+  customFieldValues?: Prisma.MemberCustomFieldValueListRelationFilter
 }, "id" | "userId" | "memberNumber" | "identityNumber">
 
 export type MemberProfileOrderByWithAggregationInput = {
@@ -289,6 +305,7 @@ export type MemberProfileOrderByWithAggregationInput = {
   address?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   identityNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  photoStorageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MemberProfileCountOrderByAggregateInput
@@ -308,6 +325,7 @@ export type MemberProfileScalarWhereWithAggregatesInput = {
   address?: Prisma.StringWithAggregatesFilter<"MemberProfile"> | string
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"MemberProfile"> | Date | string | null
   identityNumber?: Prisma.StringNullableWithAggregatesFilter<"MemberProfile"> | string | null
+  photoStorageKey?: Prisma.StringNullableWithAggregatesFilter<"MemberProfile"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MemberProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MemberProfile"> | Date | string
 }
@@ -319,6 +337,7 @@ export type MemberProfileCreateInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -330,6 +349,8 @@ export type MemberProfileCreateInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateInput = {
@@ -341,6 +362,7 @@ export type MemberProfileUncheckedCreateInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -350,6 +372,8 @@ export type MemberProfileUncheckedCreateInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUpdateInput = {
@@ -359,6 +383,7 @@ export type MemberProfileUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -370,6 +395,8 @@ export type MemberProfileUpdateInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateInput = {
@@ -381,6 +408,7 @@ export type MemberProfileUncheckedUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -390,6 +418,8 @@ export type MemberProfileUncheckedUpdateInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateManyInput = {
@@ -401,6 +431,7 @@ export type MemberProfileCreateManyInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -412,6 +443,7 @@ export type MemberProfileUpdateManyMutationInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -425,6 +457,7 @@ export type MemberProfileUncheckedUpdateManyInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +486,7 @@ export type MemberProfileCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   identityNumber?: Prisma.SortOrder
+  photoStorageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -466,6 +500,7 @@ export type MemberProfileMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   identityNumber?: Prisma.SortOrder
+  photoStorageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -479,6 +514,7 @@ export type MemberProfileMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   identityNumber?: Prisma.SortOrder
+  photoStorageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -664,6 +700,34 @@ export type MemberProfileUpdateOneRequiredWithoutWithdrawalRequestsNestedInput =
   update?: Prisma.XOR<Prisma.XOR<Prisma.MemberProfileUpdateToOneWithWhereWithoutWithdrawalRequestsInput, Prisma.MemberProfileUpdateWithoutWithdrawalRequestsInput>, Prisma.MemberProfileUncheckedUpdateWithoutWithdrawalRequestsInput>
 }
 
+export type MemberProfileCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.MemberProfileCreateWithoutDocumentsInput, Prisma.MemberProfileUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.MemberProfileCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.MemberProfileWhereUniqueInput
+}
+
+export type MemberProfileUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.MemberProfileCreateWithoutDocumentsInput, Prisma.MemberProfileUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.MemberProfileCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.MemberProfileUpsertWithoutDocumentsInput
+  connect?: Prisma.MemberProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MemberProfileUpdateToOneWithWhereWithoutDocumentsInput, Prisma.MemberProfileUpdateWithoutDocumentsInput>, Prisma.MemberProfileUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type MemberProfileCreateNestedOneWithoutCustomFieldValuesInput = {
+  create?: Prisma.XOR<Prisma.MemberProfileCreateWithoutCustomFieldValuesInput, Prisma.MemberProfileUncheckedCreateWithoutCustomFieldValuesInput>
+  connectOrCreate?: Prisma.MemberProfileCreateOrConnectWithoutCustomFieldValuesInput
+  connect?: Prisma.MemberProfileWhereUniqueInput
+}
+
+export type MemberProfileUpdateOneRequiredWithoutCustomFieldValuesNestedInput = {
+  create?: Prisma.XOR<Prisma.MemberProfileCreateWithoutCustomFieldValuesInput, Prisma.MemberProfileUncheckedCreateWithoutCustomFieldValuesInput>
+  connectOrCreate?: Prisma.MemberProfileCreateOrConnectWithoutCustomFieldValuesInput
+  upsert?: Prisma.MemberProfileUpsertWithoutCustomFieldValuesInput
+  connect?: Prisma.MemberProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MemberProfileUpdateToOneWithWhereWithoutCustomFieldValuesInput, Prisma.MemberProfileUpdateWithoutCustomFieldValuesInput>, Prisma.MemberProfileUncheckedUpdateWithoutCustomFieldValuesInput>
+}
+
 export type MemberProfileCreateWithoutUserInput = {
   id?: string
   memberNumber: string
@@ -671,6 +735,7 @@ export type MemberProfileCreateWithoutUserInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutMembersInput
@@ -681,6 +746,8 @@ export type MemberProfileCreateWithoutUserInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutUserInput = {
@@ -691,6 +758,7 @@ export type MemberProfileUncheckedCreateWithoutUserInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -700,6 +768,8 @@ export type MemberProfileUncheckedCreateWithoutUserInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutUserInput = {
@@ -725,6 +795,7 @@ export type MemberProfileUpdateWithoutUserInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutMembersNestedInput
@@ -735,6 +806,8 @@ export type MemberProfileUpdateWithoutUserInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutUserInput = {
@@ -745,6 +818,7 @@ export type MemberProfileUncheckedUpdateWithoutUserInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -754,6 +828,8 @@ export type MemberProfileUncheckedUpdateWithoutUserInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutBranchInput = {
@@ -763,6 +839,7 @@ export type MemberProfileCreateWithoutBranchInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -773,6 +850,8 @@ export type MemberProfileCreateWithoutBranchInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutBranchInput = {
@@ -783,6 +862,7 @@ export type MemberProfileUncheckedCreateWithoutBranchInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -792,6 +872,8 @@ export type MemberProfileUncheckedCreateWithoutBranchInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutBranchInput = {
@@ -832,6 +914,7 @@ export type MemberProfileScalarWhereInput = {
   address?: Prisma.StringFilter<"MemberProfile"> | string
   dateOfBirth?: Prisma.DateTimeNullableFilter<"MemberProfile"> | Date | string | null
   identityNumber?: Prisma.StringNullableFilter<"MemberProfile"> | string | null
+  photoStorageKey?: Prisma.StringNullableFilter<"MemberProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MemberProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MemberProfile"> | Date | string
 }
@@ -843,6 +926,7 @@ export type MemberProfileCreateWithoutAccountsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -853,6 +937,8 @@ export type MemberProfileCreateWithoutAccountsInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutAccountsInput = {
@@ -864,6 +950,7 @@ export type MemberProfileUncheckedCreateWithoutAccountsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   loans?: Prisma.LoanUncheckedCreateNestedManyWithoutMemberInput
@@ -872,6 +959,8 @@ export type MemberProfileUncheckedCreateWithoutAccountsInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutAccountsInput = {
@@ -897,6 +986,7 @@ export type MemberProfileUpdateWithoutAccountsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -907,6 +997,8 @@ export type MemberProfileUpdateWithoutAccountsInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutAccountsInput = {
@@ -918,6 +1010,7 @@ export type MemberProfileUncheckedUpdateWithoutAccountsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loans?: Prisma.LoanUncheckedUpdateManyWithoutMemberNestedInput
@@ -926,6 +1019,8 @@ export type MemberProfileUncheckedUpdateWithoutAccountsInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutLoansInput = {
@@ -935,6 +1030,7 @@ export type MemberProfileCreateWithoutLoansInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -945,6 +1041,8 @@ export type MemberProfileCreateWithoutLoansInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutLoansInput = {
@@ -956,6 +1054,7 @@ export type MemberProfileUncheckedCreateWithoutLoansInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -964,6 +1063,8 @@ export type MemberProfileUncheckedCreateWithoutLoansInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutLoansInput = {
@@ -989,6 +1090,7 @@ export type MemberProfileUpdateWithoutLoansInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -999,6 +1101,8 @@ export type MemberProfileUpdateWithoutLoansInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutLoansInput = {
@@ -1010,6 +1114,7 @@ export type MemberProfileUncheckedUpdateWithoutLoansInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1018,6 +1123,8 @@ export type MemberProfileUncheckedUpdateWithoutLoansInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutRepaymentsInput = {
@@ -1027,6 +1134,7 @@ export type MemberProfileCreateWithoutRepaymentsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -1037,6 +1145,8 @@ export type MemberProfileCreateWithoutRepaymentsInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutRepaymentsInput = {
@@ -1048,6 +1158,7 @@ export type MemberProfileUncheckedCreateWithoutRepaymentsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -1056,6 +1167,8 @@ export type MemberProfileUncheckedCreateWithoutRepaymentsInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutRepaymentsInput = {
@@ -1081,6 +1194,7 @@ export type MemberProfileUpdateWithoutRepaymentsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -1091,6 +1205,8 @@ export type MemberProfileUpdateWithoutRepaymentsInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutRepaymentsInput = {
@@ -1102,6 +1218,7 @@ export type MemberProfileUncheckedUpdateWithoutRepaymentsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1110,6 +1227,8 @@ export type MemberProfileUncheckedUpdateWithoutRepaymentsInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutCollectionNotesInput = {
@@ -1119,6 +1238,7 @@ export type MemberProfileCreateWithoutCollectionNotesInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -1129,6 +1249,8 @@ export type MemberProfileCreateWithoutCollectionNotesInput = {
   repayments?: Prisma.LoanRepaymentCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutCollectionNotesInput = {
@@ -1140,6 +1262,7 @@ export type MemberProfileUncheckedCreateWithoutCollectionNotesInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -1148,6 +1271,8 @@ export type MemberProfileUncheckedCreateWithoutCollectionNotesInput = {
   repayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutCollectionNotesInput = {
@@ -1173,6 +1298,7 @@ export type MemberProfileUpdateWithoutCollectionNotesInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -1183,6 +1309,8 @@ export type MemberProfileUpdateWithoutCollectionNotesInput = {
   repayments?: Prisma.LoanRepaymentUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutCollectionNotesInput = {
@@ -1194,6 +1322,7 @@ export type MemberProfileUncheckedUpdateWithoutCollectionNotesInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1202,6 +1331,8 @@ export type MemberProfileUncheckedUpdateWithoutCollectionNotesInput = {
   repayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutTransactionsInput = {
@@ -1211,6 +1342,7 @@ export type MemberProfileCreateWithoutTransactionsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -1221,6 +1353,8 @@ export type MemberProfileCreateWithoutTransactionsInput = {
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutTransactionsInput = {
@@ -1232,6 +1366,7 @@ export type MemberProfileUncheckedCreateWithoutTransactionsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -1240,6 +1375,8 @@ export type MemberProfileUncheckedCreateWithoutTransactionsInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutTransactionsInput = {
@@ -1265,6 +1402,7 @@ export type MemberProfileUpdateWithoutTransactionsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -1275,6 +1413,8 @@ export type MemberProfileUpdateWithoutTransactionsInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutTransactionsInput = {
@@ -1286,6 +1426,7 @@ export type MemberProfileUncheckedUpdateWithoutTransactionsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1294,6 +1435,8 @@ export type MemberProfileUncheckedUpdateWithoutTransactionsInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutDepositRequestsInput = {
@@ -1303,6 +1446,7 @@ export type MemberProfileCreateWithoutDepositRequestsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -1313,6 +1457,8 @@ export type MemberProfileCreateWithoutDepositRequestsInput = {
   repayments?: Prisma.LoanRepaymentCreateNestedManyWithoutMemberInput
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutDepositRequestsInput = {
@@ -1324,6 +1470,7 @@ export type MemberProfileUncheckedCreateWithoutDepositRequestsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -1332,6 +1479,8 @@ export type MemberProfileUncheckedCreateWithoutDepositRequestsInput = {
   repayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutMemberInput
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutDepositRequestsInput = {
@@ -1357,6 +1506,7 @@ export type MemberProfileUpdateWithoutDepositRequestsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -1367,6 +1517,8 @@ export type MemberProfileUpdateWithoutDepositRequestsInput = {
   repayments?: Prisma.LoanRepaymentUpdateManyWithoutMemberNestedInput
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutDepositRequestsInput = {
@@ -1378,6 +1530,7 @@ export type MemberProfileUncheckedUpdateWithoutDepositRequestsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1386,6 +1539,8 @@ export type MemberProfileUncheckedUpdateWithoutDepositRequestsInput = {
   repayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutMemberNestedInput
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateWithoutWithdrawalRequestsInput = {
@@ -1395,6 +1550,7 @@ export type MemberProfileCreateWithoutWithdrawalRequestsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
@@ -1405,6 +1561,8 @@ export type MemberProfileCreateWithoutWithdrawalRequestsInput = {
   repayments?: Prisma.LoanRepaymentCreateNestedManyWithoutMemberInput
   collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileUncheckedCreateWithoutWithdrawalRequestsInput = {
@@ -1416,6 +1574,7 @@ export type MemberProfileUncheckedCreateWithoutWithdrawalRequestsInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
@@ -1424,6 +1583,8 @@ export type MemberProfileUncheckedCreateWithoutWithdrawalRequestsInput = {
   repayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutMemberInput
   collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
   depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
 }
 
 export type MemberProfileCreateOrConnectWithoutWithdrawalRequestsInput = {
@@ -1449,6 +1610,7 @@ export type MemberProfileUpdateWithoutWithdrawalRequestsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -1459,6 +1621,8 @@ export type MemberProfileUpdateWithoutWithdrawalRequestsInput = {
   repayments?: Prisma.LoanRepaymentUpdateManyWithoutMemberNestedInput
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutWithdrawalRequestsInput = {
@@ -1470,6 +1634,7 @@ export type MemberProfileUncheckedUpdateWithoutWithdrawalRequestsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1478,6 +1643,216 @@ export type MemberProfileUncheckedUpdateWithoutWithdrawalRequestsInput = {
   repayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutMemberNestedInput
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
+}
+
+export type MemberProfileCreateWithoutDocumentsInput = {
+  id?: string
+  memberNumber: string
+  phone: string
+  address: string
+  dateOfBirth?: Date | string | null
+  identityNumber?: string | null
+  photoStorageKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
+  branch: Prisma.BranchCreateNestedOneWithoutMembersInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutMemberInput
+  loans?: Prisma.LoanCreateNestedManyWithoutMemberInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutMemberInput
+  repayments?: Prisma.LoanRepaymentCreateNestedManyWithoutMemberInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
+  depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
+  withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueCreateNestedManyWithoutMemberInput
+}
+
+export type MemberProfileUncheckedCreateWithoutDocumentsInput = {
+  id?: string
+  userId: string
+  memberNumber: string
+  branchId: string
+  phone: string
+  address: string
+  dateOfBirth?: Date | string | null
+  identityNumber?: string | null
+  photoStorageKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
+  loans?: Prisma.LoanUncheckedCreateNestedManyWithoutMemberInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutMemberInput
+  repayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutMemberInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
+  depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
+  withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedCreateNestedManyWithoutMemberInput
+}
+
+export type MemberProfileCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.MemberProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.MemberProfileCreateWithoutDocumentsInput, Prisma.MemberProfileUncheckedCreateWithoutDocumentsInput>
+}
+
+export type MemberProfileUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.MemberProfileUpdateWithoutDocumentsInput, Prisma.MemberProfileUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.MemberProfileCreateWithoutDocumentsInput, Prisma.MemberProfileUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.MemberProfileWhereInput
+}
+
+export type MemberProfileUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.MemberProfileWhereInput
+  data: Prisma.XOR<Prisma.MemberProfileUpdateWithoutDocumentsInput, Prisma.MemberProfileUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type MemberProfileUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  memberNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutMembersNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutMemberNestedInput
+  loans?: Prisma.LoanUpdateManyWithoutMemberNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutMemberNestedInput
+  repayments?: Prisma.LoanRepaymentUpdateManyWithoutMemberNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
+  depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
+  withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
+}
+
+export type MemberProfileUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
+  loans?: Prisma.LoanUncheckedUpdateManyWithoutMemberNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutMemberNestedInput
+  repayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutMemberNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
+  depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
+  withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
+}
+
+export type MemberProfileCreateWithoutCustomFieldValuesInput = {
+  id?: string
+  memberNumber: string
+  phone: string
+  address: string
+  dateOfBirth?: Date | string | null
+  identityNumber?: string | null
+  photoStorageKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutMemberProfileInput
+  branch: Prisma.BranchCreateNestedOneWithoutMembersInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutMemberInput
+  loans?: Prisma.LoanCreateNestedManyWithoutMemberInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutMemberInput
+  repayments?: Prisma.LoanRepaymentCreateNestedManyWithoutMemberInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutMemberInput
+  depositRequests?: Prisma.DepositRequestCreateNestedManyWithoutMemberInput
+  withdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentCreateNestedManyWithoutMemberInput
+}
+
+export type MemberProfileUncheckedCreateWithoutCustomFieldValuesInput = {
+  id?: string
+  userId: string
+  memberNumber: string
+  branchId: string
+  phone: string
+  address: string
+  dateOfBirth?: Date | string | null
+  identityNumber?: string | null
+  photoStorageKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutMemberInput
+  loans?: Prisma.LoanUncheckedCreateNestedManyWithoutMemberInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutMemberInput
+  repayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutMemberInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutMemberInput
+  depositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutMemberInput
+  withdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutMemberInput
+  documents?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutMemberInput
+}
+
+export type MemberProfileCreateOrConnectWithoutCustomFieldValuesInput = {
+  where: Prisma.MemberProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.MemberProfileCreateWithoutCustomFieldValuesInput, Prisma.MemberProfileUncheckedCreateWithoutCustomFieldValuesInput>
+}
+
+export type MemberProfileUpsertWithoutCustomFieldValuesInput = {
+  update: Prisma.XOR<Prisma.MemberProfileUpdateWithoutCustomFieldValuesInput, Prisma.MemberProfileUncheckedUpdateWithoutCustomFieldValuesInput>
+  create: Prisma.XOR<Prisma.MemberProfileCreateWithoutCustomFieldValuesInput, Prisma.MemberProfileUncheckedCreateWithoutCustomFieldValuesInput>
+  where?: Prisma.MemberProfileWhereInput
+}
+
+export type MemberProfileUpdateToOneWithWhereWithoutCustomFieldValuesInput = {
+  where?: Prisma.MemberProfileWhereInput
+  data: Prisma.XOR<Prisma.MemberProfileUpdateWithoutCustomFieldValuesInput, Prisma.MemberProfileUncheckedUpdateWithoutCustomFieldValuesInput>
+}
+
+export type MemberProfileUpdateWithoutCustomFieldValuesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  memberNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutMembersNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutMemberNestedInput
+  loans?: Prisma.LoanUpdateManyWithoutMemberNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutMemberNestedInput
+  repayments?: Prisma.LoanRepaymentUpdateManyWithoutMemberNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
+  depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
+  withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+}
+
+export type MemberProfileUncheckedUpdateWithoutCustomFieldValuesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
+  loans?: Prisma.LoanUncheckedUpdateManyWithoutMemberNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutMemberNestedInput
+  repayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutMemberNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
+  depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
+  withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileCreateManyBranchInput = {
@@ -1488,6 +1863,7 @@ export type MemberProfileCreateManyBranchInput = {
   address: string
   dateOfBirth?: Date | string | null
   identityNumber?: string | null
+  photoStorageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1499,6 +1875,7 @@ export type MemberProfileUpdateWithoutBranchInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMemberProfileNestedInput
@@ -1509,6 +1886,8 @@ export type MemberProfileUpdateWithoutBranchInput = {
   collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateWithoutBranchInput = {
@@ -1519,6 +1898,7 @@ export type MemberProfileUncheckedUpdateWithoutBranchInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutMemberNestedInput
@@ -1528,6 +1908,8 @@ export type MemberProfileUncheckedUpdateWithoutBranchInput = {
   collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutMemberNestedInput
   depositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutMemberNestedInput
   withdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutMemberNestedInput
+  documents?: Prisma.MemberDocumentUncheckedUpdateManyWithoutMemberNestedInput
+  customFieldValues?: Prisma.MemberCustomFieldValueUncheckedUpdateManyWithoutMemberNestedInput
 }
 
 export type MemberProfileUncheckedUpdateManyWithoutBranchInput = {
@@ -1538,6 +1920,7 @@ export type MemberProfileUncheckedUpdateManyWithoutBranchInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   identityNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1555,6 +1938,8 @@ export type MemberProfileCountOutputType = {
   collectionNotes: number
   depositRequests: number
   withdrawalRequests: number
+  documents: number
+  customFieldValues: number
 }
 
 export type MemberProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1565,6 +1950,8 @@ export type MemberProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Ext
   collectionNotes?: boolean | MemberProfileCountOutputTypeCountCollectionNotesArgs
   depositRequests?: boolean | MemberProfileCountOutputTypeCountDepositRequestsArgs
   withdrawalRequests?: boolean | MemberProfileCountOutputTypeCountWithdrawalRequestsArgs
+  documents?: boolean | MemberProfileCountOutputTypeCountDocumentsArgs
+  customFieldValues?: boolean | MemberProfileCountOutputTypeCountCustomFieldValuesArgs
 }
 
 /**
@@ -1626,6 +2013,20 @@ export type MemberProfileCountOutputTypeCountWithdrawalRequestsArgs<ExtArgs exte
   where?: Prisma.WithdrawalRequestWhereInput
 }
 
+/**
+ * MemberProfileCountOutputType without action
+ */
+export type MemberProfileCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MemberDocumentWhereInput
+}
+
+/**
+ * MemberProfileCountOutputType without action
+ */
+export type MemberProfileCountOutputTypeCountCustomFieldValuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MemberCustomFieldValueWhereInput
+}
+
 
 export type MemberProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1636,6 +2037,7 @@ export type MemberProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   address?: boolean
   dateOfBirth?: boolean
   identityNumber?: boolean
+  photoStorageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1647,6 +2049,8 @@ export type MemberProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   collectionNotes?: boolean | Prisma.MemberProfile$collectionNotesArgs<ExtArgs>
   depositRequests?: boolean | Prisma.MemberProfile$depositRequestsArgs<ExtArgs>
   withdrawalRequests?: boolean | Prisma.MemberProfile$withdrawalRequestsArgs<ExtArgs>
+  documents?: boolean | Prisma.MemberProfile$documentsArgs<ExtArgs>
+  customFieldValues?: boolean | Prisma.MemberProfile$customFieldValuesArgs<ExtArgs>
   _count?: boolean | Prisma.MemberProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["memberProfile"]>
 
@@ -1659,6 +2063,7 @@ export type MemberProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   address?: boolean
   dateOfBirth?: boolean
   identityNumber?: boolean
+  photoStorageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1674,6 +2079,7 @@ export type MemberProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   address?: boolean
   dateOfBirth?: boolean
   identityNumber?: boolean
+  photoStorageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1689,11 +2095,12 @@ export type MemberProfileSelectScalar = {
   address?: boolean
   dateOfBirth?: boolean
   identityNumber?: boolean
+  photoStorageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MemberProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "memberNumber" | "branchId" | "phone" | "address" | "dateOfBirth" | "identityNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["memberProfile"]>
+export type MemberProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "memberNumber" | "branchId" | "phone" | "address" | "dateOfBirth" | "identityNumber" | "photoStorageKey" | "createdAt" | "updatedAt", ExtArgs["result"]["memberProfile"]>
 export type MemberProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
@@ -1704,6 +2111,8 @@ export type MemberProfileInclude<ExtArgs extends runtime.Types.Extensions.Intern
   collectionNotes?: boolean | Prisma.MemberProfile$collectionNotesArgs<ExtArgs>
   depositRequests?: boolean | Prisma.MemberProfile$depositRequestsArgs<ExtArgs>
   withdrawalRequests?: boolean | Prisma.MemberProfile$withdrawalRequestsArgs<ExtArgs>
+  documents?: boolean | Prisma.MemberProfile$documentsArgs<ExtArgs>
+  customFieldValues?: boolean | Prisma.MemberProfile$customFieldValuesArgs<ExtArgs>
   _count?: boolean | Prisma.MemberProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MemberProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1727,6 +2136,8 @@ export type $MemberProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     collectionNotes: Prisma.$CollectionNotePayload<ExtArgs>[]
     depositRequests: Prisma.$DepositRequestPayload<ExtArgs>[]
     withdrawalRequests: Prisma.$WithdrawalRequestPayload<ExtArgs>[]
+    documents: Prisma.$MemberDocumentPayload<ExtArgs>[]
+    customFieldValues: Prisma.$MemberCustomFieldValuePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1737,6 +2148,7 @@ export type $MemberProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     address: string
     dateOfBirth: Date | null
     identityNumber: string | null
+    photoStorageKey: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["memberProfile"]>
@@ -2142,6 +2554,8 @@ export interface Prisma__MemberProfileClient<T, Null = never, ExtArgs extends ru
   collectionNotes<T extends Prisma.MemberProfile$collectionNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberProfile$collectionNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CollectionNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   depositRequests<T extends Prisma.MemberProfile$depositRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberProfile$depositRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DepositRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   withdrawalRequests<T extends Prisma.MemberProfile$withdrawalRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberProfile$withdrawalRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WithdrawalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  documents<T extends Prisma.MemberProfile$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberProfile$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customFieldValues<T extends Prisma.MemberProfile$customFieldValuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberProfile$customFieldValuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberCustomFieldValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2179,6 +2593,7 @@ export interface MemberProfileFieldRefs {
   readonly address: Prisma.FieldRef<"MemberProfile", 'String'>
   readonly dateOfBirth: Prisma.FieldRef<"MemberProfile", 'DateTime'>
   readonly identityNumber: Prisma.FieldRef<"MemberProfile", 'String'>
+  readonly photoStorageKey: Prisma.FieldRef<"MemberProfile", 'String'>
   readonly createdAt: Prisma.FieldRef<"MemberProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"MemberProfile", 'DateTime'>
 }
@@ -2747,6 +3162,54 @@ export type MemberProfile$withdrawalRequestsArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.WithdrawalRequestScalarFieldEnum | Prisma.WithdrawalRequestScalarFieldEnum[]
+}
+
+/**
+ * MemberProfile.documents
+ */
+export type MemberProfile$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberDocument
+   */
+  select?: Prisma.MemberDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberDocument
+   */
+  omit?: Prisma.MemberDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberDocumentInclude<ExtArgs> | null
+  where?: Prisma.MemberDocumentWhereInput
+  orderBy?: Prisma.MemberDocumentOrderByWithRelationInput | Prisma.MemberDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.MemberDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MemberDocumentScalarFieldEnum | Prisma.MemberDocumentScalarFieldEnum[]
+}
+
+/**
+ * MemberProfile.customFieldValues
+ */
+export type MemberProfile$customFieldValuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberCustomFieldValue
+   */
+  select?: Prisma.MemberCustomFieldValueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberCustomFieldValue
+   */
+  omit?: Prisma.MemberCustomFieldValueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberCustomFieldValueInclude<ExtArgs> | null
+  where?: Prisma.MemberCustomFieldValueWhereInput
+  orderBy?: Prisma.MemberCustomFieldValueOrderByWithRelationInput | Prisma.MemberCustomFieldValueOrderByWithRelationInput[]
+  cursor?: Prisma.MemberCustomFieldValueWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MemberCustomFieldValueScalarFieldEnum | Prisma.MemberCustomFieldValueScalarFieldEnum[]
 }
 
 /**
