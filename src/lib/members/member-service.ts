@@ -7,7 +7,7 @@ import {
   PermissionDeniedError,
 } from "../auth/authorize";
 import { logAuditEvent } from "../audit/audit-logger";
-import { Role, UserStatus, AccountStatus, LoanStatus } from "../../generated/prisma/client";
+import { Role, UserStatus, AccountStatus, LoanStatus, RepaymentScheduleStatus, Prisma } from "../../generated/prisma/client";
 
 export type GetMembersParams = {
   search?: string;
@@ -89,6 +89,179 @@ export type UpdateMemberInput = {
   dateOfBirth?: string | null;
   identityNumber?: string | null;
   status: UserStatus;
+};
+
+/* Member 360° Profile DTO Specifications */
+
+export type Member360AccountDTO = {
+  id: string;
+  accountNumber: string;
+  accountType: string;
+  accountTypeName: string | null;
+  currency: string;
+  balance: number;
+  loanGuarantee: number;
+  status: string;
+  createdAt: string;
+};
+
+export type Member360LoanDTO = {
+  id: string;
+  loanNumber: string;
+  productName: string | null;
+  productCode: string | null;
+  currency: string;
+  principalAmount: number;
+  approvedAmount: number | null;
+  paidAmount: number;
+  outstandingAmount: number;
+  interestRate: number;
+  interestType: string;
+  termMonths: number;
+  repaymentFrequency: string;
+  status: string;
+  applicationDate: string;
+  disbursementDate: string | null;
+  maturityDate: string | null;
+  overdueDays: number;
+  overdueAmount: number;
+};
+
+export type Member360RepaymentDTO = {
+  id: string;
+  repaymentNumber: string;
+  loanId: string;
+  loanNumber: string;
+  accountId: string;
+  accountNumber: string;
+  amount: number;
+  principalAmount: number;
+  interestAmount: number;
+  feeAmount: number;
+  penaltyAmount: number;
+  paymentDate: string;
+  status: string;
+  reference: string | null;
+  notes: string | null;
+};
+
+export type Member360RepaymentScheduleDTO = {
+  id: string;
+  loanId: string;
+  loanNumber: string;
+  installmentNumber: number;
+  dueDate: string;
+  principalDue: number;
+  interestDue: number;
+  feeDue: number;
+  penaltyDue: number;
+  totalDue: number;
+  principalPaid: number;
+  interestPaid: number;
+  feePaid: number;
+  penaltyPaid: number;
+  totalPaid: number;
+  status: string;
+  overdueDays: number;
+  paidAt: string | null;
+};
+
+export type Member360TransactionDTO = {
+  id: string;
+  accountId: string | null;
+  accountNumber: string | null;
+  type: string;
+  amount: number;
+  currency: string;
+  reference: string;
+  description: string | null;
+  status: string;
+  createdAt: string;
+};
+
+export type Member360DepositRequestDTO = {
+  id: string;
+  requestNumber: string;
+  accountId: string;
+  accountNumber: string;
+  amount: number;
+  currency: string;
+  paymentMethod: string | null;
+  reference: string | null;
+  status: string;
+  createdAt: string;
+};
+
+export type Member360WithdrawalRequestDTO = {
+  id: string;
+  requestNumber: string;
+  accountId: string;
+  accountNumber: string;
+  amount: number;
+  currency: string;
+  paymentMethod: string | null;
+  reference: string | null;
+  status: string;
+  createdAt: string;
+};
+
+export type Member360CollectionNoteDTO = {
+  id: string;
+  loanId: string;
+  loanNumber: string;
+  actionType: string;
+  notes: string;
+  actionDate: string;
+  followUpDate: string | null;
+  promiseToPayAmount: number | null;
+  promiseToPayDate: string | null;
+  createdBy: string | null;
+};
+
+export type Member360ProfileDTO = {
+  header: {
+    id: string;
+    userId: string;
+    memberNumber: string;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    dateOfBirth: string | null;
+    maskedIdentityNumber: string | null;
+    branchId: string;
+    branchName: string;
+    branchCode: string;
+    currency: string;
+    status: UserStatus;
+    createdAt: string;
+    updatedAt: string;
+  };
+  summary: {
+    totalAccounts: number;
+    activeAccounts: number;
+    totalLoans: number;
+    activeLoans: number;
+    overdueLoans: number;
+    totalAccountBalance: number;
+    totalLoanPrincipalOutstanding: number;
+  };
+  accounts: Member360AccountDTO[];
+  loans: Member360LoanDTO[];
+  repayments: Member360RepaymentDTO[];
+  schedules: Member360RepaymentScheduleDTO[];
+  transactions: {
+    items: Member360TransactionDTO[];
+    pagination: {
+      total: number;
+      page: number;
+      pageSize: number;
+      totalPages: number;
+    };
+  };
+  depositRequests: Member360DepositRequestDTO[];
+  withdrawalRequests: Member360WithdrawalRequestDTO[];
+  collectionNotes: Member360CollectionNoteDTO[];
 };
 
 /**
@@ -283,6 +456,339 @@ export async function getMemberForEdit(
     branchName: member.branch.name,
     branchCode: member.branch.code,
     status: member.user.status,
+  };
+}
+
+/**
+ * Authoritative Member 360° Profile read service.
+ * Enforces relational RBAC (`members.view`) and strict branch scope authorization.
+ * Returns consolidated, safe, fully serialized DTOs for client rendering.
+ */
+export async function getMember360Profile(
+  executorUserId: string,
+  memberId: string,
+  options?: { txPage?: number; txPageSize?: number }
+): Promise<Member360ProfileDTO> {
+  // 1. RBAC Check
+  const allowed = await hasPermission(executorUserId, "members.view");
+  if (!allowed) {
+    throw new PermissionDeniedError("Required permission missing: members.view");
+  }
+
+  // 2. Fetch member profile record & branch authorization
+  const member = await prisma.memberProfile.findUnique({
+    where: { id: memberId },
+    include: {
+      user: { select: { name: true, email: true, status: true } },
+      branch: { select: { name: true, code: true, currency: true } },
+    },
+  });
+
+  if (!member) {
+    throw new Error(`Member with ID '${memberId}' not found.`);
+  }
+
+  await assertBranchAccess(executorUserId, member.branchId);
+
+  // 3. Pagination setup for bounded transaction history
+  const txPage = Math.max(1, options?.txPage || 1);
+  const txPageSize = Math.min(50, Math.max(1, options?.txPageSize || 10));
+  const txSkip = (txPage - 1) * txPageSize;
+
+  // 4. Fetch all linked domain records in parallel
+  const [
+    accountsRecords,
+    loansRecords,
+    repaymentsRecords,
+    txTotal,
+    txRecords,
+    depositRequestRecords,
+    withdrawalRequestRecords,
+    collectionNoteRecords,
+  ] = await Promise.all([
+    // Accounts
+    prisma.account.findMany({
+      where: { memberId },
+      include: { accountTypePolicy: { select: { name: true } } },
+      orderBy: { createdAt: "desc" },
+    }),
+    // Loans with schedules
+    prisma.loan.findMany({
+      where: { memberId },
+      include: {
+        product: { select: { name: true, code: true } },
+        repaymentSchedules: {
+          orderBy: { installmentNumber: "asc" },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    // Repayments
+    prisma.loanRepayment.findMany({
+      where: { memberId },
+      take: 20,
+      include: {
+        loan: { select: { loanNumber: true } },
+        account: { select: { accountNumber: true } },
+      },
+      orderBy: { paymentDate: "desc" },
+    }),
+    // Bounded transactions count & list
+    prisma.transaction.count({ where: { memberId } }),
+    prisma.transaction.findMany({
+      where: { memberId },
+      skip: txSkip,
+      take: txPageSize,
+      include: { account: { select: { accountNumber: true } } },
+      orderBy: { createdAt: "desc" },
+    }),
+    // Deposit Requests
+    prisma.depositRequest.findMany({
+      where: { memberId },
+      take: 20,
+      include: { account: { select: { accountNumber: true } } },
+      orderBy: { createdAt: "desc" },
+    }),
+    // Withdrawal Requests
+    prisma.withdrawalRequest.findMany({
+      where: { memberId },
+      take: 20,
+      include: { account: { select: { accountNumber: true } } },
+      orderBy: { createdAt: "desc" },
+    }),
+    // Collection Notes
+    prisma.collectionNote.findMany({
+      where: { memberId },
+      take: 20,
+      include: {
+        loan: { select: { loanNumber: true } },
+        createdBy: { select: { name: true } },
+      },
+      orderBy: { actionDate: "desc" },
+    }),
+  ]);
+
+  // 5. Authoritative Money & Summary Calculations using Prisma Decimal
+  let totalAccountBalanceDecimal = new Prisma.Decimal(0);
+  let activeAccountsCount = 0;
+
+  const accountsDTO: Member360AccountDTO[] = accountsRecords.map((acc) => {
+    if (acc.status === AccountStatus.ACTIVE) {
+      activeAccountsCount++;
+      totalAccountBalanceDecimal = totalAccountBalanceDecimal.add(acc.balance);
+    } else if (acc.status === AccountStatus.FROZEN) {
+      totalAccountBalanceDecimal = totalAccountBalanceDecimal.add(acc.balance);
+    }
+
+    return {
+      id: acc.id,
+      accountNumber: acc.accountNumber,
+      accountType: acc.accountType,
+      accountTypeName: acc.accountTypePolicy?.name || null,
+      currency: acc.currency,
+      balance: acc.balance.toNumber(),
+      loanGuarantee: acc.loanGuarantee.toNumber(),
+      status: acc.status,
+      createdAt: acc.createdAt.toISOString(),
+    };
+  });
+
+  let totalLoanOutstandingDecimal = new Prisma.Decimal(0);
+  let activeLoansCount = 0;
+  let overdueLoansCount = 0;
+
+  const allSchedulesDTO: Member360RepaymentScheduleDTO[] = [];
+
+  const loansDTO: Member360LoanDTO[] = loansRecords.map((loan) => {
+    const baseAmount = loan.approvedAmount && loan.approvedAmount.gt(0) ? loan.approvedAmount : loan.principalAmount;
+    const outstanding = Prisma.Decimal.max(new Prisma.Decimal(0), baseAmount.sub(loan.paidAmount));
+
+    if (loan.status === LoanStatus.ACTIVE) {
+      activeLoansCount++;
+      totalLoanOutstandingDecimal = totalLoanOutstandingDecimal.add(outstanding);
+    } else if (loan.status === LoanStatus.DEFAULTED) {
+      totalLoanOutstandingDecimal = totalLoanOutstandingDecimal.add(outstanding);
+    }
+
+    let maxOverdueDays = 0;
+    let loanOverdueAmountDecimal = new Prisma.Decimal(0);
+    let isLoanOverdue = loan.status === LoanStatus.DEFAULTED;
+
+    loan.repaymentSchedules.forEach((sch) => {
+      if (sch.overdueDays > maxOverdueDays) {
+        maxOverdueDays = sch.overdueDays;
+      }
+      if (sch.status === RepaymentScheduleStatus.OVERDUE || (sch.overdueDays > 0 && sch.status !== RepaymentScheduleStatus.PAID)) {
+        isLoanOverdue = true;
+        const schOverdue = Prisma.Decimal.max(new Prisma.Decimal(0), sch.totalDue.sub(sch.totalPaid));
+        loanOverdueAmountDecimal = loanOverdueAmountDecimal.add(schOverdue);
+      }
+
+      allSchedulesDTO.push({
+        id: sch.id,
+        loanId: sch.loanId,
+        loanNumber: loan.loanNumber,
+        installmentNumber: sch.installmentNumber,
+        dueDate: sch.dueDate.toISOString(),
+        principalDue: sch.principalDue.toNumber(),
+        interestDue: sch.interestDue.toNumber(),
+        feeDue: sch.feeDue.toNumber(),
+        penaltyDue: sch.penaltyDue.toNumber(),
+        totalDue: sch.totalDue.toNumber(),
+        principalPaid: sch.principalPaid.toNumber(),
+        interestPaid: sch.interestPaid.toNumber(),
+        feePaid: sch.feePaid.toNumber(),
+        penaltyPaid: sch.penaltyPaid.toNumber(),
+        totalPaid: sch.totalPaid.toNumber(),
+        status: sch.status,
+        overdueDays: sch.overdueDays,
+        paidAt: sch.paidAt ? sch.paidAt.toISOString() : null,
+      });
+    });
+
+    if (isLoanOverdue) {
+      overdueLoansCount++;
+    }
+
+    return {
+      id: loan.id,
+      loanNumber: loan.loanNumber,
+      productName: loan.product?.name || null,
+      productCode: loan.product?.code || null,
+      currency: loan.currency,
+      principalAmount: loan.principalAmount.toNumber(),
+      approvedAmount: loan.approvedAmount ? loan.approvedAmount.toNumber() : null,
+      paidAmount: loan.paidAmount.toNumber(),
+      outstandingAmount: outstanding.toNumber(),
+      interestRate: loan.interestRate.toNumber(),
+      interestType: loan.interestType,
+      termMonths: loan.termMonths,
+      repaymentFrequency: loan.repaymentFrequency,
+      status: loan.status,
+      applicationDate: loan.applicationDate.toISOString(),
+      disbursementDate: loan.disbursementDate ? loan.disbursementDate.toISOString() : null,
+      maturityDate: loan.maturityDate ? loan.maturityDate.toISOString() : null,
+      overdueDays: maxOverdueDays,
+      overdueAmount: loanOverdueAmountDecimal.toNumber(),
+    };
+  });
+
+  const repaymentsDTO: Member360RepaymentDTO[] = repaymentsRecords.map((rep) => ({
+    id: rep.id,
+    repaymentNumber: rep.repaymentNumber,
+    loanId: rep.loanId,
+    loanNumber: rep.loan.loanNumber,
+    accountId: rep.accountId,
+    accountNumber: rep.account.accountNumber,
+    amount: rep.amount.toNumber(),
+    principalAmount: rep.principalAmount.toNumber(),
+    interestAmount: rep.interestAmount.toNumber(),
+    feeAmount: rep.feeAmount.toNumber(),
+    penaltyAmount: rep.penaltyAmount.toNumber(),
+    paymentDate: rep.paymentDate.toISOString(),
+    status: rep.status,
+    reference: rep.reference || null,
+    notes: rep.notes || null,
+  }));
+
+  const transactionsDTO: Member360TransactionDTO[] = txRecords.map((tx) => ({
+    id: tx.id,
+    accountId: tx.accountId,
+    accountNumber: tx.account?.accountNumber || null,
+    type: tx.type,
+    amount: tx.amount.toNumber(),
+    currency: tx.currency,
+    reference: tx.reference,
+    description: tx.description || null,
+    status: tx.status,
+    createdAt: tx.createdAt.toISOString(),
+  }));
+
+  const depositRequestsDTO: Member360DepositRequestDTO[] = depositRequestRecords.map((dr) => ({
+    id: dr.id,
+    requestNumber: dr.requestNumber,
+    accountId: dr.accountId,
+    accountNumber: dr.account.accountNumber,
+    amount: dr.amount.toNumber(),
+    currency: dr.currency,
+    paymentMethod: dr.paymentMethod || null,
+    reference: dr.reference || null,
+    status: dr.status,
+    createdAt: dr.createdAt.toISOString(),
+  }));
+
+  const withdrawalRequestsDTO: Member360WithdrawalRequestDTO[] = withdrawalRequestRecords.map((wr) => ({
+    id: wr.id,
+    requestNumber: wr.requestNumber,
+    accountId: wr.accountId,
+    accountNumber: wr.account.accountNumber,
+    amount: wr.amount.toNumber(),
+    currency: wr.currency,
+    paymentMethod: wr.paymentMethod || null,
+    reference: wr.reference || null,
+    status: wr.status,
+    createdAt: wr.createdAt.toISOString(),
+  }));
+
+  const collectionNotesDTO: Member360CollectionNoteDTO[] = collectionNoteRecords.map((cn) => ({
+    id: cn.id,
+    loanId: cn.loanId,
+    loanNumber: cn.loan.loanNumber,
+    actionType: cn.actionType,
+    notes: cn.notes,
+    actionDate: cn.actionDate.toISOString(),
+    followUpDate: cn.followUpDate ? cn.followUpDate.toISOString() : null,
+    promiseToPayAmount: cn.promiseToPayAmount ? cn.promiseToPayAmount.toNumber() : null,
+    promiseToPayDate: cn.promiseToPayDate ? cn.promiseToPayDate.toISOString() : null,
+    createdBy: cn.createdBy?.name || null,
+  }));
+
+  const txTotalPages = Math.ceil(txTotal / txPageSize);
+
+  return {
+    header: {
+      id: member.id,
+      userId: member.userId,
+      memberNumber: member.memberNumber,
+      name: member.user.name,
+      email: member.user.email,
+      phone: member.phone,
+      address: member.address,
+      dateOfBirth: member.dateOfBirth ? member.dateOfBirth.toISOString().split("T")[0] : null,
+      maskedIdentityNumber: maskIdentityNumber(member.identityNumber),
+      branchId: member.branchId,
+      branchName: member.branch.name,
+      branchCode: member.branch.code,
+      currency: member.branch.currency,
+      status: member.user.status,
+      createdAt: member.createdAt.toISOString(),
+      updatedAt: member.updatedAt.toISOString(),
+    },
+    summary: {
+      totalAccounts: accountsRecords.length,
+      activeAccounts: activeAccountsCount,
+      totalLoans: loansRecords.length,
+      activeLoans: activeLoansCount,
+      overdueLoans: overdueLoansCount,
+      totalAccountBalance: totalAccountBalanceDecimal.toNumber(),
+      totalLoanPrincipalOutstanding: totalLoanOutstandingDecimal.toNumber(),
+    },
+    accounts: accountsDTO,
+    loans: loansDTO,
+    repayments: repaymentsDTO,
+    schedules: allSchedulesDTO,
+    transactions: {
+      items: transactionsDTO,
+      pagination: {
+        total: txTotal,
+        page: txPage,
+        pageSize: txPageSize,
+        totalPages: txTotalPages,
+      },
+    },
+    depositRequests: depositRequestsDTO,
+    withdrawalRequests: withdrawalRequestsDTO,
+    collectionNotes: collectionNotesDTO,
   };
 }
 

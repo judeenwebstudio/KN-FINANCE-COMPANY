@@ -6,6 +6,7 @@ import {
   createMember,
   updateMember,
   getMemberForEdit,
+  getMember360Profile,
   maskIdentityNumber,
 } from "../member-service";
 import { PermissionDeniedError, BranchAccessDeniedError } from "../../auth/authorize";
@@ -17,6 +18,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
   let unauthorizedUserId: string;
   let testBranch1Id: string;
   let testBranch2Id: string;
+  let staffRoleId: string;
 
   before(async () => {
     // 1. Fetch or create primary test branches
@@ -126,6 +128,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
         },
       },
     });
+    staffRoleId = customRole.id;
 
     const normalAdminUser = await prisma.user.create({
       data: {
@@ -148,7 +151,7 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
         name: "Unassigned User",
         email: `unauth-mem-${Date.now()}@creditflow.test`,
         passwordHash: "dummyhash",
-        role: "SUPER_ADMIN",
+        role: "MEMBER",
         status: "ACTIVE",
         hasGlobalBranchAccess: false,
       },
@@ -356,5 +359,125 @@ describe("Phase 2A Completion Repair — Member Service Unit, Security & Hardeni
     assert.equal(recheckedAccount?.status, "ACTIVE");
 
     await prisma.account.delete({ where: { id: account.id } });
+  });
+
+  test("9. Member 360° Profile: returns comprehensive safe DTO for authorized admin", async () => {
+    const email = `m360-${Date.now()}@creditflow.test`;
+    const created = await createMember(normalAdminUserId, {
+      name: "Member 360 Test User",
+      email,
+      password: "Password360!",
+      phone: "+1-555-3600",
+      address: "360 Boulevard",
+      dateOfBirth: "1995-05-15",
+      identityNumber: `ID-360-${Date.now()}-9999`,
+      branchId: testBranch1Id,
+    });
+
+    // Add 1 account & 1 loan for member
+    const account = await prisma.account.create({
+      data: {
+        accountNumber: `ACC-360-${Date.now()}`,
+        memberId: created.id,
+        branchId: testBranch1Id,
+        accountType: "SAVINGS",
+        currency: "USD",
+        balance: 2500.5,
+        status: "ACTIVE",
+      },
+    });
+
+    const loan = await prisma.loan.create({
+      data: {
+        loanNumber: `LN-360-${Date.now()}`,
+        memberId: created.id,
+        branchId: testBranch1Id,
+        principalAmount: 10000.0,
+        approvedAmount: 10000.0,
+        paidAmount: 2000.0,
+        interestRate: 0.12,
+        termMonths: 12,
+        status: "ACTIVE",
+        currency: "USD",
+      },
+    });
+
+    const profile = await getMember360Profile(normalAdminUserId, created.id);
+
+    // Assert Header
+    assert.equal(profile.header.id, created.id);
+    assert.equal(profile.header.name, "Member 360 Test User");
+    assert.equal(profile.header.maskedIdentityNumber, "••••-9999");
+    assert.equal((profile.header as Record<string, unknown>).passwordHash, undefined);
+
+    // Assert Summary
+    assert.equal(profile.summary.totalAccounts, 1);
+    assert.equal(profile.summary.activeAccounts, 1);
+    assert.equal(profile.summary.totalAccountBalance, 2500.5);
+    assert.equal(profile.summary.totalLoans, 1);
+    assert.equal(profile.summary.activeLoans, 1);
+    assert.equal(profile.summary.totalLoanPrincipalOutstanding, 8000.0);
+
+    // Assert Accounts & Loans DTOs
+    assert.equal(profile.accounts.length, 1);
+    assert.equal(profile.accounts[0].accountNumber, account.accountNumber);
+    assert.equal(profile.loans.length, 1);
+    assert.equal(profile.loans[0].loanNumber, loan.loanNumber);
+    assert.equal(profile.loans[0].outstandingAmount, 8000.0);
+
+    // Teardown
+    await prisma.loan.delete({ where: { id: loan.id } });
+    await prisma.account.delete({ where: { id: account.id } });
+  });
+
+  test("10. Member 360° Profile: fails closed when unauthorized by branch scope or RBAC", async () => {
+    // Create a staff user explicitly assigned to Branch 1 only
+    const branch1Staff = await prisma.user.create({
+      data: {
+        name: "Branch 1 Restricted Staff User",
+        email: `b1staff-${Date.now()}@creditflow.test`,
+        passwordHash: "dummyhash",
+        role: "STAFF",
+        status: "ACTIVE",
+        hasGlobalBranchAccess: false,
+        branchId: testBranch1Id,
+        branchAccess: { create: { branchId: testBranch1Id } },
+        roleAssignments: { create: { roleId: staffRoleId } },
+      },
+    });
+
+    const branch2Member = await createMember(superAdminUserId, {
+      name: "Branch 2 Member 360",
+      email: `m360-unauth-${Date.now()}@creditflow.test`,
+      password: "Password360!",
+      phone: "+1-555-3601",
+      address: "Branch 2 Blvd",
+      branchId: testBranch2Id,
+    });
+
+    try {
+      // 1. RBAC check (unassigned user)
+      await assert.rejects(
+        async () => {
+          await getMember360Profile(unauthorizedUserId, branch2Member.id);
+        },
+        (err: unknown) => err instanceof PermissionDeniedError,
+        "Unassigned user must throw PermissionDeniedError"
+      );
+
+      // 2. Branch Scope check (staff user restricted to Branch 1 trying to view Branch 2 member)
+      await assert.rejects(
+        async () => {
+          await getMember360Profile(branch1Staff.id, branch2Member.id);
+        },
+        (err: unknown) => err instanceof BranchAccessDeniedError,
+        "Branch 1 staff must throw BranchAccessDeniedError when accessing Branch 2 member"
+      );
+    } finally {
+      await prisma.memberProfile.deleteMany({ where: { id: branch2Member.id } });
+      await prisma.userRoleAssignment.deleteMany({ where: { userId: branch1Staff.id } });
+      await prisma.userBranchAccess.deleteMany({ where: { userId: branch1Staff.id } });
+      await prisma.user.delete({ where: { id: branch1Staff.id } });
+    }
   });
 });

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Users,
@@ -13,6 +14,7 @@ import {
   ShieldCheck,
   CreditCard,
   Banknote,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -205,9 +207,17 @@ export function MembersClient({
                 members.map((m) => (
                   <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="px-4 py-3">
-                      <div className="font-semibold text-slate-900">{m.name}</div>
+                      <Link
+                        href={`/admin/members/${m.id}`}
+                        className="font-bold text-[#275d4f] hover:underline"
+                      >
+                        {m.name}
+                      </Link>
                       <div className="text-slate-500 font-mono text-[11px]">
-                        {m.memberNumber} • {m.email}
+                        <Link href={`/admin/members/${m.id}`} className="hover:underline">
+                          {m.memberNumber}
+                        </Link>{" "}
+                        • {m.email}
                       </div>
                       <div className="text-slate-400 text-[11px] mt-0.5">{m.phone}</div>
                     </td>
@@ -239,16 +249,28 @@ export function MembersClient({
                       </StatusBadge>
                     </td>
                     <td className="px-4 py-3 text-right">
-                      {canEdit && (
+                      <div className="flex items-center justify-end gap-2">
                         <Button
-                          variant="outline"
+                          asChild
+                          variant="ghost"
                           size="sm"
-                          onClick={() => setEditingMemberId(m.id)}
                           className="h-8 gap-1 text-slate-700 hover:text-slate-900"
                         >
-                          <Edit className="h-3.5 w-3.5" /> Edit
+                          <Link href={`/admin/members/${m.id}`}>
+                            <Eye className="h-3.5 w-3.5 text-[#275d4f]" /> View 360°
+                          </Link>
                         </Button>
-                      )}
+                        {canEdit && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setEditingMemberId(m.id)}
+                            className="h-8 gap-1 text-slate-700 hover:text-slate-900"
+                          >
+                            <Edit className="h-3.5 w-3.5" /> Edit
+                          </Button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))
