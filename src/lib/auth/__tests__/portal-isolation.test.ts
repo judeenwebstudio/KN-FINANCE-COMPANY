@@ -124,4 +124,51 @@ describe("Admin / Member Portal Isolation & Security Tests", () => {
       assert.doesNotThrow(() => u.email.toLowerCase());
     });
   });
+
+  test("8. MemberProfile.id is never confused with User.id", async () => {
+    const memberUser = await prisma.user.findFirst({
+      where: { memberProfile: { isNot: null } },
+      include: { memberProfile: true },
+    });
+
+    if (memberUser && memberUser.memberProfile) {
+      assert.notEqual(memberUser.id, memberUser.memberProfile.id);
+      assert.equal(memberUser.id, memberUser.memberProfile.userId);
+
+      // Verify getCurrentUser lookup uses User.id
+      const resolvedUser = await prisma.user.findUnique({
+        where: { id: memberUser.id },
+      });
+      assert.ok(resolvedUser);
+      assert.equal(resolvedUser.id, memberUser.id);
+    }
+  });
+
+  test("9. Sequential session switch does not leak identity or permissions", async () => {
+    const adminUser = await prisma.user.findFirst({
+      where: { status: "ACTIVE", roleAssignments: { some: { role: { status: "ACTIVE" } } } },
+    });
+    const memberUser = await prisma.user.findFirst({
+      where: { status: "ACTIVE", memberProfile: { isNot: null }, roleAssignments: { none: {} } },
+    });
+
+    if (adminUser && memberUser) {
+      const adminAccess1 = await hasAdminPortalAccess(adminUser.id);
+      assert.equal(adminAccess1, true);
+
+      const memberAccess = await hasAdminPortalAccess(memberUser.id);
+      assert.equal(memberAccess, false);
+
+      const adminAccess2 = await hasAdminPortalAccess(adminUser.id);
+      assert.equal(adminAccess2, true);
+    }
+  });
+
+  test("10. Invalid or empty session user.id fails closed with false and null", async () => {
+    const emptyIdAccess = await hasAdminPortalAccess("");
+    assert.equal(emptyIdAccess, false);
+
+    const spaceIdAccess = await hasAdminPortalAccess("   ");
+    assert.equal(spaceIdAccess, false);
+  });
 });

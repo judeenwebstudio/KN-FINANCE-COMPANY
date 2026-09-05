@@ -6,8 +6,9 @@ import { hasAdminPortalAccess, getUserAuthorizedBranchScope } from "@/lib/auth/a
 
 export const getCurrentUser = cache(async () => {
   const session = await auth();
-  if (!session?.user?.id) return null;
-  return prisma.user.findUnique({ where: { id: session.user.id }, include: { memberProfile: true } });
+  const userId = session?.user?.id;
+  if (!userId || typeof userId !== "string" || userId.trim() === "") return null;
+  return prisma.user.findUnique({ where: { id: userId }, include: { memberProfile: true } });
 });
 
 export async function requireAdmin() {

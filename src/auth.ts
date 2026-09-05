@@ -21,14 +21,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   })],
   callbacks: {
     jwt({ token, user }) {
-      if (user) { token.id = user.id; token.role = user.role; token.status = user.status; token.branchId = user.branchId; }
+      if (user) {
+        token.id = user.id;
+        token.sub = user.id;
+        token.role = user.role;
+        token.status = user.status;
+        token.branchId = user.branchId;
+      }
+      if (!token.id && token.sub) {
+        token.id = token.sub;
+      }
       return token;
     },
     session({ session, token }) {
-      session.user.id = token.id as string;
-      session.user.role = token.role as typeof session.user.role;
-      session.user.status = token.status as typeof session.user.status;
-      session.user.branchId = token.branchId as string | null;
+      const userId = (token.id || token.sub) as string;
+      if (session.user) {
+        session.user.id = userId;
+        session.user.role = token.role as typeof session.user.role;
+        session.user.status = token.status as typeof session.user.status;
+        session.user.branchId = token.branchId as string | null;
+      }
       return session;
     },
   },
