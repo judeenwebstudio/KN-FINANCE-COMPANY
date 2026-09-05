@@ -51,6 +51,7 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
 
   return (
     <UserDetailsClient
+      key={targetUserDTO.id}
       targetUser={targetUserDTO}
       allRoles={roles.map((r) => ({ id: r.id, name: r.name, slug: r.slug, description: r.description }))}
       allBranches={branches.map((b) => ({ id: b.id, name: b.name, code: b.code }))}

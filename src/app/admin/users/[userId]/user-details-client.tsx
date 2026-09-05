@@ -35,25 +35,9 @@ export function UserDetailsClient({
   const [name, setName] = useState(targetUser.name);
   const [email, setEmail] = useState(targetUser.email);
   const [status, setStatus] = useState<"ACTIVE" | "INACTIVE" | "SUSPENDED">(targetUser.status);
-  const [selectedRoleIds, setSelectedRoleIds] = useState<string[]>(targetUser.roles.map((r) => r.id));
-  const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>(targetUser.branches.map((b) => b.id));
+  const [selectedRoleIds, setSelectedRoleIds] = useState<string[]>(() => targetUser.roles.map((r) => r.id));
+  const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>(() => targetUser.branches.map((b) => b.id));
   const [hasGlobalBranchAccess, setHasGlobalBranchAccess] = useState(targetUser.hasGlobalBranchAccess);
-
-  // Synchronize component state with targetUser props when props change or after router.refresh()
-  const prevRolesKey = targetUser.roles.map((r) => r.id).sort().join(",");
-  const prevBranchesKey = targetUser.branches.map((b) => b.id).sort().join(",");
-  const currentSyncKey = `${targetUser.id}:${targetUser.name}:${targetUser.email}:${targetUser.status}:${targetUser.hasGlobalBranchAccess}:${prevRolesKey}:${prevBranchesKey}`;
-  const [prevSyncKey, setPrevSyncKey] = useState(currentSyncKey);
-
-  if (currentSyncKey !== prevSyncKey) {
-    setPrevSyncKey(currentSyncKey);
-    setName(targetUser.name);
-    setEmail(targetUser.email);
-    setStatus(targetUser.status);
-    setSelectedRoleIds(targetUser.roles.map((r) => r.id));
-    setSelectedBranchIds(targetUser.branches.map((b) => b.id));
-    setHasGlobalBranchAccess(targetUser.hasGlobalBranchAccess);
-  }
 
   const [saving, setSaving] = useState(false);
   const [sendingReset, setSendingReset] = useState(false);
