@@ -11,6 +11,7 @@ import { Buffer } from "node:buffer";
  * 3. Never attempts access: "public" against the private KYC Blob store.
  * 4. Zero base64 data: URLs, zero DB binary blobs, zero filesystem fallbacks.
  * 5. Fails closed with controlled response when unconfigured.
+ * 6. Verified production env vars: PUBLIC_BRANDING_BLOB_READ_WRITE_TOKEN, PUBLIC_BRANDING_BLOB_STORE_ID, PUBLIC_BRANDING_BLOB_WEBHOOK_PUBLIC_KEY.
  */
 
 export function isPublicBrandingStorageConfigured(): boolean {
