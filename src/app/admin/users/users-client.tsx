@@ -31,9 +31,10 @@ export function UsersClient({ initialUsers }: { initialUsers: SafeUserDTO[] }) {
   const [statusFilter, setStatusFilter] = useState("");
 
   const filteredUsers = users.filter((u) => {
-    const matchesSearch =
-      u.name.toLowerCase().includes(search.toLowerCase()) ||
-      u.email.toLowerCase().includes(search.toLowerCase());
+    const nameStr = (u.name || "").toLowerCase();
+    const emailStr = (u.email || "").toLowerCase();
+    const searchStr = (search || "").toLowerCase();
+    const matchesSearch = nameStr.includes(searchStr) || emailStr.includes(searchStr);
     const matchesStatus = !statusFilter || u.status === statusFilter;
     return matchesSearch && matchesStatus;
   });

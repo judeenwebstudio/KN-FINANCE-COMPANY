@@ -17,7 +17,7 @@
     "db:bootstrap:production": "tsx scripts/bootstrap-production.ts",
     "db:validate": "prisma validate",
     "loans:refresh-overdue": "tsx scripts/refresh-overdue.ts",
-    "test": "tsx --test src/lib/**/__tests__/**/*.test.ts"
+    "test": "tsx --test --test-concurrency=1 src/lib/**/__tests__/**/*.test.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "latest",

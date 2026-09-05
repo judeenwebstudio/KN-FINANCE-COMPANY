@@ -15,15 +15,15 @@ export default async function RolesPage() {
 
   const safeRoles = roles.map((r) => ({
     id: r.id,
-    name: r.name,
-    slug: r.slug,
-    description: r.description,
-    isSystem: r.isSystem,
-    isSuperAdminRole: r.isSuperAdminRole,
+    name: r.name ?? "",
+    slug: r.slug ?? "",
+    description: r.description ?? "",
+    isSystem: r.isSystem ?? false,
+    isSuperAdminRole: r.isSuperAdminRole ?? false,
     status: r.status,
-    assignedUserCount: r._count.userAssignments,
-    permissions: r.rolePermissions.map((rp) => rp.permission.code),
-    createdAt: r.createdAt.toISOString(),
+    assignedUserCount: r._count?.userAssignments ?? 0,
+    permissions: (r.rolePermissions || []).map((rp) => rp.permission?.code).filter(Boolean),
+    createdAt: r.createdAt ? r.createdAt.toISOString() : new Date().toISOString(),
   }));
 
   return <RolesClient initialRoles={safeRoles} />;

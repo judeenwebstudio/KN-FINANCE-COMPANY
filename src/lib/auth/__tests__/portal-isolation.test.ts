@@ -88,4 +88,40 @@ describe("Admin / Member Portal Isolation & Security Tests", () => {
       assert.equal(hasAccess, false);
     }
   });
+
+  test("7. User Management DTO mapping safely handles null name/email without component crashes", async () => {
+    const users = await prisma.user.findMany({
+      take: 10,
+      include: {
+        roleAssignments: { include: { role: true } },
+        branchAccess: { include: { branch: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    const safeUsers = users.map((u) => ({
+      id: u.id,
+      name: u.name ?? u.email ?? "User",
+      email: u.email ?? "",
+      status: u.status,
+      hasGlobalBranchAccess: u.hasGlobalBranchAccess ?? false,
+      roles: (u.roleAssignments || [])
+        .filter((ra) => ra?.role && ra.role.status === "ACTIVE")
+        .map((ra) => ({ id: ra.role.id, name: ra.role.name ?? "", slug: ra.role.slug ?? "" })),
+      branches: (u.branchAccess || []).map((ba) => ({
+        id: ba.branch?.id ?? "",
+        name: ba.branch?.name ?? "",
+        code: ba.branch?.code ?? "",
+      })),
+      createdAt: u.createdAt ? u.createdAt.toISOString() : new Date().toISOString(),
+    }));
+
+    assert.ok(Array.isArray(safeUsers));
+    safeUsers.forEach((u) => {
+      assert.equal(typeof u.name, "string");
+      assert.equal(typeof u.email, "string");
+      assert.doesNotThrow(() => u.name.toLowerCase());
+      assert.doesNotThrow(() => u.email.toLowerCase());
+    });
+  });
 });

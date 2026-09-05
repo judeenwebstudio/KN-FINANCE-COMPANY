@@ -15,13 +15,17 @@ export default async function AuditLogPage() {
 
   const safeLogs = logs.map((l) => ({
     id: l.id,
-    actor: { id: l.actor.id, name: l.actor.name, email: l.actor.email },
-    action: l.action,
-    entityType: l.entityType,
-    entityId: l.entityId,
-    branchId: l.branchId,
-    metadataJson: l.metadataJson,
-    createdAt: l.createdAt.toISOString(),
+    actor: {
+      id: l.actor?.id ?? "",
+      name: l.actor?.name ?? l.actor?.email ?? "System",
+      email: l.actor?.email ?? "",
+    },
+    action: l.action ?? "",
+    entityType: l.entityType ?? "",
+    entityId: l.entityId ?? "",
+    branchId: l.branchId ?? "",
+    metadataJson: l.metadataJson ?? "",
+    createdAt: l.createdAt ? l.createdAt.toISOString() : new Date().toISOString(),
   }));
 
   return <AuditLogClient initialLogs={safeLogs} />;

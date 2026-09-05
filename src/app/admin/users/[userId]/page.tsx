@@ -46,12 +46,12 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
 
   const targetUserDTO = {
     id: user.id,
-    name: user.name,
-    email: user.email,
+    name: user.name ?? user.email ?? "User",
+    email: user.email ?? "",
     status: user.status,
-    hasGlobalBranchAccess: user.hasGlobalBranchAccess,
+    hasGlobalBranchAccess: user.hasGlobalBranchAccess ?? false,
     effectivePermissions,
-    createdAt: user.createdAt.toISOString(),
+    createdAt: user.createdAt ? user.createdAt.toISOString() : new Date().toISOString(),
   };
 
   return (
