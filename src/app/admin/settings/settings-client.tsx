@@ -583,17 +583,17 @@ export function SettingsClient({
   // Filtered lists
   const filteredBranches = branches.filter(
     (b) =>
-      b.name.toLowerCase().includes(searchBranch.toLowerCase()) ||
-      b.code.toLowerCase().includes(searchBranch.toLowerCase()) ||
-      b.city.toLowerCase().includes(searchBranch.toLowerCase()) ||
-      b.country.toLowerCase().includes(searchBranch.toLowerCase())
+      (b?.name || "").toLowerCase().includes(searchBranch.toLowerCase()) ||
+      (b?.code || "").toLowerCase().includes(searchBranch.toLowerCase()) ||
+      (b?.city || "").toLowerCase().includes(searchBranch.toLowerCase()) ||
+      (b?.country || "").toLowerCase().includes(searchBranch.toLowerCase())
   );
 
   const filteredTemplates = templates.filter(
     (t) =>
-      t.name.toLowerCase().includes(searchTemplate.toLowerCase()) ||
-      t.code.toLowerCase().includes(searchTemplate.toLowerCase()) ||
-      t.description.toLowerCase().includes(searchTemplate.toLowerCase())
+      (t?.name || "").toLowerCase().includes(searchTemplate.toLowerCase()) ||
+      (t?.code || "").toLowerCase().includes(searchTemplate.toLowerCase()) ||
+      (t?.description || "").toLowerCase().includes(searchTemplate.toLowerCase())
   );
 
   const labelClass = "block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1";

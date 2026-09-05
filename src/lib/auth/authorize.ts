@@ -194,15 +194,25 @@ export const getUserPrimaryRoleName = cache(async (userId: string): Promise<stri
     },
   });
 
-  if (!user || user.status !== "ACTIVE" || user.roleAssignments.length === 0) {
+  if (!user || user.status !== "ACTIVE" || !user.roleAssignments || user.roleAssignments.length === 0) {
     return "Member";
   }
 
-  const superAdminAssignment = user.roleAssignments.find((ra) => ra.role.isSuperAdminRole);
-  if (superAdminAssignment) {
+  const superAdminAssignment = user.roleAssignments.find(
+    (ra) => ra?.role && ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
+  );
+  if (superAdminAssignment && superAdminAssignment.role?.name) {
     return superAdminAssignment.role.name;
   }
 
-  return user.roleAssignments[0].role.name;
+  const primaryAssignment = user.roleAssignments.find(
+    (ra) => ra?.role && ra.role.status === "ACTIVE" && Boolean(ra.role.name)
+  );
+  if (primaryAssignment && primaryAssignment.role?.name) {
+    return primaryAssignment.role.name;
+  }
+
+  return "Member";
 });
+
 

@@ -22,20 +22,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     orderBy: { name: "asc" },
   });
 
-  const displayName = userRecord.name && userRecord.name.trim().length > 0 ? userRecord.name.trim() : userRecord.email;
+  const displayName =
+    userRecord.name && userRecord.name.trim().length > 0
+      ? userRecord.name.trim()
+      : userRecord.email && userRecord.email.trim().length > 0
+      ? userRecord.email.trim()
+      : "Admin User";
 
   const user: PortalUserDTO = {
     id: String(userRecord.id),
     name: displayName,
-    email: String(userRecord.email),
-    role: roleName,
+    email: String(userRecord.email ?? ""),
+    role: roleName || "Member",
     permissions: Array.from(permissionsSet),
-    hasGlobalBranchAccess: branchScope.global,
+    hasGlobalBranchAccess: Boolean(branchScope.global),
   };
-  const branches: BranchDTO[] = branchRecords.map((branch) => ({
+  const branches: BranchDTO[] = (branchRecords || []).map((branch) => ({
     id: String(branch.id),
-    name: String(branch.name),
-    code: String(branch.code),
+    name: String(branch.name ?? ""),
+    code: String(branch.code ?? ""),
   }));
 
   return <PortalShell portal="Admin" user={user} branches={branches}>{children}</PortalShell>;

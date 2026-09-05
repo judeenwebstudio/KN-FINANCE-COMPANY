@@ -54,17 +54,17 @@ async function loadSettingsData() {
     };
 
     const safeBranches = (branches || []).map((b) => ({
-      id: b.id,
-      name: b.name,
-      code: b.code,
-      email: b.email,
-      phone: b.phone,
-      address: b.address,
-      city: b.city,
-      state: b.state,
-      country: b.country,
-      currency: b.currency,
-      status: b.status,
+      id: String(b.id ?? ""),
+      name: String(b.name ?? ""),
+      code: String(b.code ?? ""),
+      email: String(b.email ?? ""),
+      phone: String(b.phone ?? ""),
+      address: String(b.address ?? ""),
+      city: String(b.city ?? ""),
+      state: String(b.state ?? ""),
+      country: String(b.country ?? ""),
+      currency: String(b.currency ?? "INR"),
+      status: String(b.status ?? "ACTIVE"),
       userCount: b._count?.users ?? 0,
       memberCount: b._count?.members ?? 0,
       accountCount: b._count?.accounts ?? 0,
@@ -72,24 +72,24 @@ async function loadSettingsData() {
     }));
 
     const safeEmailConfig = {
-      id: rawEmailConfig.id,
-      enabled: rawEmailConfig.enabled,
-      provider: rawEmailConfig.provider,
-      senderName: rawEmailConfig.senderName,
-      senderEmail: rawEmailConfig.senderEmail,
-      replyToEmail: rawEmailConfig.replyToEmail,
+      id: String(rawEmailConfig.id ?? "email-config-main"),
+      enabled: Boolean(rawEmailConfig.enabled),
+      provider: String(rawEmailConfig.provider ?? "NONE"),
+      senderName: String(rawEmailConfig.senderName ?? "KN Finance Company"),
+      senderEmail: rawEmailConfig.senderEmail ?? null,
+      replyToEmail: rawEmailConfig.replyToEmail ?? null,
     };
 
     const safeTemplates = (rawTemplates || []).map((t) => ({
-      id: t.id,
-      code: t.code,
-      name: t.name,
-      description: t.description,
-      channel: t.channel,
-      subject: t.subject,
-      bodyTemplate: t.bodyTemplate,
+      id: String(t.id ?? ""),
+      code: String(t.code ?? ""),
+      name: String(t.name ?? ""),
+      description: String(t.description ?? ""),
+      channel: String(t.channel ?? "EMAIL"),
+      subject: String(t.subject ?? ""),
+      bodyTemplate: String(t.bodyTemplate ?? ""),
       variables: Array.isArray(t.variables) ? (t.variables as string[]) : [],
-      isEnabled: t.isEnabled,
+      isEnabled: Boolean(t.isEnabled),
     }));
 
     return {
