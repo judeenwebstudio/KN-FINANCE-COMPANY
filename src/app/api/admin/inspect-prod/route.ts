@@ -33,9 +33,13 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Query all role profiles
     const allRoles = await prisma.roleProfile.findMany({
       orderBy: { name: "asc" },
+    });
+
+    const allUsersInDB = await prisma.user.findMany({
+      include: { roleAssignments: { include: { role: true } } },
+      orderBy: { createdAt: "desc" },
     });
 
     const activeRoles = allRoles.filter((r) => r.status === "ACTIVE");
@@ -93,6 +97,13 @@ export async function GET() {
         slug: r.slug,
         isSuperAdminRole: r.isSuperAdminRole,
         status: r.status,
+      })),
+      allUsersSummary: allUsersInDB.map((u) => ({
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        status: u.status,
+        roles: u.roleAssignments.map((ra) => ra.role.name),
       })),
       targetUserDTO_roles: targetUserDTO.roles,
       selectedRoleIds,
