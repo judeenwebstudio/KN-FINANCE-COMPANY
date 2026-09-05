@@ -3,6 +3,7 @@ import { getCompanyProfile } from "@/lib/settings/company-profile";
 import { getAllBranchesWithCounts } from "@/lib/settings/branch-service";
 import { getEmailConfiguration, getEmailProviderStatus } from "@/lib/settings/email-service";
 import { getAllNotificationTemplates } from "@/lib/settings/notification-service";
+import { isPublicBrandingStorageConfigured } from "@/lib/storage/public-branding-storage";
 import { SettingsClient } from "./settings-client";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +27,7 @@ async function loadSettingsData() {
     const rawEmailConfig = await getEmailConfiguration();
     const providerStatus = getEmailProviderStatus();
     const rawTemplates = await getAllNotificationTemplates();
+    const publicBrandingStorageConfigured = isPublicBrandingStorageConfigured();
 
     const safeProfile = {
       id: rawProfile.id,
@@ -96,6 +98,7 @@ async function loadSettingsData() {
       safeEmailConfig,
       providerStatus,
       safeTemplates,
+      publicBrandingStorageConfigured,
       canManageCompany,
       canManageBranch,
       canManageFinancial,
@@ -123,6 +126,7 @@ export default async function SettingsPage() {
       emailConfig={data.safeEmailConfig}
       providerStatus={data.providerStatus}
       templates={data.safeTemplates}
+      publicBrandingStorageConfigured={data.publicBrandingStorageConfigured}
       canManageCompany={data.canManageCompany}
       canManageBranch={data.canManageBranch}
       canManageFinancial={data.canManageFinancial}

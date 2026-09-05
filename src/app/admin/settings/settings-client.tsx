@@ -3,7 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { updateGeneralSettingsAction, updateBrandingSettingsAction } from "./actions";
+import {
+  updateGeneralSettingsAction,
+  updateBrandingSettingsAction,
+  uploadBrandingAssetAction,
+  restoreBrandingDefaultAction,
+} from "./actions";
 import { createBranchAction, updateBranchAction, toggleBranchStatusAction } from "./branch-actions";
 import { updateEmailSettingsAction, sendTestEmailAction } from "./email-actions";
 import {
@@ -87,6 +92,7 @@ export function SettingsClient({
   emailConfig: initialEmailConfig,
   providerStatus,
   templates: initialTemplates,
+  publicBrandingStorageConfigured = false,
   canManageCompany,
   canManageBranch,
   canManageFinancial,
@@ -98,6 +104,7 @@ export function SettingsClient({
   emailConfig: EmailConfigData;
   providerStatus: ProviderStatusData;
   templates: NotificationTemplateData[];
+  publicBrandingStorageConfigured?: boolean;
   canManageCompany: boolean;
   canManageBranch: boolean;
   canManageFinancial: boolean;
@@ -112,6 +119,129 @@ export function SettingsClient({
 
   // Message Toast Banner
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  // Upload States for Branding Assets
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+
+  const [faviconFile, setFaviconFile] = useState<File | null>(null);
+  const [faviconPreviewUrl, setFaviconPreviewUrl] = useState<string | null>(null);
+  const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
+  const [showAdvancedBranding, setShowAdvancedBranding] = useState(false);
+
+  const handleLogoFileChange = (file: File | null) => {
+    if (!file) {
+      setLogoFile(null);
+      setLogoPreviewUrl(null);
+      return;
+    }
+    setLogoFile(file);
+    setLogoPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleFaviconFileChange = (file: File | null) => {
+    if (!file) {
+      setFaviconFile(null);
+      setFaviconPreviewUrl(null);
+      return;
+    }
+    setFaviconFile(file);
+    setFaviconPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleUploadAsset = async (kind: "logo" | "favicon") => {
+    const file = kind === "logo" ? logoFile : faviconFile;
+    if (!file) return;
+
+    if (kind === "logo") setIsUploadingLogo(true);
+    else setIsUploadingFavicon(true);
+
+    setMessage(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("kind", kind);
+      formData.append("file", file);
+
+      const res = await uploadBrandingAssetAction(formData);
+
+      if (res.success && res.profile) {
+        setProfile(res.profile as CompanyProfileData);
+        setBrandingForm((prev) => ({
+          ...prev,
+          logoUrl: res.profile.logoUrl || prev.logoUrl,
+          faviconUrl: res.profile.faviconUrl || prev.faviconUrl,
+        }));
+
+        if (kind === "logo") {
+          setLogoFile(null);
+          setLogoPreviewUrl(null);
+        } else {
+          setFaviconFile(null);
+          setFaviconPreviewUrl(null);
+        }
+
+        setMessage({
+          type: "success",
+          text: `${kind === "logo" ? "Brand logo" : "Favicon"} uploaded and updated successfully.`,
+        });
+      } else {
+        setMessage({
+          type: "error",
+          text: res.error || `Failed to upload ${kind}.`,
+        });
+      }
+    } catch (err: unknown) {
+      setMessage({
+        type: "error",
+        text: err instanceof Error ? err.message : `Failed to upload ${kind}.`,
+      });
+    } finally {
+      if (kind === "logo") setIsUploadingLogo(false);
+      else setIsUploadingFavicon(false);
+    }
+  };
+
+  const handleRestoreDefault = async (kind: "logo" | "favicon") => {
+    if (!canManageCompany) return;
+    setMessage(null);
+    if (kind === "logo") setIsUploadingLogo(true);
+    else setIsUploadingFavicon(true);
+
+    try {
+      const res = await restoreBrandingDefaultAction(kind);
+      if (res.success && res.profile) {
+        setProfile(res.profile as CompanyProfileData);
+        setBrandingForm((prev) => ({
+          ...prev,
+          logoUrl: res.profile.logoUrl || prev.logoUrl,
+          faviconUrl: res.profile.faviconUrl || prev.faviconUrl,
+        }));
+        if (kind === "logo") {
+          setLogoFile(null);
+          setLogoPreviewUrl(null);
+        } else {
+          setFaviconFile(null);
+          setFaviconPreviewUrl(null);
+        }
+        setMessage({
+          type: "success",
+          text: `${kind === "logo" ? "Brand logo" : "Favicon"} restored to default.`,
+        });
+      } else {
+        setMessage({ type: "error", text: "Failed to restore default asset." });
+      }
+    } catch (err: unknown) {
+      setMessage({
+        type: "error",
+        text: err instanceof Error ? err.message : "Failed to restore default asset.",
+      });
+    } finally {
+      if (kind === "logo") setIsUploadingLogo(false);
+      else setIsUploadingFavicon(false);
+    }
+  };
 
   // General & Branding form states
   const [generalForm, setGeneralForm] = useState({
@@ -786,101 +916,250 @@ export function SettingsClient({
 
       {/* Tab 2: Branding Settings */}
       {activeTab === "branding" && (
-        <form onSubmit={handleBrandingSubmit} className="space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <div>
-            <h2 className="text-lg font-bold text-slate-900">Official Brand Assets & Visual Identity</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Configure system logo, favicon, brand name, and metadata.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label className={labelClass}>Brand Logo Path / URL *</label>
-              <input
-                type="text"
-                disabled={!canManageCompany}
-                value={brandingForm.logoUrl}
-                onChange={(e) => setBrandingForm({ ...brandingForm, logoUrl: e.target.value })}
-                className={inputClass}
-                required
-              />
-              <p className="text-[11px] text-slate-500 mt-1">Relative path starting with `/` or secure `https://` URL.</p>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <label className={labelClass}>Favicon Path / URL *</label>
-                {canManageCompany && (
-                  <button
-                    type="button"
-                    onClick={() => setBrandingForm({ ...brandingForm, faviconUrl: "/favicon.ico" })}
-                    className="text-[11px] font-semibold text-[#1a2e5a] hover:underline"
-                  >
-                    Restore Default (/favicon.ico)
-                  </button>
-                )}
+        <div className="space-y-6">
+          {/* Public Storage Status Notice */}
+          {!publicBrandingStorageConfigured ? (
+            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1">
+              <div className="flex items-center gap-2 font-bold">
+                <span>⚠️ Public Branding Storage Not Configured</span>
               </div>
-              <input
-                type="text"
-                disabled={!canManageCompany}
-                value={brandingForm.faviconUrl}
-                onChange={(e) => setBrandingForm({ ...brandingForm, faviconUrl: e.target.value })}
-                className={inputClass}
-                required
-              />
-              <p className="text-[11px] text-slate-500 mt-1">
-                Relative path (starting with `/`) or secure `https://` URL. PNG and ICO files supported (SVG prohibited).
+              <p>
+                Custom branding uploads require <code className="font-mono bg-amber-100 px-1 py-0.5 rounded">PUBLIC_BRANDING_BLOB_READ_WRITE_TOKEN</code>. Custom uploads are disabled. Bundled defaults (<code className="font-mono">/branding/kn-finance-logo.png</code> & <code className="font-mono">/favicon.ico</code>) remain active. No file payloads will be stored as base64 or PostgreSQL blobs.
               </p>
             </div>
-          </div>
+          ) : (
+            <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center justify-between">
+              <span className="font-semibold flex items-center gap-1.5">
+                ✓ Public Branding Object Storage Configured (<code className="font-mono">PUBLIC_BRANDING_BLOB_STORE_ID</code>)
+              </span>
+              <span className="text-[11px] text-emerald-700 font-medium">Dedicated Public Store</span>
+            </div>
+          )}
 
-          <div className="pt-4 border-t border-slate-100 space-y-4">
-            <h3 className="text-sm font-bold text-slate-900">Live Brand & Browser Tab Preview</h3>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {/* 1. Logo Upload & Management Card */}
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-base">Brand Logo</h3>
+                    <p className="text-xs text-slate-500">Official company logo asset used in header, login & navigation.</p>
+                  </div>
+                  {canManageCompany && (
+                    <button
+                      type="button"
+                      disabled={isUploadingLogo}
+                      onClick={() => handleRestoreDefault("logo")}
+                      className="text-xs font-semibold text-indigo-700 hover:text-indigo-900 hover:underline disabled:opacity-50"
+                    >
+                      Restore Default
+                    </button>
+                  )}
+                </div>
 
-            {/* Browser Tab Simulation */}
-            <div className="max-w-xs rounded-t-lg bg-slate-200 border border-slate-300 p-2 flex items-center gap-2">
-              <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-t shadow-xs text-xs text-slate-800 font-medium max-w-[240px] truncate border-t border-x border-slate-300">
-                <Image
-                  src={brandingForm.faviconUrl || "/favicon.ico"}
-                  alt="Favicon"
-                  width={16}
-                  height={16}
-                  className="size-4 object-contain rounded-xs"
-                  unoptimized
-                />
-                <span className="truncate">{brandingForm.displayName || "KN Finance Company"}</span>
+                <div className="mt-4 flex items-center gap-5">
+                  {/* Current or Pending Preview */}
+                  <div className="relative size-20 rounded-xl border border-slate-200 bg-slate-900 p-2 shrink-0 overflow-hidden shadow-xs">
+                    <Image
+                      src={logoPreviewUrl || brandingForm.logoUrl || "/branding/kn-finance-logo.png"}
+                      alt="Brand Logo"
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <label className="block text-xs font-semibold text-slate-700">Upload New Logo (PNG, JPEG, WebP, max 5 MB)</label>
+                    <input
+                      type="file"
+                      accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+                      disabled={!canManageCompany || !publicBrandingStorageConfigured || isUploadingLogo}
+                      onChange={(e) => handleLogoFileChange(e.target.files?.[0] || null)}
+                      className="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                    {logoFile && (
+                      <p className="text-[11px] font-mono text-emerald-700">
+                        Selected: {logoFile.name} ({(logoFile.size / 1024).toFixed(1)} KB)
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
+
+              {logoFile && publicBrandingStorageConfigured && canManageCompany && (
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => handleLogoFileChange(null)}
+                    disabled={isUploadingLogo}
+                    className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleUploadAsset("logo")}
+                    disabled={isUploadingLogo}
+                    className="px-4 py-1.5 rounded-lg bg-[#1a2e5a] text-xs font-semibold text-white hover:bg-[#122244] disabled:opacity-50 shadow-xs"
+                  >
+                    {isUploadingLogo ? "Uploading..." : "Upload & Apply Logo"}
+                  </button>
+                </div>
+              )}
             </div>
 
-            {/* Brand Logo & Description Card */}
-            <div className="flex items-center gap-6 p-6 rounded-xl bg-slate-900 border border-slate-800 text-white">
-              <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-white p-2 shrink-0">
-                <Image
-                  src={brandingForm.logoUrl || "/branding/kn-finance-logo.png"}
-                  alt="Brand Logo"
-                  fill
-                  className="object-contain"
-                  unoptimized
+            {/* 2. Favicon Upload & Management Card */}
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-base">Favicon & Browser Tab</h3>
+                    <p className="text-xs text-slate-500">Browser tab icon & metadata shortcut icon.</p>
+                  </div>
+                  {canManageCompany && (
+                    <button
+                      type="button"
+                      disabled={isUploadingFavicon}
+                      onClick={() => handleRestoreDefault("favicon")}
+                      className="text-xs font-semibold text-indigo-700 hover:text-indigo-900 hover:underline disabled:opacity-50"
+                    >
+                      Restore Default
+                    </button>
+                  )}
+                </div>
+
+                <div className="mt-4 flex items-center gap-5">
+                  {/* Current or Pending Preview Tab Simulation */}
+                  <div className="rounded-t-lg bg-slate-200 border border-slate-300 p-1.5 shrink-0">
+                    <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-t text-xs text-slate-800 font-medium max-w-[150px] truncate border-t border-x border-slate-300 shadow-xs">
+                      <Image
+                        src={faviconPreviewUrl || brandingForm.faviconUrl || "/favicon.ico"}
+                        alt="Favicon"
+                        width={16}
+                        height={16}
+                        className="size-4 object-contain rounded-xs shrink-0"
+                        unoptimized
+                      />
+                      <span className="truncate text-[11px]">{brandingForm.displayName || "KN Finance"}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <label className="block text-xs font-semibold text-slate-700">Upload New Favicon (PNG, ICO, max 2 MB)</label>
+                    <input
+                      type="file"
+                      accept=".png,.ico,image/png,image/x-icon,image/vnd.microsoft.icon"
+                      disabled={!canManageCompany || !publicBrandingStorageConfigured || isUploadingFavicon}
+                      onChange={(e) => handleFaviconFileChange(e.target.files?.[0] || null)}
+                      className="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                    {faviconFile && (
+                      <p className="text-[11px] font-mono text-emerald-700">
+                        Selected: {faviconFile.name} ({(faviconFile.size / 1024).toFixed(1)} KB)
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {faviconFile && publicBrandingStorageConfigured && canManageCompany && (
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => handleFaviconFileChange(null)}
+                    disabled={isUploadingFavicon}
+                    className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleUploadAsset("favicon")}
+                    disabled={isUploadingFavicon}
+                    className="px-4 py-1.5 rounded-lg bg-[#1a2e5a] text-xs font-semibold text-white hover:bg-[#122244] disabled:opacity-50 shadow-xs"
+                  >
+                    {isUploadingFavicon ? "Uploading..." : "Upload & Apply Favicon"}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 3. Brand Copy Form */}
+          <form onSubmit={handleBrandingSubmit} className="space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <h3 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Brand Name, Tagline & Meta Description</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className={labelClass}>Company Display Name *</label>
+                <input
+                  type="text"
+                  disabled={!canManageCompany}
+                  value={brandingForm.displayName}
+                  onChange={(e) => setBrandingForm({ ...brandingForm, displayName: e.target.value })}
+                  className={inputClass}
+                  required
                 />
               </div>
               <div>
-                <h4 className="text-xl font-bold text-amber-400">{brandingForm.displayName}</h4>
-                <p className="text-sm text-slate-300 italic">{brandingForm.tagline || "Empowering your future"}</p>
-                <p className="text-xs text-slate-400 mt-1">{brandingForm.metaDescription}</p>
+                <label className={labelClass}>Tagline</label>
+                <input
+                  type="text"
+                  disabled={!canManageCompany}
+                  value={brandingForm.tagline}
+                  onChange={(e) => setBrandingForm({ ...brandingForm, tagline: e.target.value })}
+                  className={inputClass}
+                />
               </div>
             </div>
-          </div>
 
-          {canManageCompany && (
-            <div className="flex justify-end pt-4 border-t border-slate-100">
-              <button
-                type="submit"
-                disabled={isSavingBranding}
-                className="rounded-lg bg-[#1a2e5a] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#122244] disabled:opacity-50"
-              >
-                {isSavingBranding ? "Saving..." : "Save Branding Settings"}
-              </button>
+            <div>
+              <label className={labelClass}>Meta Description</label>
+              <textarea
+                rows={2}
+                disabled={!canManageCompany}
+                value={brandingForm.metaDescription}
+                onChange={(e) => setBrandingForm({ ...brandingForm, metaDescription: e.target.value })}
+                className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm text-slate-900 shadow-xs focus:border-[#1a2e5a] focus:ring-1 focus:ring-[#1a2e5a] disabled:opacity-60"
+              />
             </div>
-          )}
-        </form>
+
+            {canManageCompany && (
+              <div className="flex justify-end pt-4 border-t border-slate-100">
+                <button
+                  type="submit"
+                  disabled={isSavingBranding}
+                  className="rounded-lg bg-[#1a2e5a] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#122244] disabled:opacity-50"
+                >
+                  {isSavingBranding ? "Saving..." : "Save Brand Details"}
+                </button>
+              </div>
+            )}
+          </form>
+
+          {/* 4. Advanced Technical Details (Collapsible Read-Only Inspection) */}
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedBranding((v) => !v)}
+              className="text-xs font-bold text-slate-700 hover:text-slate-900 flex items-center gap-2"
+            >
+              <span>{showAdvancedBranding ? "▼ Hide" : "▶ Show"} Technical Asset Locations (Read-Only)</span>
+            </button>
+            {showAdvancedBranding && (
+              <div className="mt-3 space-y-2 text-xs font-mono text-slate-600 bg-white p-3 rounded-lg border border-slate-200">
+                <div>
+                  <span className="font-bold text-slate-800">Logo Path / URL:</span>{" "}
+                  <code className="text-indigo-700 break-all">{brandingForm.logoUrl}</code>
+                </div>
+                <div>
+                  <span className="font-bold text-slate-800">Favicon Path / URL:</span>{" "}
+                  <code className="text-indigo-700 break-all">{brandingForm.faviconUrl}</code>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       )}
 
       {/* Tab 3: Branches Directory */}
