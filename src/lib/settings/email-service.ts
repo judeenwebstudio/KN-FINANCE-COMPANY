@@ -140,3 +140,36 @@ export async function sendTestEmail(actorUserId: string, recipientEmail: string)
     message: "Email provider is not configured. Delivery skipped.",
   };
 }
+
+/**
+ * Attempts password reset transactional email dispatch.
+ * Depends cleanly on generic email transport abstraction.
+ * When email provider is unconfigured (provider = NONE), delivery is safely skipped.
+ * NEVER leaks passwords, tokens, roles, or financial data in audit logs or payloads.
+ */
+export async function sendPasswordResetEmail(recipientEmail: string, resetLink: string) {
+  const emailSchema = z.string().trim().email("Invalid recipient email address");
+  emailSchema.parse(recipientEmail);
+  void resetLink;
+
+  const providerStatus = getEmailProviderStatus();
+
+  if (!providerStatus.configured) {
+    return {
+      success: false,
+      delivered: false,
+      reason: "NOT_CONFIGURED" as const,
+      message: "Email provider is not configured. Password reset delivery unavailable.",
+    };
+  }
+
+  // When an actual generic SMTP/Email transport SDK is installed in the future,
+  // remote email dispatch logic will be executed here.
+  return {
+    success: false,
+    delivered: false,
+    reason: "NOT_CONFIGURED" as const,
+    message: "Email provider transport unavailable.",
+  };
+}
+

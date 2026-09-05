@@ -2,6 +2,7 @@
 
 import { useActionState, useState, useEffect, useRef, useCallback } from "react";
 import Script from "next/script";
+import Link from "next/link";
 import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from "lucide-react";
 import { loginAction } from "./actions";
 import { Button } from "@/components/ui/button";
@@ -89,7 +90,9 @@ export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
 
   useEffect(() => {
     if (state.error && isRecaptchaEnabled) {
-      setRecaptchaToken("");
+      queueMicrotask(() => {
+        setRecaptchaToken("");
+      });
       if (typeof window !== "undefined" && window.grecaptcha && widgetIdRef.current !== null) {
         try {
           window.grecaptcha.reset(widgetIdRef.current);
@@ -195,15 +198,12 @@ export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
           />
           Remember me
         </label>
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          title="Password recovery is not available yet"
-          className="cursor-not-allowed font-medium text-slate-400"
+        <Link
+          href="/forgot-password"
+          className="font-medium text-[#1a2e5a] transition-colors hover:text-[#1e3a6e] hover:underline"
         >
           Forgot password?
-        </button>
+        </Link>
       </div>
 
       {/* ── reCAPTCHA v2 Checkbox Widget Container ── */}

@@ -272,6 +272,7 @@ export type UserWhereInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentListRelationFilter
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  passwordResetTokens?: Prisma.PasswordResetTokenListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -335,6 +336,7 @@ export type UserOrderByWithRelationInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentOrderByRelationAggregateInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  passwordResetTokens?: Prisma.PasswordResetTokenOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -401,6 +403,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   uploadedMemberDocuments?: Prisma.MemberDocumentListRelationFilter
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  passwordResetTokens?: Prisma.PasswordResetTokenListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -495,6 +498,7 @@ export type UserCreateInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -557,6 +561,7 @@ export type UserUncheckedCreateInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -619,6 +624,7 @@ export type UserUpdateInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -681,6 +687,7 @@ export type UserUncheckedUpdateInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1618,6 +1625,20 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
+export type UserCreateNestedOneWithoutPasswordResetTokensInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPasswordResetTokensInput, Prisma.UserUncheckedCreateWithoutPasswordResetTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPasswordResetTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPasswordResetTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPasswordResetTokensInput, Prisma.UserUncheckedCreateWithoutPasswordResetTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPasswordResetTokensInput
+  upsert?: Prisma.UserUpsertWithoutPasswordResetTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPasswordResetTokensInput, Prisma.UserUpdateWithoutPasswordResetTokensInput>, Prisma.UserUncheckedUpdateWithoutPasswordResetTokensInput>
+}
+
 export type UserCreateWithoutBranchInput = {
   id?: string
   name: string
@@ -1677,6 +1698,7 @@ export type UserCreateWithoutBranchInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBranchInput = {
@@ -1738,6 +1760,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBranchInput = {
@@ -1841,6 +1864,7 @@ export type UserCreateWithoutMemberProfileInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMemberProfileInput = {
@@ -1902,6 +1926,7 @@ export type UserUncheckedCreateWithoutMemberProfileInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMemberProfileInput = {
@@ -1979,6 +2004,7 @@ export type UserUpdateWithoutMemberProfileInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMemberProfileInput = {
@@ -2040,6 +2066,7 @@ export type UserUncheckedUpdateWithoutMemberProfileInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountTypesInput = {
@@ -2101,6 +2128,7 @@ export type UserCreateWithoutCreatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountTypesInput = {
@@ -2162,6 +2190,7 @@ export type UserUncheckedCreateWithoutCreatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountTypesInput = {
@@ -2228,6 +2257,7 @@ export type UserCreateWithoutUpdatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountTypesInput = {
@@ -2289,6 +2319,7 @@ export type UserUncheckedCreateWithoutUpdatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountTypesInput = {
@@ -2366,6 +2397,7 @@ export type UserUpdateWithoutCreatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountTypesInput = {
@@ -2427,6 +2459,7 @@ export type UserUncheckedUpdateWithoutCreatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountTypesInput = {
@@ -2499,6 +2532,7 @@ export type UserUpdateWithoutUpdatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountTypesInput = {
@@ -2560,6 +2594,7 @@ export type UserUncheckedUpdateWithoutUpdatedAccountTypesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedPenaltyRulesInput = {
@@ -2621,6 +2656,7 @@ export type UserCreateWithoutCreatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPenaltyRulesInput = {
@@ -2682,6 +2718,7 @@ export type UserUncheckedCreateWithoutCreatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPenaltyRulesInput = {
@@ -2748,6 +2785,7 @@ export type UserCreateWithoutUpdatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPenaltyRulesInput = {
@@ -2809,6 +2847,7 @@ export type UserUncheckedCreateWithoutUpdatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPenaltyRulesInput = {
@@ -2886,6 +2925,7 @@ export type UserUpdateWithoutCreatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPenaltyRulesInput = {
@@ -2947,6 +2987,7 @@ export type UserUncheckedUpdateWithoutCreatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPenaltyRulesInput = {
@@ -3019,6 +3060,7 @@ export type UserUpdateWithoutUpdatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPenaltyRulesInput = {
@@ -3080,6 +3122,7 @@ export type UserUncheckedUpdateWithoutUpdatedPenaltyRulesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedLoanProductsInput = {
@@ -3141,6 +3184,7 @@ export type UserCreateWithoutCreatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLoanProductsInput = {
@@ -3202,6 +3246,7 @@ export type UserUncheckedCreateWithoutCreatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLoanProductsInput = {
@@ -3268,6 +3313,7 @@ export type UserCreateWithoutUpdatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLoanProductsInput = {
@@ -3329,6 +3375,7 @@ export type UserUncheckedCreateWithoutUpdatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLoanProductsInput = {
@@ -3406,6 +3453,7 @@ export type UserUpdateWithoutCreatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLoanProductsInput = {
@@ -3467,6 +3515,7 @@ export type UserUncheckedUpdateWithoutCreatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLoanProductsInput = {
@@ -3539,6 +3588,7 @@ export type UserUpdateWithoutUpdatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLoanProductsInput = {
@@ -3600,6 +3650,7 @@ export type UserUncheckedUpdateWithoutUpdatedLoanProductsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApprovedLoansInput = {
@@ -3661,6 +3712,7 @@ export type UserCreateWithoutApprovedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedLoansInput = {
@@ -3722,6 +3774,7 @@ export type UserUncheckedCreateWithoutApprovedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedLoansInput = {
@@ -3788,6 +3841,7 @@ export type UserCreateWithoutDisbursedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDisbursedLoansInput = {
@@ -3849,6 +3903,7 @@ export type UserUncheckedCreateWithoutDisbursedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDisbursedLoansInput = {
@@ -3915,6 +3970,7 @@ export type UserCreateWithoutCreatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLoansInput = {
@@ -3976,6 +4032,7 @@ export type UserUncheckedCreateWithoutCreatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLoansInput = {
@@ -4042,6 +4099,7 @@ export type UserCreateWithoutUpdatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLoansInput = {
@@ -4103,6 +4161,7 @@ export type UserUncheckedCreateWithoutUpdatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLoansInput = {
@@ -4180,6 +4239,7 @@ export type UserUpdateWithoutApprovedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedLoansInput = {
@@ -4241,6 +4301,7 @@ export type UserUncheckedUpdateWithoutApprovedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutDisbursedLoansInput = {
@@ -4313,6 +4374,7 @@ export type UserUpdateWithoutDisbursedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDisbursedLoansInput = {
@@ -4374,6 +4436,7 @@ export type UserUncheckedUpdateWithoutDisbursedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedLoansInput = {
@@ -4446,6 +4509,7 @@ export type UserUpdateWithoutCreatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLoansInput = {
@@ -4507,6 +4571,7 @@ export type UserUncheckedUpdateWithoutCreatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLoansInput = {
@@ -4579,6 +4644,7 @@ export type UserUpdateWithoutUpdatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLoansInput = {
@@ -4640,6 +4706,7 @@ export type UserUncheckedUpdateWithoutUpdatedLoansInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedRepaymentsInput = {
@@ -4701,6 +4768,7 @@ export type UserCreateWithoutCreatedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedRepaymentsInput = {
@@ -4762,6 +4830,7 @@ export type UserUncheckedCreateWithoutCreatedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedRepaymentsInput = {
@@ -4828,6 +4897,7 @@ export type UserCreateWithoutReversedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedRepaymentsInput = {
@@ -4889,6 +4959,7 @@ export type UserUncheckedCreateWithoutReversedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedRepaymentsInput = {
@@ -4966,6 +5037,7 @@ export type UserUpdateWithoutCreatedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedRepaymentsInput = {
@@ -5027,6 +5099,7 @@ export type UserUncheckedUpdateWithoutCreatedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedRepaymentsInput = {
@@ -5099,6 +5172,7 @@ export type UserUpdateWithoutReversedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedRepaymentsInput = {
@@ -5160,6 +5234,7 @@ export type UserUncheckedUpdateWithoutReversedRepaymentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCollectionNotesInput = {
@@ -5221,6 +5296,7 @@ export type UserCreateWithoutCollectionNotesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCollectionNotesInput = {
@@ -5282,6 +5358,7 @@ export type UserUncheckedCreateWithoutCollectionNotesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCollectionNotesInput = {
@@ -5359,6 +5436,7 @@ export type UserUpdateWithoutCollectionNotesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCollectionNotesInput = {
@@ -5420,6 +5498,7 @@ export type UserUncheckedUpdateWithoutCollectionNotesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionCategoriesInput = {
@@ -5481,6 +5560,7 @@ export type UserCreateWithoutCreatedTransactionCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionCategoriesInput = {
@@ -5542,6 +5622,7 @@ export type UserUncheckedCreateWithoutCreatedTransactionCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionCategoriesInput = {
@@ -5619,6 +5700,7 @@ export type UserUpdateWithoutCreatedTransactionCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionCategoriesInput = {
@@ -5680,6 +5762,7 @@ export type UserUncheckedUpdateWithoutCreatedTransactionCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionsInput = {
@@ -5741,6 +5824,7 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
@@ -5802,6 +5886,7 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
@@ -5868,6 +5953,7 @@ export type UserCreateWithoutReversedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedTransactionsInput = {
@@ -5929,6 +6015,7 @@ export type UserUncheckedCreateWithoutReversedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedTransactionsInput = {
@@ -6006,6 +6093,7 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
@@ -6067,6 +6155,7 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedTransactionsInput = {
@@ -6139,6 +6228,7 @@ export type UserUpdateWithoutReversedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedTransactionsInput = {
@@ -6200,6 +6290,7 @@ export type UserUncheckedUpdateWithoutReversedTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApprovedDepositRequestsInput = {
@@ -6261,6 +6352,7 @@ export type UserCreateWithoutApprovedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedDepositRequestsInput = {
@@ -6322,6 +6414,7 @@ export type UserUncheckedCreateWithoutApprovedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedDepositRequestsInput = {
@@ -6388,6 +6481,7 @@ export type UserCreateWithoutRejectedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRejectedDepositRequestsInput = {
@@ -6449,6 +6543,7 @@ export type UserUncheckedCreateWithoutRejectedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRejectedDepositRequestsInput = {
@@ -6515,6 +6610,7 @@ export type UserCreateWithoutCreatedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedDepositRequestsInput = {
@@ -6576,6 +6672,7 @@ export type UserUncheckedCreateWithoutCreatedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedDepositRequestsInput = {
@@ -6653,6 +6750,7 @@ export type UserUpdateWithoutApprovedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedDepositRequestsInput = {
@@ -6714,6 +6812,7 @@ export type UserUncheckedUpdateWithoutApprovedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutRejectedDepositRequestsInput = {
@@ -6786,6 +6885,7 @@ export type UserUpdateWithoutRejectedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedDepositRequestsInput = {
@@ -6847,6 +6947,7 @@ export type UserUncheckedUpdateWithoutRejectedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedDepositRequestsInput = {
@@ -6919,6 +7020,7 @@ export type UserUpdateWithoutCreatedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedDepositRequestsInput = {
@@ -6980,6 +7082,7 @@ export type UserUncheckedUpdateWithoutCreatedDepositRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApprovedWithdrawalRequestsInput = {
@@ -7041,6 +7144,7 @@ export type UserCreateWithoutApprovedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedWithdrawalRequestsInput = {
@@ -7102,6 +7206,7 @@ export type UserUncheckedCreateWithoutApprovedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedWithdrawalRequestsInput = {
@@ -7168,6 +7273,7 @@ export type UserCreateWithoutRejectedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRejectedWithdrawalRequestsInput = {
@@ -7229,6 +7335,7 @@ export type UserUncheckedCreateWithoutRejectedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRejectedWithdrawalRequestsInput = {
@@ -7295,6 +7402,7 @@ export type UserCreateWithoutCreatedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedWithdrawalRequestsInput = {
@@ -7356,6 +7464,7 @@ export type UserUncheckedCreateWithoutCreatedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedWithdrawalRequestsInput = {
@@ -7433,6 +7542,7 @@ export type UserUpdateWithoutApprovedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedWithdrawalRequestsInput = {
@@ -7494,6 +7604,7 @@ export type UserUncheckedUpdateWithoutApprovedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutRejectedWithdrawalRequestsInput = {
@@ -7566,6 +7677,7 @@ export type UserUpdateWithoutRejectedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedWithdrawalRequestsInput = {
@@ -7627,6 +7739,7 @@ export type UserUncheckedUpdateWithoutRejectedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedWithdrawalRequestsInput = {
@@ -7699,6 +7812,7 @@ export type UserUpdateWithoutCreatedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedWithdrawalRequestsInput = {
@@ -7760,6 +7874,7 @@ export type UserUncheckedUpdateWithoutCreatedWithdrawalRequestsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedExpenseCategoriesInput = {
@@ -7821,6 +7936,7 @@ export type UserCreateWithoutCreatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExpenseCategoriesInput = {
@@ -7882,6 +7998,7 @@ export type UserUncheckedCreateWithoutCreatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExpenseCategoriesInput = {
@@ -7948,6 +8065,7 @@ export type UserCreateWithoutUpdatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedExpenseCategoriesInput = {
@@ -8009,6 +8127,7 @@ export type UserUncheckedCreateWithoutUpdatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedExpenseCategoriesInput = {
@@ -8086,6 +8205,7 @@ export type UserUpdateWithoutCreatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExpenseCategoriesInput = {
@@ -8147,6 +8267,7 @@ export type UserUncheckedUpdateWithoutCreatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedExpenseCategoriesInput = {
@@ -8219,6 +8340,7 @@ export type UserUpdateWithoutUpdatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedExpenseCategoriesInput = {
@@ -8280,6 +8402,7 @@ export type UserUncheckedUpdateWithoutUpdatedExpenseCategoriesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTreasuryAccountsInput = {
@@ -8341,6 +8464,7 @@ export type UserCreateWithoutCreatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTreasuryAccountsInput = {
@@ -8402,6 +8526,7 @@ export type UserUncheckedCreateWithoutCreatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTreasuryAccountsInput = {
@@ -8468,6 +8593,7 @@ export type UserCreateWithoutUpdatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTreasuryAccountsInput = {
@@ -8529,6 +8655,7 @@ export type UserUncheckedCreateWithoutUpdatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTreasuryAccountsInput = {
@@ -8606,6 +8733,7 @@ export type UserUpdateWithoutCreatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTreasuryAccountsInput = {
@@ -8667,6 +8795,7 @@ export type UserUncheckedUpdateWithoutCreatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTreasuryAccountsInput = {
@@ -8739,6 +8868,7 @@ export type UserUpdateWithoutUpdatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTreasuryAccountsInput = {
@@ -8800,6 +8930,7 @@ export type UserUncheckedUpdateWithoutUpdatedTreasuryAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTreasuryTransactionsInput = {
@@ -8861,6 +8992,7 @@ export type UserCreateWithoutCreatedTreasuryTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTreasuryTransactionsInput = {
@@ -8922,6 +9054,7 @@ export type UserUncheckedCreateWithoutCreatedTreasuryTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTreasuryTransactionsInput = {
@@ -8999,6 +9132,7 @@ export type UserUpdateWithoutCreatedTreasuryTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTreasuryTransactionsInput = {
@@ -9060,6 +9194,7 @@ export type UserUncheckedUpdateWithoutCreatedTreasuryTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedBankAccountsInput = {
@@ -9121,6 +9256,7 @@ export type UserCreateWithoutCreatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankAccountsInput = {
@@ -9182,6 +9318,7 @@ export type UserUncheckedCreateWithoutCreatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankAccountsInput = {
@@ -9248,6 +9385,7 @@ export type UserCreateWithoutUpdatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedBankAccountsInput = {
@@ -9309,6 +9447,7 @@ export type UserUncheckedCreateWithoutUpdatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedBankAccountsInput = {
@@ -9386,6 +9525,7 @@ export type UserUpdateWithoutCreatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankAccountsInput = {
@@ -9447,6 +9587,7 @@ export type UserUncheckedUpdateWithoutCreatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedBankAccountsInput = {
@@ -9519,6 +9660,7 @@ export type UserUpdateWithoutUpdatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedBankAccountsInput = {
@@ -9580,6 +9722,7 @@ export type UserUncheckedUpdateWithoutUpdatedBankAccountsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReconciledBankTransactionsInput = {
@@ -9641,6 +9784,7 @@ export type UserCreateWithoutReconciledBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReconciledBankTransactionsInput = {
@@ -9702,6 +9846,7 @@ export type UserUncheckedCreateWithoutReconciledBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReconciledBankTransactionsInput = {
@@ -9768,6 +9913,7 @@ export type UserCreateWithoutCreatedBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankTransactionsInput = {
@@ -9829,6 +9975,7 @@ export type UserUncheckedCreateWithoutCreatedBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankTransactionsInput = {
@@ -9906,6 +10053,7 @@ export type UserUpdateWithoutReconciledBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReconciledBankTransactionsInput = {
@@ -9967,6 +10115,7 @@ export type UserUncheckedUpdateWithoutReconciledBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedBankTransactionsInput = {
@@ -10039,6 +10188,7 @@ export type UserUpdateWithoutCreatedBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankTransactionsInput = {
@@ -10100,6 +10250,7 @@ export type UserUncheckedUpdateWithoutCreatedBankTransactionsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedExpensesInput = {
@@ -10161,6 +10312,7 @@ export type UserCreateWithoutCreatedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExpensesInput = {
@@ -10222,6 +10374,7 @@ export type UserUncheckedCreateWithoutCreatedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExpensesInput = {
@@ -10288,6 +10441,7 @@ export type UserCreateWithoutReversedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedExpensesInput = {
@@ -10349,6 +10503,7 @@ export type UserUncheckedCreateWithoutReversedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedExpensesInput = {
@@ -10426,6 +10581,7 @@ export type UserUpdateWithoutCreatedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExpensesInput = {
@@ -10487,6 +10643,7 @@ export type UserUncheckedUpdateWithoutCreatedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedExpensesInput = {
@@ -10559,6 +10716,7 @@ export type UserUpdateWithoutReversedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedExpensesInput = {
@@ -10620,6 +10778,7 @@ export type UserUncheckedUpdateWithoutReversedExpensesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTransfersInput = {
@@ -10681,6 +10840,7 @@ export type UserCreateWithoutCreatedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransfersInput = {
@@ -10742,6 +10902,7 @@ export type UserUncheckedCreateWithoutCreatedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransfersInput = {
@@ -10808,6 +10969,7 @@ export type UserCreateWithoutReversedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReversedTransfersInput = {
@@ -10869,6 +11031,7 @@ export type UserUncheckedCreateWithoutReversedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReversedTransfersInput = {
@@ -10946,6 +11109,7 @@ export type UserUpdateWithoutCreatedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransfersInput = {
@@ -11007,6 +11171,7 @@ export type UserUncheckedUpdateWithoutCreatedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReversedTransfersInput = {
@@ -11079,6 +11244,7 @@ export type UserUpdateWithoutReversedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReversedTransfersInput = {
@@ -11140,6 +11306,7 @@ export type UserUncheckedUpdateWithoutReversedTransfersInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedBankStatementImportsInput = {
@@ -11201,6 +11368,7 @@ export type UserCreateWithoutCreatedBankStatementImportsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedBankStatementImportsInput = {
@@ -11262,6 +11430,7 @@ export type UserUncheckedCreateWithoutCreatedBankStatementImportsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedBankStatementImportsInput = {
@@ -11339,6 +11508,7 @@ export type UserUpdateWithoutCreatedBankStatementImportsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedBankStatementImportsInput = {
@@ -11400,6 +11570,7 @@ export type UserUncheckedUpdateWithoutCreatedBankStatementImportsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutIgnoredBankStatementLinesInput = {
@@ -11461,6 +11632,7 @@ export type UserCreateWithoutIgnoredBankStatementLinesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutIgnoredBankStatementLinesInput = {
@@ -11522,6 +11694,7 @@ export type UserUncheckedCreateWithoutIgnoredBankStatementLinesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutIgnoredBankStatementLinesInput = {
@@ -11599,6 +11772,7 @@ export type UserUpdateWithoutIgnoredBankStatementLinesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIgnoredBankStatementLinesInput = {
@@ -11660,6 +11834,7 @@ export type UserUncheckedUpdateWithoutIgnoredBankStatementLinesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMatchedBankReconciliationsInput = {
@@ -11721,6 +11896,7 @@ export type UserCreateWithoutMatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMatchedBankReconciliationsInput = {
@@ -11782,6 +11958,7 @@ export type UserUncheckedCreateWithoutMatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMatchedBankReconciliationsInput = {
@@ -11848,6 +12025,7 @@ export type UserCreateWithoutUnmatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUnmatchedBankReconciliationsInput = {
@@ -11909,6 +12087,7 @@ export type UserUncheckedCreateWithoutUnmatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUnmatchedBankReconciliationsInput = {
@@ -11986,6 +12165,7 @@ export type UserUpdateWithoutMatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMatchedBankReconciliationsInput = {
@@ -12047,6 +12227,7 @@ export type UserUncheckedUpdateWithoutMatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUnmatchedBankReconciliationsInput = {
@@ -12119,6 +12300,7 @@ export type UserUpdateWithoutUnmatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUnmatchedBankReconciliationsInput = {
@@ -12180,6 +12362,7 @@ export type UserUncheckedUpdateWithoutUnmatchedBankReconciliationsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRoleAssignmentsInput = {
@@ -12241,6 +12424,7 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -12302,6 +12486,7 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -12379,6 +12564,7 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -12440,6 +12626,7 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBranchAccessInput = {
@@ -12501,6 +12688,7 @@ export type UserCreateWithoutBranchAccessInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBranchAccessInput = {
@@ -12562,6 +12750,7 @@ export type UserUncheckedCreateWithoutBranchAccessInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBranchAccessInput = {
@@ -12639,6 +12828,7 @@ export type UserUpdateWithoutBranchAccessInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchAccessInput = {
@@ -12700,6 +12890,7 @@ export type UserUncheckedUpdateWithoutBranchAccessInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActorAuditLogsInput = {
@@ -12761,6 +12952,7 @@ export type UserCreateWithoutActorAuditLogsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActorAuditLogsInput = {
@@ -12822,6 +13014,7 @@ export type UserUncheckedCreateWithoutActorAuditLogsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActorAuditLogsInput = {
@@ -12899,6 +13092,7 @@ export type UserUpdateWithoutActorAuditLogsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActorAuditLogsInput = {
@@ -12960,6 +13154,7 @@ export type UserUncheckedUpdateWithoutActorAuditLogsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUpdatedCompanyProfilesInput = {
@@ -13021,6 +13216,7 @@ export type UserCreateWithoutUpdatedCompanyProfilesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCompanyProfilesInput = {
@@ -13082,6 +13278,7 @@ export type UserUncheckedCreateWithoutUpdatedCompanyProfilesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCompanyProfilesInput = {
@@ -13159,6 +13356,7 @@ export type UserUpdateWithoutUpdatedCompanyProfilesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput = {
@@ -13220,6 +13418,7 @@ export type UserUncheckedUpdateWithoutUpdatedCompanyProfilesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUpdatedEmailConfigsInput = {
@@ -13281,6 +13480,7 @@ export type UserCreateWithoutUpdatedEmailConfigsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedEmailConfigsInput = {
@@ -13342,6 +13542,7 @@ export type UserUncheckedCreateWithoutUpdatedEmailConfigsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedEmailConfigsInput = {
@@ -13419,6 +13620,7 @@ export type UserUpdateWithoutUpdatedEmailConfigsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedEmailConfigsInput = {
@@ -13480,6 +13682,7 @@ export type UserUncheckedUpdateWithoutUpdatedEmailConfigsInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUpdatedNotificationTemplatesInput = {
@@ -13541,6 +13744,7 @@ export type UserCreateWithoutUpdatedNotificationTemplatesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedNotificationTemplatesInput = {
@@ -13602,6 +13806,7 @@ export type UserUncheckedCreateWithoutUpdatedNotificationTemplatesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedNotificationTemplatesInput = {
@@ -13679,6 +13884,7 @@ export type UserUpdateWithoutUpdatedNotificationTemplatesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedNotificationTemplatesInput = {
@@ -13740,6 +13946,7 @@ export type UserUncheckedUpdateWithoutUpdatedNotificationTemplatesInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUploadedMemberDocumentsInput = {
@@ -13801,6 +14008,7 @@ export type UserCreateWithoutUploadedMemberDocumentsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUploadedMemberDocumentsInput = {
@@ -13862,6 +14070,7 @@ export type UserUncheckedCreateWithoutUploadedMemberDocumentsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUploadedMemberDocumentsInput = {
@@ -13939,6 +14148,7 @@ export type UserUpdateWithoutUploadedMemberDocumentsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedMemberDocumentsInput = {
@@ -14000,6 +14210,7 @@ export type UserUncheckedUpdateWithoutUploadedMemberDocumentsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedCustomFieldDefsInput = {
@@ -14061,6 +14272,7 @@ export type UserCreateWithoutCreatedCustomFieldDefsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCustomFieldDefsInput = {
@@ -14122,6 +14334,7 @@ export type UserUncheckedCreateWithoutCreatedCustomFieldDefsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCustomFieldDefsInput = {
@@ -14199,6 +14412,7 @@ export type UserUpdateWithoutCreatedCustomFieldDefsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCustomFieldDefsInput = {
@@ -14260,6 +14474,7 @@ export type UserUncheckedUpdateWithoutCreatedCustomFieldDefsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -14321,6 +14536,7 @@ export type UserCreateWithoutNotificationsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
   uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -14382,6 +14598,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -14459,6 +14676,7 @@ export type UserUpdateWithoutNotificationsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -14520,6 +14738,271 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPasswordResetTokensInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  hasGlobalBranchAccess?: boolean
+  branchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedCreateNestedManyWithoutUserInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutUpdatedByInput
+  approvedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutApprovedByInput
+  disbursedLoans?: Prisma.LoanUncheckedCreateNestedManyWithoutDisbursedByInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedCreateNestedManyWithoutReversedByInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedCreateNestedManyWithoutUpdatedByInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedCreateNestedManyWithoutCreatedByInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReversedByInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutRejectedByInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutCreatedByInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedCreateNestedManyWithoutReconciledByInput
+  createdExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedExpenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutReversedByInput
+  createdTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutCreatedByInput
+  reversedTransfers?: Prisma.TransferUncheckedCreateNestedManyWithoutReversedByInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedCreateNestedManyWithoutCreatedByInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedCreateNestedManyWithoutIgnoredByInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutMatchedByInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedCreateNestedManyWithoutUnmatchedByInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPasswordResetTokensInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPasswordResetTokensInput, Prisma.UserUncheckedCreateWithoutPasswordResetTokensInput>
+}
+
+export type UserUpsertWithoutPasswordResetTokensInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPasswordResetTokensInput, Prisma.UserUncheckedUpdateWithoutPasswordResetTokensInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPasswordResetTokensInput, Prisma.UserUncheckedCreateWithoutPasswordResetTokensInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPasswordResetTokensInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPasswordResetTokensInput, Prisma.UserUncheckedUpdateWithoutPasswordResetTokensInput>
+}
+
+export type UserUpdateWithoutPasswordResetTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  hasGlobalBranchAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  branchAccess?: Prisma.UserBranchAccessUncheckedUpdateManyWithoutUserNestedInput
+  actorAuditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoanProducts?: Prisma.LoanProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLoans?: Prisma.LoanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLoans?: Prisma.LoanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  approvedLoans?: Prisma.LoanUncheckedUpdateManyWithoutApprovedByNestedInput
+  disbursedLoans?: Prisma.LoanUncheckedUpdateManyWithoutDisbursedByNestedInput
+  createdRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedRepayments?: Prisma.LoanRepaymentUncheckedUpdateManyWithoutReversedByNestedInput
+  createdPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPenaltyRules?: Prisma.LoanPenaltyRuleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  collectionNotes?: Prisma.CollectionNoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountTypes?: Prisma.AccountTypePolicyUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactionCategories?: Prisma.TransactionCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReversedByNestedInput
+  approvedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdDepositRequests?: Prisma.DepositRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  rejectedWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutRejectedByNestedInput
+  createdWithdrawalRequests?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedExpenseCategories?: Prisma.ExpenseCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTreasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTreasuryTransactions?: Prisma.TreasuryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBankAccounts?: Prisma.BankAccountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  reconciledBankTransactions?: Prisma.BankTransactionUncheckedUpdateManyWithoutReconciledByNestedInput
+  createdExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedExpenses?: Prisma.ExpenseUncheckedUpdateManyWithoutReversedByNestedInput
+  createdTransfers?: Prisma.TransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  reversedTransfers?: Prisma.TransferUncheckedUpdateManyWithoutReversedByNestedInput
+  createdBankStatementImports?: Prisma.BankStatementImportUncheckedUpdateManyWithoutCreatedByNestedInput
+  ignoredBankStatementLines?: Prisma.BankStatementLineUncheckedUpdateManyWithoutIgnoredByNestedInput
+  matchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutMatchedByNestedInput
+  unmatchedBankReconciliations?: Prisma.BankReconciliationMatchUncheckedUpdateManyWithoutUnmatchedByNestedInput
+  updatedCompanyProfiles?: Prisma.CompanyProfileUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedEmailConfigs?: Prisma.EmailConfigurationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedNotificationTemplates?: Prisma.NotificationTemplateUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyBranchInput = {
@@ -14593,6 +15076,7 @@ export type UserUpdateWithoutBranchInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchInput = {
@@ -14654,6 +15138,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   uploadedMemberDocuments?: Prisma.MemberDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdCustomFieldDefs?: Prisma.MemberCustomFieldDefinitionUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -14722,6 +15207,7 @@ export type UserCountOutputType = {
   uploadedMemberDocuments: number
   createdCustomFieldDefs: number
   notifications: number
+  passwordResetTokens: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -14773,6 +15259,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   uploadedMemberDocuments?: boolean | UserCountOutputTypeCountUploadedMemberDocumentsArgs
   createdCustomFieldDefs?: boolean | UserCountOutputTypeCountCreatedCustomFieldDefsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  passwordResetTokens?: boolean | UserCountOutputTypeCountPasswordResetTokensArgs
 }
 
 /**
@@ -15121,6 +15608,13 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPasswordResetTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PasswordResetTokenWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -15183,6 +15677,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   uploadedMemberDocuments?: boolean | Prisma.User$uploadedMemberDocumentsArgs<ExtArgs>
   createdCustomFieldDefs?: boolean | Prisma.User$createdCustomFieldDefsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  passwordResetTokens?: boolean | Prisma.User$passwordResetTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -15279,6 +15774,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   uploadedMemberDocuments?: boolean | Prisma.User$uploadedMemberDocumentsArgs<ExtArgs>
   createdCustomFieldDefs?: boolean | Prisma.User$createdCustomFieldDefsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  passwordResetTokens?: boolean | Prisma.User$passwordResetTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -15341,6 +15837,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     uploadedMemberDocuments: Prisma.$MemberDocumentPayload<ExtArgs>[]
     createdCustomFieldDefs: Prisma.$MemberCustomFieldDefinitionPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    passwordResetTokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -15797,6 +16294,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   uploadedMemberDocuments<T extends Prisma.User$uploadedMemberDocumentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedMemberDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdCustomFieldDefs<T extends Prisma.User$createdCustomFieldDefsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdCustomFieldDefsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberCustomFieldDefinitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  passwordResetTokens<T extends Prisma.User$passwordResetTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$passwordResetTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17424,6 +17922,30 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.passwordResetTokens
+ */
+export type User$passwordResetTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PasswordResetToken
+   */
+  select?: Prisma.PasswordResetTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PasswordResetToken
+   */
+  omit?: Prisma.PasswordResetTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PasswordResetTokenInclude<ExtArgs> | null
+  where?: Prisma.PasswordResetTokenWhereInput
+  orderBy?: Prisma.PasswordResetTokenOrderByWithRelationInput | Prisma.PasswordResetTokenOrderByWithRelationInput[]
+  cursor?: Prisma.PasswordResetTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PasswordResetTokenScalarFieldEnum | Prisma.PasswordResetTokenScalarFieldEnum[]
 }
 
 /**

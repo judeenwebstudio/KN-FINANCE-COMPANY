@@ -192,6 +192,7 @@ model User {
   uploadedMemberDocuments     MemberDocument[]          @relation("DocumentUploadedBy")
   createdCustomFieldDefs     MemberCustomFieldDefinition[] @relation("CustomFieldDefCreatedBy")
   notifications              Notification[]            @relation("UserNotifications")
+  passwordResetTokens        PasswordResetToken[]
 
   @@index([branchId])
   @@index([role, status])
@@ -1306,5 +1307,15 @@ model Notification {
   @@index([userId, createdAt])
 }
 
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
 
-
+  @@index([userId])
+}

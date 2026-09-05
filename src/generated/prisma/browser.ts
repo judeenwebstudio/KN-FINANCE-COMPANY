@@ -222,3 +222,8 @@ export type MemberCustomFieldValue = Prisma.MemberCustomFieldValueModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel

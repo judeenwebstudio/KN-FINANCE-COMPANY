@@ -38,8 +38,34 @@ export function UserDetailsClient({
   const [hasGlobalBranchAccess, setHasGlobalBranchAccess] = useState(targetUser.hasGlobalBranchAccess);
 
   const [saving, setSaving] = useState(false);
+  const [sendingReset, setSendingReset] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  async function handleSendResetLink() {
+    setSendingReset(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const res = await fetch(`/api/admin/users/${targetUser.id}/reset-password`, {
+        method: "POST",
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to send reset link.");
+
+      if (data.delivered) {
+        setSuccess(data.message || "Password reset instructions sent.");
+      } else {
+        setError(data.message || "Email provider is not configured.");
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Reset link request failed.");
+    } finally {
+      setSendingReset(false);
+    }
+  }
 
   async function handleSave() {
     setSaving(true);
@@ -102,9 +128,20 @@ export function UserDetailsClient({
           </div>
         </div>
 
-        <Button onClick={handleSave} disabled={saving} className="bg-indigo-600 hover:bg-indigo-700">
-          {saving ? "Saving Changes..." : "Save Changes"}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleSendResetLink}
+            disabled={sendingReset || saving}
+            className="border-slate-300 text-slate-700 hover:bg-slate-50"
+          >
+            {sendingReset ? "Sending Reset..." : "Send Password Reset Link"}
+          </Button>
+          <Button onClick={handleSave} disabled={saving || sendingReset} className="bg-indigo-600 hover:bg-indigo-700">
+            {saving ? "Saving Changes..." : "Save Changes"}
+          </Button>
+        </div>
       </div>
 
       {error && (
