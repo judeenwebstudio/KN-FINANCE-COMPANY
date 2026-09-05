@@ -145,6 +145,7 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
   });
 
   test("F & G. Permission evaluation MUST NOT mutate RBAC database records", async () => {
+    await bootstrapRBAC();
     const initialAssignmentCount = await prisma.userRoleAssignment.count();
     const initialPermissionCount = await prisma.rolePermission.count();
 

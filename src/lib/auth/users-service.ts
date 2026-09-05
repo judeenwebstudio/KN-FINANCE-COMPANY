@@ -306,8 +306,26 @@ export async function updateUser(input: UpdateUserInput) {
 
       // Update basic fields
       const updateData: Prisma.UserUpdateInput = {};
-      if (input.name !== undefined) updateData.name = input.name.trim();
-      if (input.email !== undefined) updateData.email = input.email.toLowerCase().trim();
+      if (input.name !== undefined) {
+        const trimmedName = input.name.trim();
+        if (trimmedName.length === 0) {
+          throw new PrivilegeEscalationError("Full Name cannot be empty.");
+        }
+        updateData.name = trimmedName;
+      }
+      if (input.email !== undefined) {
+        const normalizedEmail = input.email.toLowerCase().trim();
+        if (!normalizedEmail || !normalizedEmail.includes("@")) {
+          throw new PrivilegeEscalationError("Valid email address is required.");
+        }
+        if (normalizedEmail !== targetUser.email) {
+          const existingEmailUser = await tx.user.findUnique({ where: { email: normalizedEmail } });
+          if (existingEmailUser && existingEmailUser.id !== input.userId) {
+            throw new PrivilegeEscalationError(`Email address '${normalizedEmail}' is already in use by another account.`);
+          }
+        }
+        updateData.email = normalizedEmail;
+      }
       if (input.password !== undefined && input.password.trim()) {
         updateData.passwordHash = await hash(input.password, 12);
       }
@@ -347,6 +365,8 @@ export async function updateUser(input: UpdateUserInput) {
           entityType: "User",
           entityId: updatedUser.id,
           metadata: {
+            nameUpdated: input.name !== undefined,
+            emailUpdated: input.email !== undefined,
             statusBefore: targetUser.status,
             statusAfter: updatedUser.status,
             rolesUpdated: input.roleIds !== undefined,

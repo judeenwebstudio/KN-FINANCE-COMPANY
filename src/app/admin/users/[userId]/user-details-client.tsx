@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowLeft, Shield, Building2, Key, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Shield, Building2, Key, CheckCircle2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
@@ -32,6 +32,8 @@ export function UserDetailsClient({
   allBranches: BranchDTO[];
 }) {
   const router = useRouter();
+  const [name, setName] = useState(targetUser.name);
+  const [email, setEmail] = useState(targetUser.email);
   const [status, setStatus] = useState<"ACTIVE" | "INACTIVE" | "SUSPENDED">(targetUser.status);
   const [selectedRoleIds, setSelectedRoleIds] = useState<string[]>(targetUser.roles.map((r) => r.id));
   const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>(targetUser.branches.map((b) => b.id));
@@ -68,6 +70,15 @@ export function UserDetailsClient({
   }
 
   async function handleSave() {
+    if (!name.trim()) {
+      setError("Full Name is required.");
+      return;
+    }
+    if (!email.trim() || !email.includes("@")) {
+      setError("Valid email address is required.");
+      return;
+    }
+
     setSaving(true);
     setError(null);
     setSuccess(null);
@@ -77,6 +88,8 @@ export function UserDetailsClient({
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
           status,
           roleIds: selectedRoleIds,
           branchIds: selectedBranchIds,
@@ -87,7 +100,7 @@ export function UserDetailsClient({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to update user.");
 
-      setSuccess("User configuration updated successfully!");
+      setSuccess("User profile and configuration updated successfully!");
       router.refresh();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Update failed");
@@ -117,14 +130,14 @@ export function UserDetailsClient({
           </Button>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-slate-900">{targetUser.name}</h1>
+              <h1 className="text-xl font-bold text-slate-900">{name || targetUser.name}</h1>
               <StatusBadge
                 tone={status === "ACTIVE" ? "success" : status === "SUSPENDED" ? "danger" : "warning"}
               >
                 {status}
               </StatusBadge>
             </div>
-            <p className="text-xs text-slate-500">{targetUser.email}</p>
+            <p className="text-xs text-slate-500">{email || targetUser.email}</p>
           </div>
         </div>
 
@@ -157,8 +170,45 @@ export function UserDetailsClient({
       )}
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left 2 Cols: Roles & Branch Scope */}
+        {/* Left 2 Cols: Basic Profile, Roles & Branch Scope */}
         <div className="lg:col-span-2 space-y-6">
+          {/* User Profile / Basic Information */}
+          <Card className="p-5 space-y-4">
+            <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+              <User className="h-4 w-4 text-indigo-600" /> User Profile & Basic Information
+            </h2>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Full Name <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Avery Morgan"
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Email Address <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="user@knfinance.com"
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none"
+                  required
+                />
+              </div>
+            </div>
+          </Card>
+
           {/* Status Control */}
           <Card className="p-5 space-y-3">
             <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">Account Lifecycle Status</h2>
