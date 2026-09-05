@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useEffect, useRef, useCallback } from "react";
 import Script from "next/script";
-import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail, Users } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from "lucide-react";
 import { loginAction } from "./actions";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -255,26 +255,6 @@ export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
           />
         )}
       </Button>
-
-      {/* ── Separator ── */}
-      <div className="relative flex items-center gap-3 py-0.5">
-        <div className="h-px flex-1 bg-slate-200" />
-        <span className="text-xs text-slate-400">or</span>
-        <div className="h-px flex-1 bg-slate-200" />
-      </div>
-
-      {/* ── Member login ── */}
-      <button
-        type="button"
-        disabled={pending}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/60 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-[#1a2e5a]/30 hover:bg-white hover:text-[#1a2e5a] disabled:pointer-events-none disabled:opacity-50"
-        title="Members use the same login form — sign in above"
-        aria-label="Member Login — use the sign-in form above"
-      >
-        <Users className="size-4" aria-hidden="true" />
-        Member Login
-      </button>
-
     </form>
   );
 }
