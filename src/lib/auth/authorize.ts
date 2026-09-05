@@ -176,3 +176,33 @@ export async function assertBranchAccess(userId: string, branchId: string) {
     throw new BranchAccessDeniedError(`Access denied to branch ${branchId}`);
   }
 }
+
+/**
+ * Resolves the primary relational RBAC role display name for an active user.
+ * Prioritizes Super Admin role assignments, then the primary assigned active role profile name.
+ * Deduplicated per-request via React cache.
+ */
+export const getUserPrimaryRoleName = cache(async (userId: string): Promise<string> => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      roleAssignments: {
+        where: { role: { status: "ACTIVE" } },
+        include: { role: true },
+        orderBy: { createdAt: "asc" },
+      },
+    },
+  });
+
+  if (!user || user.status !== "ACTIVE" || user.roleAssignments.length === 0) {
+    return "Member";
+  }
+
+  const superAdminAssignment = user.roleAssignments.find((ra) => ra.role.isSuperAdminRole);
+  if (superAdminAssignment) {
+    return superAdminAssignment.role.name;
+  }
+
+  return user.roleAssignments[0].role.name;
+});
+

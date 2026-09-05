@@ -1,14 +1,19 @@
 import { PortalShell } from "@/components/portal-shell";
 import { requireAdmin } from "@/lib/authz";
-import { getUserEffectivePermissions, getUserAuthorizedBranchScope } from "@/lib/auth/authorize";
+import {
+  getUserEffectivePermissions,
+  getUserAuthorizedBranchScope,
+  getUserPrimaryRoleName,
+} from "@/lib/auth/authorize";
 import { prisma } from "@/lib/prisma";
 import type { BranchDTO, PortalUserDTO } from "@/types/portal";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const userRecord = await requireAdmin();
-  const [branchScope, permissionsSet] = await Promise.all([
+  const [branchScope, permissionsSet, roleName] = await Promise.all([
     getUserAuthorizedBranchScope(userRecord.id),
     getUserEffectivePermissions(userRecord.id),
+    getUserPrimaryRoleName(userRecord.id),
   ]);
 
   const branchRecords = await prisma.branch.findMany({
@@ -17,11 +22,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     orderBy: { name: "asc" },
   });
 
+  const displayName = userRecord.name && userRecord.name.trim().length > 0 ? userRecord.name.trim() : userRecord.email;
+
   const user: PortalUserDTO = {
     id: String(userRecord.id),
-    name: String(userRecord.name),
+    name: displayName,
     email: String(userRecord.email),
-    role: String(userRecord.role),
+    role: roleName,
     permissions: Array.from(permissionsSet),
     hasGlobalBranchAccess: branchScope.global,
   };

@@ -177,21 +177,6 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
               );
             })}
       </nav>
-
-      {/* ── Dark Sidebar User Card ── */}
-      <div className="border-t border-shell-border bg-shell-navy p-3 shrink-0">
-        <div className={cn("flex items-center gap-3 rounded-xl border border-shell-border-subtle bg-shell-navy-surface p-2.5 shadow-xs", collapsed && "justify-center p-2")}>
-          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-shell-gold/20 text-shell-gold-light border border-shell-gold/30">
-            <UserRound className="size-4.5 text-shell-gold-light" />
-          </div>
-          {!collapsed && (
-            <div className="min-w-0">
-              <p className="truncate text-xs font-bold text-white">{user.name}</p>
-              <p className="truncate text-[10px] font-medium text-slate-400">{user.role.replaceAll("_", " ")}</p>
-            </div>
-          )}
-        </div>
-      </div>
     </>
   );
 
@@ -353,9 +338,9 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                 <span className="grid size-8 place-items-center rounded-xl bg-shell-gold/20 text-shell-gold-light ring-1 ring-shell-gold/40">
                   <UserRound className="size-4 text-shell-gold-light" />
                 </span>
-                <span className="hidden text-left md:block">
-                  <span className="block text-xs font-semibold text-white">{user.name}</span>
-                  <span className="block text-[10px] font-medium text-slate-400">{portal} portal</span>
+                <span className="hidden text-left md:block max-w-44">
+                  <span className="block truncate text-xs font-semibold text-white">{user.name}</span>
+                  <span className="block truncate text-[10px] font-medium text-slate-400">{user.role}</span>
                 </span>
                 <ChevronDown className="hidden size-3.5 text-slate-400 md:block" />
               </button>
@@ -367,7 +352,8 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                 >
                   <div className="border-b border-slate-100 px-3 py-2">
                     <p className="truncate text-xs font-bold text-slate-900">{user.name}</p>
-                    <p className="truncate text-[11px] text-slate-500">{user.email}</p>
+                    <p className="truncate text-[10px] font-semibold text-[#1a2e5a]">{user.role}</p>
+                    <p className="truncate text-[11px] text-slate-500 mt-0.5">{user.email}</p>
                   </div>
                   <Link
                     role="menuitem"
