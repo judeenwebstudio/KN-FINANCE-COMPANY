@@ -1,10 +1,33 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect, useRef, useCallback } from "react";
+import Script from "next/script";
 import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail, Users } from "lucide-react";
 import { loginAction } from "./actions";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      render: (
+        container: HTMLElement | string,
+        parameters: {
+          sitekey: string;
+          theme?: "light" | "dark";
+          size?: "normal" | "compact";
+          tabindex?: number;
+          callback?: (token: string) => void;
+          "expired-callback"?: () => void;
+          "error-callback"?: () => void;
+        }
+      ) => number;
+      reset: (widgetId?: number) => void;
+      getResponse: (widgetId?: number) => string;
+    };
+  }
+}
 
 /* ── Shared input style ── */
 const inputClass =
@@ -19,11 +42,69 @@ export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
   const [state, action, pending] = useActionState(loginAction, {});
   const [showPassword, setShowPassword] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState("");
+
+  const recaptchaRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<number | null>(null);
+
+  const isRecaptchaEnabled = Boolean(recaptchaSiteKey && recaptchaSiteKey.trim().length > 0);
+
+  const renderRecaptchaWidget = useCallback(() => {
+    if (
+      !isRecaptchaEnabled ||
+      typeof window === "undefined" ||
+      !window.grecaptcha ||
+      !recaptchaRef.current
+    ) {
+      return;
+    }
+
+    window.grecaptcha.ready(() => {
+      if (!recaptchaRef.current || widgetIdRef.current !== null) return;
+      try {
+        recaptchaRef.current.innerHTML = "";
+        const id = window.grecaptcha!.render(recaptchaRef.current, {
+          sitekey: recaptchaSiteKey!,
+          callback: (token: string) => {
+            setRecaptchaToken(token);
+          },
+          "expired-callback": () => {
+            setRecaptchaToken("");
+          },
+          "error-callback": () => {
+            setRecaptchaToken("");
+          },
+        });
+        widgetIdRef.current = id;
+      } catch (err) {
+        console.error("[reCAPTCHA Widget Render Error]", err);
+      }
+    });
+  }, [isRecaptchaEnabled, recaptchaSiteKey]);
+
+  useEffect(() => {
+    if (isRecaptchaEnabled && typeof window !== "undefined" && window.grecaptcha) {
+      renderRecaptchaWidget();
+    }
+  }, [isRecaptchaEnabled, renderRecaptchaWidget]);
+
+  useEffect(() => {
+    if (state.error && isRecaptchaEnabled) {
+      setRecaptchaToken("");
+      if (typeof window !== "undefined" && window.grecaptcha && widgetIdRef.current !== null) {
+        try {
+          window.grecaptcha.reset(widgetIdRef.current);
+        } catch {
+          // Ignore reset error if widget is unmounted
+        }
+      }
+    }
+  }, [state.error, isRecaptchaEnabled]);
+
   const hasError = Boolean(state.error);
 
   return (
     <form action={action} className="space-y-4">
-      {recaptchaSiteKey ? (
+      {isRecaptchaEnabled ? (
         <input type="hidden" name="g-recaptcha-response" value={recaptchaToken} />
       ) : null}
 
@@ -125,6 +206,24 @@ export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
         </button>
       </div>
 
+      {/* ── reCAPTCHA v2 Checkbox Widget Container ── */}
+      {isRecaptchaEnabled ? (
+        <>
+          <Script
+            src="https://www.google.com/recaptcha/api.js?render=explicit"
+            strategy="afterInteractive"
+            onLoad={renderRecaptchaWidget}
+          />
+          <div className="my-2.5 flex flex-col items-center justify-center">
+            <div
+              ref={recaptchaRef}
+              className="g-recaptcha flex min-h-[78px] justify-center"
+              data-sitekey={recaptchaSiteKey}
+            />
+          </div>
+        </>
+      ) : null}
+
       {/* ── Error ── */}
       {state.error && (
         <p
@@ -164,7 +263,7 @@ export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
         <div className="h-px flex-1 bg-slate-200" />
       </div>
 
-      {/* ── Member login — same credentials form, visual portal hint ── */}
+      {/* ── Member login ── */}
       <button
         type="button"
         disabled={pending}

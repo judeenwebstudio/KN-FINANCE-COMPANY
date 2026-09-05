@@ -2,6 +2,8 @@ import Image from "next/image";
 import { LoginForm } from "./login-form";
 import { getRecaptchaSiteKey } from "@/lib/security/recaptcha";
 
+export const dynamic = "force-dynamic";
+
 export default function LoginPage() {
   const recaptchaSiteKey = getRecaptchaSiteKey();
 
