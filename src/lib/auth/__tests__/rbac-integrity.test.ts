@@ -201,4 +201,87 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       await prisma.user.delete({ where: { id: testUser.id } });
     }
   });
+
+  test("I. User Details Role Checkbox Rendering & Save-Without-Role-Change Integrity", async () => {
+    const adminRole = await prisma.roleProfile.findUnique({ where: { slug: "admin" } });
+    const superAdminRole = await prisma.roleProfile.findUnique({ where: { slug: "super_admin" } });
+
+    assert.ok(adminRole, "admin role profile must exist");
+    assert.ok(superAdminRole, "super_admin role profile must exist");
+
+    // Create test user with ONLY super_admin assignment
+    const testUser = await prisma.user.create({
+      data: {
+        email: `checkbox-test-${Date.now()}@test.com`,
+        name: "Checkbox Rendering Test User",
+        passwordHash: "dummyhash",
+        status: "ACTIVE",
+        roleAssignments: {
+          create: { roleId: superAdminRole.id },
+        },
+      },
+      include: {
+        roleAssignments: { include: { role: true } },
+      },
+    });
+
+    const actorUser = await prisma.user.findFirst({
+      where: { roleAssignments: { some: { role: { slug: "super_admin" } } }, status: "ACTIVE" },
+    });
+    assert.ok(actorUser, "Actor super admin user must exist");
+
+    try {
+      // 1. Simulate server component DTO generation (page.tsx)
+      const targetUserDTO = {
+        id: testUser.id,
+        name: testUser.name,
+        email: testUser.email,
+        roles: testUser.roleAssignments
+          .filter((ra) => ra.role.status === "ACTIVE")
+          .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug })),
+      };
+
+      const allRolesDTO = [adminRole, superAdminRole].map((r) => ({
+        id: r.id,
+        name: r.name,
+        slug: r.slug,
+      }));
+      assert.equal(allRolesDTO.length, 2, "Available roles list should contain both roles");
+
+      // 2. Client-side checked state determination (user-details-client.tsx)
+      const selectedRoleProfileIds = new Set(targetUserDTO.roles.map((r) => r.id));
+
+      const isAdminChecked = selectedRoleProfileIds.has(adminRole.id);
+      const isSuperAdminChecked = selectedRoleProfileIds.has(superAdminRole.id);
+
+      assert.equal(isAdminChecked, false, "Administrator role MUST be unchecked for user with only super_admin assignment");
+      assert.equal(isSuperAdminChecked, true, "Super Administrator role MUST be checked for user with super_admin assignment");
+
+      // 3. Simulate Save Changes without modifying roles
+      const { updateUser } = await import("../users-service");
+      await updateUser({
+        userId: testUser.id,
+        name: testUser.name,
+        email: testUser.email,
+        roleIds: Array.from(selectedRoleProfileIds),
+        actorUserId: actorUser.id,
+      });
+
+      // 4. Verify post-save DB state
+      const reloadedUser = await prisma.user.findUnique({
+        where: { id: testUser.id },
+        include: { roleAssignments: { include: { role: true } } },
+      });
+
+      assert.ok(reloadedUser, "User record must exist after save");
+      const assignedRoleSlugs = reloadedUser.roleAssignments.map((ra) => ra.role.slug);
+      assert.equal(assignedRoleSlugs.length, 1, "User must maintain exactly 1 assigned role after save");
+      assert.equal(assignedRoleSlugs[0], "super_admin", "Assigned role must remain super_admin");
+      assert.equal(assignedRoleSlugs.includes("admin"), false, "Admin role MUST NOT be assigned after saving");
+    } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
+      await prisma.userRoleAssignment.deleteMany({ where: { userId: testUser.id } });
+      await prisma.user.delete({ where: { id: testUser.id } });
+    }
+  });
 });

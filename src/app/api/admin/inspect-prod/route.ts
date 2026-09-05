@@ -75,7 +75,7 @@ export async function GET() {
         id: user.id,
         name: user.name,
         email: user.email,
-        legacyRoleEnum: (user as any).role,
+        legacyRoleEnum: (user as Record<string, unknown>).role,
         status: user.status,
         hasGlobalBranchAccess: user.hasGlobalBranchAccess,
       },

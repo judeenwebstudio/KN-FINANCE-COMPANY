@@ -39,10 +39,27 @@ export function UserDetailsClient({
   const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>(targetUser.branches.map((b) => b.id));
   const [hasGlobalBranchAccess, setHasGlobalBranchAccess] = useState(targetUser.hasGlobalBranchAccess);
 
+  // Synchronize component state with targetUser props when props change or after router.refresh()
+  const [prevUserId, setPrevUserId] = useState(targetUser.id);
+  const [prevRoles, setPrevRoles] = useState(targetUser.roles);
+  if (targetUser.id !== prevUserId || targetUser.roles !== prevRoles) {
+    setPrevUserId(targetUser.id);
+    setPrevRoles(targetUser.roles);
+    setName(targetUser.name);
+    setEmail(targetUser.email);
+    setStatus(targetUser.status);
+    setSelectedRoleIds(targetUser.roles.map((r) => r.id));
+    setSelectedBranchIds(targetUser.branches.map((b) => b.id));
+    setHasGlobalBranchAccess(targetUser.hasGlobalBranchAccess);
+  }
+
   const [saving, setSaving] = useState(false);
   const [sendingReset, setSendingReset] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const selectedRoleProfileIds = new Set(selectedRoleIds);
+  const selectedBranchProfileIds = new Set(selectedBranchIds);
 
   async function handleSendResetLink() {
     setSendingReset(true);
@@ -91,8 +108,8 @@ export function UserDetailsClient({
           name: name.trim(),
           email: email.trim(),
           status,
-          roleIds: selectedRoleIds,
-          branchIds: selectedBranchIds,
+          roleIds: Array.from(selectedRoleProfileIds),
+          branchIds: Array.from(selectedBranchProfileIds),
           hasGlobalBranchAccess,
         }),
       });
@@ -259,21 +276,27 @@ export function UserDetailsClient({
 
             <div className="grid gap-3 sm:grid-cols-2">
               {allRoles.map((role) => {
-                const isSelected = selectedRoleIds.includes(role.id);
+                const isSelected = selectedRoleProfileIds.has(role.id);
                 return (
-                  <div
+                  <label
                     key={role.id}
-                    onClick={() => toggleRole(role.id)}
-                    className={`cursor-pointer rounded-xl border p-3 transition-colors ${
+                    htmlFor={`role-checkbox-${role.id}`}
+                    className={`cursor-pointer rounded-xl border p-3 transition-colors block ${
                       isSelected ? "border-indigo-500 bg-indigo-50/50" : "border-slate-200 hover:border-slate-300"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-slate-900">{role.name}</span>
-                      <input type="checkbox" checked={isSelected} onChange={() => {}} className="h-4 w-4 text-indigo-600" />
+                      <input
+                        id={`role-checkbox-${role.id}`}
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleRole(role.id)}
+                        className="h-4 w-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
+                      />
                     </div>
                     {role.description && <p className="text-[11px] text-slate-500 mt-1">{role.description}</p>}
-                  </div>
+                  </label>
                 );
               })}
             </div>
@@ -291,7 +314,7 @@ export function UserDetailsClient({
                 id="editGlobalScope"
                 checked={hasGlobalBranchAccess}
                 onChange={(e) => setHasGlobalBranchAccess(e.target.checked)}
-                className="h-4 w-4 text-indigo-600"
+                className="h-4 w-4 text-indigo-600 cursor-pointer"
               />
               <label htmlFor="editGlobalScope" className="text-xs font-semibold text-slate-800 cursor-pointer">
                 Global Branch Scope (Access All Branches)
@@ -301,18 +324,24 @@ export function UserDetailsClient({
             {!hasGlobalBranchAccess && (
               <div className="grid gap-2 sm:grid-cols-2 mt-3">
                 {allBranches.map((b) => {
-                  const isSelected = selectedBranchIds.includes(b.id);
+                  const isSelected = selectedBranchProfileIds.has(b.id);
                   return (
-                    <div
+                    <label
                       key={b.id}
-                      onClick={() => toggleBranch(b.id)}
+                      htmlFor={`branch-checkbox-${b.id}`}
                       className={`cursor-pointer rounded-xl border p-2.5 transition-colors flex items-center justify-between ${
                         isSelected ? "border-indigo-500 bg-indigo-50/50" : "border-slate-200 hover:border-slate-300"
                       }`}
                     >
                       <span className="text-xs font-semibold text-slate-800">{b.name} ({b.code})</span>
-                      <input type="checkbox" checked={isSelected} onChange={() => {}} className="h-4 w-4 text-indigo-600" />
-                    </div>
+                      <input
+                        id={`branch-checkbox-${b.id}`}
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleBranch(b.id)}
+                        className="h-4 w-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
+                      />
+                    </label>
                   );
                 })}
               </div>
