@@ -38,7 +38,9 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
     email: user.email,
     status: user.status,
     hasGlobalBranchAccess: user.hasGlobalBranchAccess,
-    roles: user.roleAssignments.map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug, description: ra.role.description })),
+    roles: user.roleAssignments
+      .filter((ra) => ra.role.status === "ACTIVE")
+      .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug, description: ra.role.description })),
     branches: user.branchAccess.map((ba) => ({ id: ba.branch.id, name: ba.branch.name, code: ba.branch.code })),
     effectivePermissions,
     createdAt: user.createdAt.toISOString(),

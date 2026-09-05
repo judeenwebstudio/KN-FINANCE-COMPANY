@@ -217,6 +217,15 @@ export async function bootstrapRBAC(): Promise<{
             });
             usersMigrated++;
           }
+
+          if (targetSlug === "super_admin") {
+            const adminRoleId = roleMap.get("admin");
+            if (adminRoleId) {
+              await prisma.userRoleAssignment.deleteMany({
+                where: { userId: user.id, roleId: adminRoleId },
+              });
+            }
+          }
         }
       }
 

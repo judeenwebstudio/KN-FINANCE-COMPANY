@@ -271,34 +271,36 @@ export async function updateUser(input: UpdateUserInput) {
   // Serializable transaction for safety
   return await prisma.$transaction(
     async (tx) => {
-      // Last Super Admin Protection
-      const superAdminRole = await tx.roleProfile.findUnique({ where: { slug: "super_admin" } });
+      // Last Super Admin Protection based authoritatively on relational RoleProfile.isSuperAdminRole
+      const targetIsSuperAdmin = targetUser.roleAssignments.some(
+        (ra) => ra.role.status === "ACTIVE" && ra.role.isSuperAdminRole
+      );
 
-      if (superAdminRole) {
-        const targetIsSuperAdmin = targetUser.roleAssignments.some(
-          (ra) => ra.roleId === superAdminRole.id
-        );
-
-        const willBeSuperAdmin =
-          input.roleIds !== undefined
-            ? input.roleIds.includes(superAdminRole.id)
-            : targetIsSuperAdmin;
+      if (targetIsSuperAdmin) {
+        let willBeSuperAdmin: boolean = targetIsSuperAdmin;
+        if (input.roleIds !== undefined) {
+          const requestedSuperAdminRoles = await tx.roleProfile.findMany({
+            where: { id: { in: input.roleIds }, status: "ACTIVE", isSuperAdminRole: true },
+          });
+          willBeSuperAdmin = requestedSuperAdminRoles.length > 0;
+        }
 
         const willBeActive =
           input.status !== undefined ? input.status === "ACTIVE" : targetUser.status === "ACTIVE";
 
-        const losesActiveSuperAdmin = targetIsSuperAdmin && targetUser.status === "ACTIVE" && (!willBeActive || !willBeSuperAdmin);
+        const losesActiveSuperAdmin = targetUser.status === "ACTIVE" && (!willBeActive || !willBeSuperAdmin);
 
         if (losesActiveSuperAdmin) {
-          const activeSuperAdminCount = await tx.userRoleAssignment.count({
+          const activeSuperAdmins = await tx.userRoleAssignment.findMany({
             where: {
-              roleId: superAdminRole.id,
-              role: { status: "ACTIVE" },
+              role: { status: "ACTIVE", isSuperAdminRole: true },
               user: { status: "ACTIVE" },
             },
+            select: { userId: true },
+            distinct: ["userId"],
           });
 
-          if (activeSuperAdminCount <= 1) {
+          if (activeSuperAdmins.length <= 1) {
             throw new LastSuperAdminProtectionError();
           }
         }

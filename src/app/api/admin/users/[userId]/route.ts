@@ -30,7 +30,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ userId: 
       email: user.email,
       status: user.status,
       hasGlobalBranchAccess: user.hasGlobalBranchAccess,
-      roles: user.roleAssignments.map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug })),
+      roles: user.roleAssignments
+        .filter((ra) => ra.role.status === "ACTIVE")
+        .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug })),
       branches: user.branchAccess.map((ba) => ({ id: ba.branch.id, name: ba.branch.name, code: ba.branch.code })),
       effectivePermissions,
       branchScope,

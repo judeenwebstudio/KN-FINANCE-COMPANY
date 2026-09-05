@@ -163,4 +163,42 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
     assert.equal(postAssignmentCount, initialAssignmentCount, "Permission evaluations must NOT mutate UserRoleAssignment table");
     assert.equal(postPermissionCount, initialPermissionCount, "Permission evaluations must NOT mutate RolePermission table");
   });
+
+  test("H. Last Super Admin protection and role resolution consistency", async () => {
+    const superAdminRole = await prisma.roleProfile.findUnique({ where: { slug: "super_admin" } });
+    assert.ok(superAdminRole, "super_admin role profile must exist");
+
+    const testUser = await prisma.user.create({
+      data: {
+        email: `consistency-superadmin-${Date.now()}@test.com`,
+        name: "Consistency SuperAdmin Test",
+        passwordHash: "dummyhash",
+        role: "SUPER_ADMIN",
+        status: "ACTIVE",
+        hasGlobalBranchAccess: true,
+        roleAssignments: {
+          create: { roleId: superAdminRole.id },
+        },
+      },
+    });
+
+    try {
+      const perms = await getUserEffectivePermissions(testUser.id);
+      assert.equal(perms.size, 58, "Super Administrator must possess full 58 permissions catalog");
+
+      const activeUser = await prisma.user.findUnique({
+        where: { id: testUser.id },
+        include: { roleAssignments: { include: { role: true } } },
+      });
+      assert.ok(activeUser, "User record must exist");
+      const activeRoles = activeUser.roleAssignments.filter((ra) => ra.role.status === "ACTIVE");
+      assert.equal(activeRoles.length, 1, "User should have exactly 1 active role assignment");
+      assert.equal(activeRoles[0].role.slug, "super_admin", "Active role slug must be super_admin");
+      assert.equal(activeRoles[0].role.name, "Super Administrator", "Active role name must be Super Administrator");
+    } finally {
+      await prisma.auditLog.deleteMany({ where: { actorUserId: testUser.id } });
+      await prisma.userRoleAssignment.deleteMany({ where: { userId: testUser.id } });
+      await prisma.user.delete({ where: { id: testUser.id } });
+    }
+  });
 });

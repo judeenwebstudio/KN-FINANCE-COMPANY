@@ -21,7 +21,9 @@ export default async function UsersPage() {
     email: u.email,
     status: u.status,
     hasGlobalBranchAccess: u.hasGlobalBranchAccess,
-    roles: u.roleAssignments.map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug })),
+    roles: u.roleAssignments
+      .filter((ra) => ra.role.status === "ACTIVE")
+      .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug })),
     branches: u.branchAccess.map((ba) => ({ id: ba.branch.id, name: ba.branch.name, code: ba.branch.code })),
     createdAt: u.createdAt.toISOString(),
   }));
