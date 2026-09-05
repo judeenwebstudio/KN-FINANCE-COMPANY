@@ -1,5 +1,6 @@
 import { isStorageConfigured } from "../storage/private-file-storage";
 import { getEmailProviderStatus } from "./email-service";
+import { getRecaptchaSiteKey, isRecaptchaConfigured } from "../security/recaptcha";
 
 export type IntegrationStatusDTO = {
   storage: { provider: "Vercel Blob"; mode: "Private"; configured: boolean; region: string };
@@ -21,6 +22,7 @@ export function getSafeIntegrationStatus(): IntegrationStatusDTO {
 }
 
 export function getSafeSecurityStatus() {
+  const recaptchaConfigured = isRecaptchaConfigured();
   return {
     minimumPasswordLength: 8,
     bcryptCost: 12,
@@ -32,6 +34,13 @@ export function getSafeSecurityStatus() {
     accountLifecycle: "Only ACTIVE users may authenticate; protected requests re-check current database status.",
     authorizationModel: "Relational role assignments and permissions; legacy role values do not grant authorization.",
     branchScope: "Relational global or explicitly assigned branch access is enforced server-side.",
+    recaptcha: {
+      provider: "Google reCAPTCHA",
+      configured: recaptchaConfigured,
+      serverVerification: recaptchaConfigured ? "Enabled" : "Disabled",
+      protectionScope: "Login Form Only",
+      siteKeyConfigured: Boolean(getRecaptchaSiteKey()),
+    },
   };
 }
 

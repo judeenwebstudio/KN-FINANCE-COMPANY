@@ -15,13 +15,17 @@ const inputClass =
   "disabled:cursor-not-allowed disabled:opacity-60 " +
   "[&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_#fff]";
 
-export function LoginForm() {
+export function LoginForm({ recaptchaSiteKey }: { recaptchaSiteKey?: string }) {
   const [state, action, pending] = useActionState(loginAction, {});
   const [showPassword, setShowPassword] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
   const hasError = Boolean(state.error);
 
   return (
     <form action={action} className="space-y-4">
+      {recaptchaSiteKey ? (
+        <input type="hidden" name="g-recaptcha-response" value={recaptchaToken} />
+      ) : null}
 
       {/* ── Email ── */}
       <div className="space-y-1.5">

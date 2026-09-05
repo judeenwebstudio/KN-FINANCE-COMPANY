@@ -5,6 +5,8 @@ import { z } from "zod";
 function isValidAssetUrl(val: string | null | undefined): boolean {
   if (!val || val.trim() === "") return true;
   const trimmed = val.trim();
+  // Reject SVG for security/sanitization reasons
+  if (trimmed.toLowerCase().endsWith(".svg") || trimmed.toLowerCase().includes("image/svg")) return false;
   // Safe relative paths starting with /
   if (trimmed.startsWith("/")) return true;
   // Safe secure HTTPS URLs
@@ -43,13 +45,13 @@ export const updateCompanyProfileSchema = z.object({
     .trim()
     .nullable()
     .optional()
-    .refine(isValidAssetUrl, { message: "Logo URL must be a relative path (starting with /) or a secure HTTPS URL." }),
+    .refine(isValidAssetUrl, { message: "Logo URL must be a relative path (starting with /) or a secure HTTPS URL (SVG not supported)." }),
   faviconUrl: z
     .string()
     .trim()
     .nullable()
     .optional()
-    .refine(isValidAssetUrl, { message: "Favicon URL must be a relative path (starting with /) or a secure HTTPS URL." }),
+    .refine(isValidAssetUrl, { message: "Favicon URL must be a relative path (starting with /) or a secure HTTPS URL (SVG not supported)." }),
   metaDescription: z.string().trim().nullable().optional(),
 });
 
@@ -73,7 +75,7 @@ export const DEFAULT_COMPANY_PROFILE = {
   timezone: "UTC",
   dateFormat: "YYYY-MM-DD",
   timeFormat: "12h",
-  locale: "en-US",
+  locale: "en-IN",
   logoUrl: "/branding/kn-finance-logo.png",
   faviconUrl: "/favicon.ico",
   metaDescription: "KN Finance Company — Empowering your future. Multi-branch credit and loan management platform.",
@@ -151,7 +153,7 @@ export async function updateCompanyProfile(actorUserId: string, input: UpdateCom
     timezone: validated.timezone || "UTC",
     dateFormat: validated.dateFormat || "YYYY-MM-DD",
     timeFormat: validated.timeFormat || "12h",
-    locale: validated.locale || "en-US",
+    locale: validated.locale || "en-IN",
     logoUrl: validated.logoUrl || "/branding/kn-finance-logo.png",
     faviconUrl: validated.faviconUrl || "/favicon.ico",
     metaDescription: validated.metaDescription || null,

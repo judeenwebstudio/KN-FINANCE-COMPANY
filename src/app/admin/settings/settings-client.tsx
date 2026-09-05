@@ -806,7 +806,18 @@ export function SettingsClient({
               <p className="text-[11px] text-slate-500 mt-1">Relative path starting with `/` or secure `https://` URL.</p>
             </div>
             <div>
-              <label className={labelClass}>Favicon Path / URL *</label>
+              <div className="flex items-center justify-between">
+                <label className={labelClass}>Favicon Path / URL *</label>
+                {canManageCompany && (
+                  <button
+                    type="button"
+                    onClick={() => setBrandingForm({ ...brandingForm, faviconUrl: "/favicon.ico" })}
+                    className="text-[11px] font-semibold text-[#1a2e5a] hover:underline"
+                  >
+                    Restore Default (/favicon.ico)
+                  </button>
+                )}
+              </div>
               <input
                 type="text"
                 disabled={!canManageCompany}
@@ -815,14 +826,33 @@ export function SettingsClient({
                 className={inputClass}
                 required
               />
-              <p className="text-[11px] text-slate-500 mt-1">Relative path starting with `/` or secure `https://` URL.</p>
+              <p className="text-[11px] text-slate-500 mt-1">
+                Relative path (starting with `/`) or secure `https://` URL. PNG and ICO files supported (SVG prohibited).
+              </p>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100">
-            <h3 className="text-sm font-bold text-slate-900 mb-3">Live Brand Preview</h3>
+          <div className="pt-4 border-t border-slate-100 space-y-4">
+            <h3 className="text-sm font-bold text-slate-900">Live Brand & Browser Tab Preview</h3>
+
+            {/* Browser Tab Simulation */}
+            <div className="max-w-xs rounded-t-lg bg-slate-200 border border-slate-300 p-2 flex items-center gap-2">
+              <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-t shadow-xs text-xs text-slate-800 font-medium max-w-[240px] truncate border-t border-x border-slate-300">
+                <Image
+                  src={brandingForm.faviconUrl || "/favicon.ico"}
+                  alt="Favicon"
+                  width={16}
+                  height={16}
+                  className="size-4 object-contain rounded-xs"
+                  unoptimized
+                />
+                <span className="truncate">{brandingForm.displayName || "KN Finance Company"}</span>
+              </div>
+            </div>
+
+            {/* Brand Logo & Description Card */}
             <div className="flex items-center gap-6 p-6 rounded-xl bg-slate-900 border border-slate-800 text-white">
-              <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-white p-2">
+              <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-white p-2 shrink-0">
                 <Image
                   src={brandingForm.logoUrl || "/branding/kn-finance-logo.png"}
                   alt="Brand Logo"
