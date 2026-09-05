@@ -16,8 +16,6 @@ type UserDetailDTO = {
   email: string;
   status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
   hasGlobalBranchAccess: boolean;
-  roles: RoleDTO[];
-  branches: BranchDTO[];
   effectivePermissions: string[];
   createdAt: string;
 };
@@ -26,17 +24,22 @@ export function UserDetailsClient({
   targetUser,
   allRoles,
   allBranches,
+  initialSelectedRoleIds,
+  initialSelectedBranchIds,
 }: {
   targetUser: UserDetailDTO;
   allRoles: RoleDTO[];
   allBranches: BranchDTO[];
+  initialSelectedRoleIds: string[];
+  initialSelectedBranchIds: string[];
 }) {
   const router = useRouter();
   const [name, setName] = useState(targetUser.name);
   const [email, setEmail] = useState(targetUser.email);
   const [status, setStatus] = useState<"ACTIVE" | "INACTIVE" | "SUSPENDED">(targetUser.status);
-  const [selectedRoleIds, setSelectedRoleIds] = useState<string[]>(() => targetUser.roles.map((r) => r.id));
-  const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>(() => targetUser.branches.map((b) => b.id));
+  // Initialize from explicit primitive props — never derive from nested objects.
+  const [selectedRoleIds, setSelectedRoleIds] = useState<string[]>(initialSelectedRoleIds);
+  const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>(initialSelectedBranchIds);
   const [hasGlobalBranchAccess, setHasGlobalBranchAccess] = useState(targetUser.hasGlobalBranchAccess);
 
   const [saving, setSaving] = useState(false);

@@ -232,14 +232,10 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
 
     try {
       // 1. Simulate server component DTO generation (page.tsx)
-      const targetUserDTO = {
-        id: testUser.id,
-        name: testUser.name,
-        email: testUser.email,
-        roles: testUser.roleAssignments
-          .filter((ra) => ra.role.status === "ACTIVE")
-          .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug })),
-      };
+      // initialSelectedRoleIds is now built directly from roleAssignments — no nested object derivation.
+      const initialSelectedRoleIds: string[] = testUser.roleAssignments
+        .filter((ra) => ra.role.status === "ACTIVE")
+        .map((ra) => ra.role.id);
 
       const allRolesDTO = [adminRole, superAdminRole].map((r) => ({
         id: r.id,
@@ -249,7 +245,8 @@ describe("Phase 6 & 7 RBAC Relational Integrity Tests", () => {
       assert.equal(allRolesDTO.length, 2, "Available roles list should contain both roles");
 
       // 2. Client-side checked state determination (user-details-client.tsx)
-      const selectedRoleProfileIds = new Set(targetUserDTO.roles.map((r) => r.id));
+      // Uses initialSelectedRoleIds directly — no targetUser.roles involved.
+      const selectedRoleProfileIds = new Set(initialSelectedRoleIds);
 
       const isAdminChecked = selectedRoleProfileIds.has(adminRole.id);
       const isSuperAdminChecked = selectedRoleProfileIds.has(superAdminRole.id);

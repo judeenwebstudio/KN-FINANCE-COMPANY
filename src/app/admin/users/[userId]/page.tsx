@@ -35,16 +35,21 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
 
   const effectivePermissions = Array.from(await getUserEffectivePermissions(user.id));
 
+  // Build explicit primitive arrays for deterministic client initialization.
+  // selectedRoleIds is a flat string[] of RoleProfile.id values — the authoritative
+  // source of truth for which checkboxes must be checked on mount.
+  const initialSelectedRoleIds: string[] = user.roleAssignments
+    .filter((ra) => ra.role.status === "ACTIVE")
+    .map((ra) => ra.role.id);
+
+  const initialSelectedBranchIds: string[] = user.branchAccess.map((ba) => ba.branch.id);
+
   const targetUserDTO = {
     id: user.id,
     name: user.name,
     email: user.email,
     status: user.status,
     hasGlobalBranchAccess: user.hasGlobalBranchAccess,
-    roles: user.roleAssignments
-      .filter((ra) => ra.role.status === "ACTIVE")
-      .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug, description: ra.role.description })),
-    branches: user.branchAccess.map((ba) => ({ id: ba.branch.id, name: ba.branch.name, code: ba.branch.code })),
     effectivePermissions,
     createdAt: user.createdAt.toISOString(),
   };
@@ -55,6 +60,8 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
       targetUser={targetUserDTO}
       allRoles={roles.map((r) => ({ id: r.id, name: r.name, slug: r.slug, description: r.description }))}
       allBranches={branches.map((b) => ({ id: b.id, name: b.name, code: b.code }))}
+      initialSelectedRoleIds={initialSelectedRoleIds}
+      initialSelectedBranchIds={initialSelectedBranchIds}
     />
   );
 }

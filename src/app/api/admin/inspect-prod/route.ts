@@ -44,19 +44,12 @@ export async function GET() {
 
     const activeRoles = allRoles.filter((r) => r.status === "ACTIVE");
 
-    // Replicate page.tsx targetUserDTO logic
-    const targetUserDTO = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      status: user.status,
-      hasGlobalBranchAccess: user.hasGlobalBranchAccess,
-      roles: user.roleAssignments
-        .filter((ra) => ra.role.status === "ACTIVE")
-        .map((ra) => ({ id: ra.role.id, name: ra.role.name, slug: ra.role.slug, description: ra.role.description })),
-    };
+    // Replicate page.tsx — explicit initialSelectedRoleIds
+    const initialSelectedRoleIds: string[] = user.roleAssignments
+      .filter((ra) => ra.role.status === "ACTIVE")
+      .map((ra) => ra.role.id);
 
-    const selectedRoleIds = targetUserDTO.roles.map((r) => r.id);
+    const selectedRoleIds = initialSelectedRoleIds;
 
     // Replicate user-details-client.tsx checkbox rendering logic
     const renderedCheckboxes = activeRoles.map((role) => {
@@ -105,7 +98,7 @@ export async function GET() {
         status: u.status,
         roles: u.roleAssignments.map((ra) => ra.role.name),
       })),
-      targetUserDTO_roles: targetUserDTO.roles,
+      initialSelectedRoleIds,
       selectedRoleIds,
       renderedCheckboxes,
       getUserPrimaryRoleName_result: primaryRoleName,
