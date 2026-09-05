@@ -2,6 +2,9 @@ import { requirePermission, getUserAuthorizedBranchScope } from "@/lib/auth/auth
 import { prisma } from "@/lib/prisma";
 import { UsersClient } from "./users-client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function UsersPage() {
   const actor = await requirePermission("users.view");
   const scope = await getUserAuthorizedBranchScope(actor.id);

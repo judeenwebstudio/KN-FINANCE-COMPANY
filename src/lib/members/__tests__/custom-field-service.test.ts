@@ -37,12 +37,12 @@ describe("Member Custom Fields Service Tests", () => {
     }
     branchId = branch.id;
 
-    let superAdminRole = await prisma.roleProfile.findFirst({ where: { isSuperAdminRole: true } });
+    let superAdminRole = await prisma.roleProfile.findUnique({ where: { slug: "super_admin" } });
     if (!superAdminRole) {
       superAdminRole = await prisma.roleProfile.create({
         data: {
           name: "Super Admin CF Role",
-          slug: `sa_cf_${Date.now()}`,
+          slug: "super_admin",
           isSuperAdminRole: true,
           status: "ACTIVE",
         },

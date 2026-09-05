@@ -3,6 +3,9 @@ import { requirePermission, getUserEffectivePermissions, getUserAuthorizedBranch
 import { prisma } from "@/lib/prisma";
 import { UserDetailsClient } from "./user-details-client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function UserDetailsPage({ params }: { params: Promise<{ userId: string }> }) {
   const actor = await requirePermission("users.view");
   const { userId } = await params;

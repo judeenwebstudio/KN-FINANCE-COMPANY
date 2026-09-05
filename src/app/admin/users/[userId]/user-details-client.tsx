@@ -40,11 +40,13 @@ export function UserDetailsClient({
   const [hasGlobalBranchAccess, setHasGlobalBranchAccess] = useState(targetUser.hasGlobalBranchAccess);
 
   // Synchronize component state with targetUser props when props change or after router.refresh()
-  const [prevUserId, setPrevUserId] = useState(targetUser.id);
-  const [prevRoles, setPrevRoles] = useState(targetUser.roles);
-  if (targetUser.id !== prevUserId || targetUser.roles !== prevRoles) {
-    setPrevUserId(targetUser.id);
-    setPrevRoles(targetUser.roles);
+  const prevRolesKey = targetUser.roles.map((r) => r.id).sort().join(",");
+  const prevBranchesKey = targetUser.branches.map((b) => b.id).sort().join(",");
+  const currentSyncKey = `${targetUser.id}:${targetUser.name}:${targetUser.email}:${targetUser.status}:${targetUser.hasGlobalBranchAccess}:${prevRolesKey}:${prevBranchesKey}`;
+  const [prevSyncKey, setPrevSyncKey] = useState(currentSyncKey);
+
+  if (currentSyncKey !== prevSyncKey) {
+    setPrevSyncKey(currentSyncKey);
     setName(targetUser.name);
     setEmail(targetUser.email);
     setStatus(targetUser.status);
