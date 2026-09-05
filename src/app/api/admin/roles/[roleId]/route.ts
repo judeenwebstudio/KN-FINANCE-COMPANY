@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/authz";
-import { requirePermission } from "@/lib/auth/authorize";
+import { requirePermission, PermissionDeniedError } from "@/lib/auth/authorize";
 import { updateRolePermissions, updateRoleStatus, deleteRole } from "@/lib/auth/roles-service";
 import { PERMISSION_CATALOG } from "@/lib/auth/catalog";
 import { prisma } from "@/lib/prisma";
@@ -37,20 +36,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ roleId: 
 
     return NextResponse.json({ role: safeRole, catalog: PERMISSION_CATALOG });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to fetch role.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ roleId: string }> }) {
   try {
-    const actor = await getCurrentUser();
-    if (!actor) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const actor = await requirePermission("roles.update");
 
     const { roleId } = await params;
     const body = await req.json();
 
     if (body.permissionCodes !== undefined) {
+      await requirePermission("roles.assign_permissions");
       await updateRolePermissions({
         roleId,
         permissionCodes: body.permissionCodes,
@@ -68,15 +68,15 @@ export async function PUT(req: Request, { params }: { params: Promise<{ roleId: 
 
     return NextResponse.json({ success: true });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to update role.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ roleId: string }> }) {
   try {
-    const actor = await getCurrentUser();
-    if (!actor) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const actor = await requirePermission("roles.delete");
 
     const { roleId } = await params;
 
@@ -84,7 +84,8 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ roleI
 
     return NextResponse.json({ success: true });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to delete role.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }

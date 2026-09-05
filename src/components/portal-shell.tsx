@@ -357,7 +357,7 @@ export function PortalShell({ children, user, portal, branches = [] }: PortalShe
                   </div>
                   <Link
                     role="menuitem"
-                    href={portal === "Admin" ? "/admin/settings" : "/member/reports"}
+                    href={portal === "Admin" ? "/admin/settings" : "/member/profile"}
                     onClick={() => setUserMenuOpen(false)}
                     className="mt-1 flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                   >

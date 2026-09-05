@@ -2,7 +2,7 @@ import { cache } from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { getUserEffectivePermissions, getUserAuthorizedBranchScope } from "@/lib/auth/authorize";
+import { hasAdminPortalAccess, getUserAuthorizedBranchScope } from "@/lib/auth/authorize";
 
 export const getCurrentUser = cache(async () => {
   const session = await auth();
@@ -18,9 +18,9 @@ export async function requireAdmin() {
     redirect("/login");
   }
 
-  const permissions = await getUserEffectivePermissions(user.id);
+  const isAdmin = await hasAdminPortalAccess(user.id);
 
-  if (!permissions.has("dashboard.view")) {
+  if (!isAdmin) {
     if (user.memberProfile) redirect("/member/dashboard");
     redirect("/login");
   }
@@ -32,7 +32,13 @@ export async function requireMember() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
   if (user.status !== "ACTIVE") redirect("/login");
-  if (!user.memberProfile) redirect("/admin/dashboard");
+
+  if (!user.memberProfile) {
+    const isAdmin = await hasAdminPortalAccess(user.id);
+    if (isAdmin) redirect("/admin/dashboard");
+    redirect("/login");
+  }
+
   return user;
 }
 

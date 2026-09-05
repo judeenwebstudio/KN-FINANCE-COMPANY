@@ -24,6 +24,31 @@ export class BranchAccessDeniedError extends Error {
 }
 
 /**
+ * Determines whether a user is eligible for Admin / Staff Portal access.
+ * Must be an ACTIVE user with at least one ACTIVE relational staff/admin role assignment.
+ * Deduplicated per-request via React cache.
+ */
+export const hasAdminPortalAccess = cache(async (userId: string): Promise<boolean> => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      status: true,
+      roleAssignments: {
+        where: { role: { status: "ACTIVE" } },
+        select: { id: true },
+        take: 1,
+      },
+    },
+  });
+
+  if (!user || user.status !== "ACTIVE") {
+    return false;
+  }
+
+  return user.roleAssignments.length > 0;
+});
+
+/**
  * Resolves the effective permissions for a user authoritatively from relational RBAC.
  * Returns an empty Set if the user is INACTIVE or SUSPENDED.
  * Strictly FAILS CLOSED if relational RBAC assignments are missing (never falls back to legacy User.role).

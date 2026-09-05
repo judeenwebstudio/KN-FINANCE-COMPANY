@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/authz";
-import { requirePermission, getUserEffectivePermissions, getUserAuthorizedBranchScope } from "@/lib/auth/authorize";
+import { requirePermission, getUserEffectivePermissions, getUserAuthorizedBranchScope, PermissionDeniedError } from "@/lib/auth/authorize";
 import { updateUser } from "@/lib/auth/users-service";
 import { prisma } from "@/lib/prisma";
 
@@ -41,18 +40,28 @@ export async function GET(req: Request, { params }: { params: Promise<{ userId: 
 
     return NextResponse.json({ user: safeUser });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to fetch user.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ userId: string }> }) {
   try {
-    const actor = await getCurrentUser();
-    if (!actor) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const actor = await requirePermission("users.update");
 
     const { userId } = await params;
     const body = await req.json();
+
+    if (body.roleIds !== undefined) {
+      await requirePermission("users.assign_roles");
+    }
+    if (body.branchIds !== undefined || body.hasGlobalBranchAccess !== undefined) {
+      await requirePermission("users.manage_branch_access");
+    }
+    if (body.status !== undefined) {
+      await requirePermission("users.disable");
+    }
 
     const updated = await updateUser({
       userId,
@@ -68,7 +77,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ userId: 
 
     return NextResponse.json({ success: true, userId: updated.id });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to update user.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }

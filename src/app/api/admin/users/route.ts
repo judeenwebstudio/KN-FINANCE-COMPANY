@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/authz";
-import { requirePermission, getUserAuthorizedBranchScope } from "@/lib/auth/authorize";
+import { requirePermission, getUserAuthorizedBranchScope, PermissionDeniedError } from "@/lib/auth/authorize";
 import { createUser } from "@/lib/auth/users-service";
 import { prisma } from "@/lib/prisma";
 
@@ -52,17 +51,24 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ users: safeUsers });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to fetch users.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const actor = await getCurrentUser();
-    if (!actor) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const actor = await requirePermission("users.create");
 
     const body = await req.json();
+
+    if (body.roleIds && body.roleIds.length > 0) {
+      await requirePermission("users.assign_roles");
+    }
+    if (body.branchIds && body.branchIds.length > 0) {
+      await requirePermission("users.manage_branch_access");
+    }
 
     const created = await createUser({
       name: body.name,
@@ -76,7 +82,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, userId: created.id });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to create user.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }

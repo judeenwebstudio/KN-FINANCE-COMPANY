@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/authz";
-import { requirePermission } from "@/lib/auth/authorize";
+import { requirePermission, PermissionDeniedError } from "@/lib/auth/authorize";
 import { createRole } from "@/lib/auth/roles-service";
 import { PERMISSION_CATALOG } from "@/lib/auth/catalog";
 import { prisma } from "@/lib/prisma";
@@ -32,15 +31,15 @@ export async function GET() {
 
     return NextResponse.json({ roles: safeRoles, catalog: PERMISSION_CATALOG });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to fetch roles.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const actor = await getCurrentUser();
-    if (!actor) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const actor = await requirePermission("roles.create");
 
     const body = await req.json();
 
@@ -54,7 +53,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, roleId: created.id });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to create role.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }

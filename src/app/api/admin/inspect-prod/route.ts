@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getUserEffectivePermissions, getUserPrimaryRoleName } from "@/lib/auth/authorize";
+import { getUserEffectivePermissions, getUserPrimaryRoleName, requirePermission, PermissionDeniedError } from "@/lib/auth/authorize";
 
 export async function GET() {
   try {
+    await requirePermission("users.view");
     const targetEmail = "kabhinishainfotech@gmail.com";
 
     // Query user
@@ -105,7 +106,8 @@ export async function GET() {
       effectivePermissionsCount: perms.length,
     });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Inspect failed.";
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 500 });
   }
 }

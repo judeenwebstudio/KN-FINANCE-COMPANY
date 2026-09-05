@@ -1,16 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/authz";
-import { requirePermission } from "@/lib/auth/authorize";
+import { requirePermission, PermissionDeniedError } from "@/lib/auth/authorize";
 import { requestPasswordReset } from "@/lib/auth/password-reset";
 import { getEmailProviderStatus } from "@/lib/settings/email-service";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request, { params }: { params: Promise<{ userId: string }> }) {
   try {
-    const actor = await getCurrentUser();
-    if (!actor) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-    await requirePermission("users.manage");
+    const actor = await requirePermission("users.update");
     const { userId } = await params;
 
     const user = await prisma.user.findUnique({
@@ -40,7 +36,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ userId:
       message: "Password reset instructions sent successfully.",
     });
   } catch (err: unknown) {
+    const isDenied = err instanceof PermissionDeniedError;
     const msg = err instanceof Error ? err.message : "Failed to initiate password reset.";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    return NextResponse.json({ error: msg }, { status: isDenied ? 403 : 400 });
   }
 }
